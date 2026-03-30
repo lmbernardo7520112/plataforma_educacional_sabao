@@ -1,40 +1,51 @@
 import React from 'react';
-import './Footer.css';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="footer">
-      <div className="container footer-container">
-        <div className="footer-brand">
-          <div className="footer-logo">
-            <img src="/vite.svg" alt="EcoSabon Logo" className="logo-icon grayscale" />
-            <span className="logo-text">EcoSabon</span>
+    <footer className="bg-[#0a0f1a] border-t border-white/10 pt-20">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+        
+        {/* Brand */}
+        <div className="md:col-span-6">
+          <div className="flex items-center gap-3 font-extrabold text-2xl mb-4 text-white">
+            <img src="/vite.svg" alt="EcoSabon Logo" className="w-8 h-8 grayscale brightness-200" />
+            <span className="font-['Outfit']">EcoSabon</span>
           </div>
-          <p className="footer-desc">
-            Desenvolvido com MTP e SDD para a nova geração de currículos escolares de Ciências da Natureza.
+          <p className="text-gray-400 text-sm max-w-sm leading-relaxed">
+            Desenvolvido com MTP e SDD para a nova geração de currículos escolares de Ciências da Natureza. 
+            Educação gamificada unindo química orgânica e engenharia de precisão.
           </p>
         </div>
         
-        <div className="footer-links">
-          <h4>Plataforma</h4>
-          <ul>
-            <li><a href="#journey">Jornada do Aluno</a></li>
-            <li><a href="#versions">Versão Sensores</a></li>
-            <li><a href="#about">Impacto Ambiental</a></li>
+        {/* Links 1 */}
+        <div className="md:col-span-3">
+          <h4 className="text-white font-bold text-lg mb-6">Plataforma</h4>
+          <ul className="space-y-4">
+            <li><a href="#journey" className="text-gray-400 hover:text-[#10B981] text-sm transition-colors">Jornada do Aluno</a></li>
+            <li><a href="#versions" className="text-gray-400 hover:text-[#10B981] text-sm transition-colors">Versão Sensores</a></li>
+            <li><a href="#about" className="text-gray-400 hover:text-[#10B981] text-sm transition-colors">Impacto Ambiental</a></li>
+            <li><a href="#stack" className="text-gray-400 hover:text-[#10B981] text-sm transition-colors">Engenharia Core</a></li>
           </ul>
         </div>
         
-        <div className="footer-links">
-          <h4>Documentação</h4>
-          <ul>
-            <li><a href="#">Manifesto SDD</a></li>
-            <li><a href="#">API Docs (IoT)</a></li>
-            <li><a href="#">Clean Architecture</a></li>
+        {/* Links 2 */}
+        <div className="md:col-span-3">
+          <h4 className="text-white font-bold text-lg mb-6">Documentação</h4>
+          <ul className="space-y-4">
+            <li><button className="text-gray-400 hover:text-[#10B981] text-sm transition-colors cursor-pointer text-left">Manifesto SDD (Core)</button></li>
+            <li><button className="text-gray-400 hover:text-[#10B981] text-sm transition-colors cursor-pointer text-left">API Docs (Telemetria IoT)</button></li>
+            <li><button className="text-gray-400 hover:text-[#10B981] text-sm transition-colors cursor-pointer text-left">Clean Architecture Repo</button></li>
           </ul>
         </div>
+
       </div>
-      <div className="footer-bottom text-center">
-        <p>&copy; {new Date().getFullYear()} EcoSabon. Desenvolvido por Leonardo Maximino Bernardo.</p>
+      
+      <div className="border-t border-white/10 py-8 bg-black/20">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <p className="text-gray-500 text-sm">
+            &copy; {new Date().getFullYear()} EcoSabon. Desenvolvido por <span className="text-gray-300 font-semibold">Leonardo Maximino Bernardo</span>.
+          </p>
+        </div>
       </div>
     </footer>
   );
