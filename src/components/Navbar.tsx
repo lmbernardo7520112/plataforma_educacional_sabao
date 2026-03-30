@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -29,9 +30,9 @@ const Navbar: React.FC = () => {
           <button className="hidden md:block text-white hover:text-[#3B82F6] font-semibold text-sm transition-colors cursor-pointer">
             Portal da Escola
           </button>
-          <button className="bg-gradient-to-r from-[#10B981] to-[#3B82F6] hover:opacity-90 text-white px-6 py-2.5 rounded-full font-bold text-sm transition-opacity shadow-[0_0_15px_rgba(16,185,129,0.3)] cursor-pointer">
+          <Link to="/dashboard" className="bg-gradient-to-r from-[#10B981] to-[#3B82F6] hover:opacity-90 text-white px-6 py-2.5 rounded-full font-bold text-sm transition-opacity shadow-[0_0_15px_rgba(16,185,129,0.3)] cursor-pointer inline-block">
             Área do Aluno
-          </button>
+          </Link>
         </div>
       </div>
     </nav>
