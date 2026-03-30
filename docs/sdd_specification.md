@@ -145,3 +145,164 @@ A plataforma operará sob a validação estrita das seguintes premissas acadêmi
 
 **5. Segurança (Segurança Máxima como Regra de Negócio):**
 * A ordem universal "Nunca jogue água sobre o ácido/base forte, mas sim o soluto na água" será um *hard block* no fluxo do sistema. Qualquer desvio no registro disparará alertas e invalidará a experiência temporalmente. O sistema de EPIs será validado via *checklist* assinado digitalmente na UI antes do acesso às etapas experimentais.
+
+---
+
+## SEÇÃO 7 — JORNADA PEDAGÓGICA DA PLATAFORMA
+
+A trilha gamificada é estruturada em 9 missões progressivas, bloqueadas sequencialmente:
+
+**Missão 1: O Ciclo da Água e o Inimigo Invisível**
+*   **Objetivo:** Compreender o impacto do descarte de óleo na água.
+*   **Conteúdos:** Poluição hídrica, tensão superficial, micelas.
+*   **Atividade Principal:** Quiz interativo de diagnóstico e simulação visual da gota de óleo na água.
+*   **Desafio Gamificado:** "Salvar o primeiro litro de água".
+*   **Critérios de Sucesso:** Acerto > 70% no quiz.
+
+**Missão 2: Vestindo o Jaleco (Segurança)**
+*   **Objetivo:** Garantir a integridade física na manipulação de bases fortes.
+*   **Conteúdos:** EPIs (óculos, luvas, avental), neutralização, ventilação.
+*   **Atividade Principal:** Checklist digital assinado pelo aluno e validado (por PIN) pelo professor.
+*   **Evidências:** Upload de foto do grupo portando os EPIs.
+
+**Missão 3: A Receita do Alquimista (Planejamento)**
+*   **Objetivo:** Matemática aplicada à química.
+*   **Conteúdos:** Cálculo de índice de saponificação, concentração, regra de três, conversão de unidades.
+*   **Atividade Principal:** Inserir a quantidade de óleo coletado. O sistema solicita que o grupo calcule a quantidade exata de soda (NaOH) e água necessária.
+*   **Critérios de Sucesso:** Aluno informa valores de reagentes com margem de erro máxima de ±2%.
+
+**Missão 4: Purificação (Filtração do Óleo)**
+*   **Objetivo:** Preparo da amostra.
+*   **Conteúdos:** Separação de misturas heterogêneas.
+*   **Atividade Principal:** Filtrar o óleo fisicamente para retirar detritos de decantação.
+*   **Evidências:** Input qualitativo ("Cor do óleo: Escuro/Claro/Turvo") e foto do filtro.
+
+**Missão 5: O Despertar do Dragão (A Solução de Soda)**
+*   **Objetivo:** Reação exotérmica.
+*   **Conteúdos:** Dissolução, entalpia, bases fortes.
+*   **Atividade Principal:** Registro do aumento de temperatura ao adicionar soda à água (nunca o inverso).
+*   **Evidências:** Versão A: gráfico capturado via sensor de temperatura; Versão B: registro manual da temperatura lida no termômetro de vidro com relato descritivo do calor no frasco.
+
+**Missão 6: A Fusão (Saponificação)**
+*   **Objetivo:** Compreender a reação de obtenção de um sal orgânico.
+*   **Conteúdos:** Ésteres + Base -> Sal orgânico (sabão) + Álcool (glicerina).
+*   **Atividade Principal:** Misturar a lixívia ao óleo até atingir o *Trace* (ponto de traço).
+*   **Evidências:** Escolha em UI gamificada do estado de viscosidade (Ex: textura de pudim/maionese) + Foto do *trace*.
+
+**Missão 7: Molde e Repouso**
+*   **Objetivo:** Solidificação e organização molecular.
+*   **Conteúdos:** Mudança de estado físico, cristalização parcial.
+*   **Atividade Principal:** Input do peso final bruto no molde. Início do contador regressivo de cura (geralmente 30 dias na vida real - a UI reflete esse calendário).
+
+**Missão 8: O Teste do pH (Controle de Qualidade)**
+*   **Objetivo:** Segurança do produto final.
+*   **Conteúdos:** Escala de pH, indicadores ácido-base.
+*   **Atividade Principal:** Testar o sabão curado com papel tornassol/fita de pH e registrar a cor.
+*   **Critérios de Sucesso:** pH entre 8 e 10. Se >10, o próprio sistema acusa "Falha no Lote: Excesso de Base".
+
+**Missão 9: Embaixadores da Água (Culminância)**
+*   **Objetivo:** Conclusão ambiental sociável.
+*   **Conteúdos:** Biodegradabilidade.
+*   **Atividade Principal:** Geração de Certificado apontando a contribuição líquida (Ex: "O Grupo 3 poupou 50.000 litros de água").
+*   **Evidências:** Relatório final em PDF gerado para feira de ciências.
+
+---
+
+## SEÇÃO 8 — REQUISITOS FUNCIONAIS
+
+**Módulo de Usuários e Autenticação**
+*   **RF-001 (Cadastro/Login):** O sistema deve permitir login via e-mail/senha ou Google OAuth (Aluno/Professor).
+*   **RF-002 (Gestão de Turmas):** O professor deve poder criar turmas gerando um Código de Convite (ex: `A7B9`).
+*   **RF-003 (Criação de Grupos):** Os alunos, ao entrarem na turma com o código, devem formar "Bancadas" (grupos de 2-5 alunos).
+
+**Módulo de Laboratório Gamificado (Jornada)**
+*   **RF-004 (Progresso Travado):** O sistema não deve permitir o acesso da Bancada à Missão $N+1$ sem concluir a Missão $N$.
+*   **RF-005 (Upload de Evidências):** O sistema deve permitir o upload de imagens (máx 5MB) nas etapas que exigem fotos (EPIs, *Trace*, papel de pH).
+*   **RF-006 (Validador de Cálculos):** O sistema deve receber o array `[Massa_Oleo, Massa_Soda, Massa_Agua]` e aplicar a fórmula estequiométrica em background, retornando Sucesso ou Falha.
+*   **RF-007 (Timer de Cura):** O sistema deve registrar um `timestamp` no término da Missão 6/7 e exibir uma barra de progresso em dias (Data Alvo: +30 dias) para liberação da Missão 8.
+
+**Módulo de Sensores vs Simplificado**
+*   **RF-008 (Coleta Automática - Versão A):** O sistema deve expor um endpoint/API que receba JSON `{bancadaId, timestamp, temp, ph}` via POST de um ESP32/Arduino, populando a tabela do aluno em realtime.
+*   **RF-009 (Coleta Manual - Versão B):** O sistema deve fornecer um formulário web com inputs de UI deslizantes (sliders) para que o aluno reporte temperatura e pH lidos visualmente.
+
+**Módulo do Professor (Dashboard)**
+*   **RF-010 (Visão Macro):** O professor deve visualizar uma matriz onde linhas são "Bancadas" e colunas são "Missões 1 a 9", coloridas em verde/amarelo/vermelho (status).
+*   **RF-011 (Override/Aprovação Manual):** O professor pode usar um PIN numérico para ignorar uma trava ou aprovar uma etapa que o sistema tenha sinalizado como duvidosa.
+
+---
+
+## SEÇÃO 9 — REQUISITOS NÃO FUNCIONAIS
+
+*   **RNF-01 (Desempenho/Carregamento):** A SPA em React deve carregar o First Contentful Paint em < 2 segundos em redes 3G (foco em escolas com internet precária).
+*   **RNF-02 (Acessibilidade):** O frontend deve respeitar a paleta de contraste W3C AA (dark mode garantindo leitura), suportar navegação por tab (teclado) e ter atributos `aria-labels` em todos os botões experimentais.
+*   **RNF-03 (Responsividade):** A UI do estudante (laboratório digital) deve ser 100% *Mobile-First*, pois a inserção de dados ocorrerá simultaneamente à atividade com mãos sujas na bancada escolar usando smartphones.
+*   **RNF-04 (Segurança de Dados):** Dados de estudantes menores de idade não devem vazar; senhas sob bcrypt(salt de 10) e JWT sessions com short expiration (1h).
+*   **RNF-05 (Resiliência Offline):** O PWA deve manter o estado não salvo no `localStorage` caso a rede da escola caia durante o preenchimento da Missão, sincronizando no reestabelecimento ('offline-first approach').
+*   **RNF-06 (Armazenamento de Mídia):** Fotos enviadas devem ser comprimidas no cliente (via Canvas API ou lib similar) para no máximo 1024x1024 / JSON para aliviar uso do banco/S3 Amazon e rede local.
+
+---
+
+## SEÇÃO 10 — REGRAS DE NEGÓCIO
+
+*   **RN-001 (Paridade de Ensino):** A *Versão B (Simplificada)* não resultará em dedução de pontuação/badges para o aluno comparada à *Versão A*. Ambas garantem 100% de conclusão.
+*   **RN-002 (Hard Block de Segurança Térmica):** A soma da Soda + Água só avança se o usuário afirmar (checkbox afirmativo de risco) que despejou *O Sólido no Líquido*, e não o contrário. Respostas incorretas trazem pop-up vermelho educacional bloqueante.
+*   **RN-003 (Cálculo Fator de Impacto):** 1 litro de óleo reciclado = 25.000 litros de água preservados. O sistema sempre apresentará os cálculos multiplicados por este fator na UI de culminância.
+*   **RN-004 (Limites Químicos de Sucesso):** Índice de Saponificação base de tolerância deve ser configurado no banco. Margem de segurança de segurança de soda: *Superfatting* sugerido na plataforma de pelo menos 5% (Garantir que sobre óleo e nunca soda no sabão resultante).
+*   **RN-005 (Gamificação Acumulativa):** A pontuação escolar não decrementar em tentativas erradas, priorizando a avaliação formativa (aprender com o erro) e não punitiva.
+
+---
+
+## SEÇÃO 11 — FLUXOS PRINCIPAIS
+
+**Fluxo 1: Onboarding do Laboratório (Grupos)**
+1.  Aluno abre o EcoSabon Mobile.
+2.  Insere o Código da Turma fornecido pelo Professor.
+3.  Escolhe seu nome e seleciona a "Bancada X".
+4.  É levado à tela inicial gamificada (Mapa da Jornada do Ciclo da Água).
+
+**Fluxo 2: Planejamento Estequiométrico (Missão 3)**
+1.  Bancada acessa "A Receita".
+2.  Input UI: "Pesamos X gramas de Óleo".
+3.  Sistema: Desafio aberto - "Dez gramas de soda saponificam N gramas do óleo atual. De quanta soda você precisará?"
+4.  Aluno insere resposta (ex: 135g).
+5.  Backend valida: resposta $\in$ [Range Correto]?
+6.  (SE SIM): Animação de sucesso (confetes/badge ganha) -> Avança missão.
+7.  (SE NÃO): Animação de erro moderado -> Mostra "Dica do Químico" ensinando regra de 3. -> Tenta novamente.
+
+**Fluxo 3: Integração de Sensor (Versão A - Missão 5)**
+1.  Professor habilita modo Arduino no seu Dashboard para a Bancada X. Dá aos alunos a API Key temporária.
+2.  Na Missão 5, o app diz "Aguardando transmissão do Termômetro Bluetooth...".
+3.  Backend recebe POST do Arduino: `{id: 'BancadaX', temp: 82}`.
+4.  Sistema via Socket.io/Polling reflete o gráfico subindo na tela do Aluno vivo (Real-time).
+5.  Quando atinge estabilidade ou >80°C, a missão conclui.
+
+**Fluxo 4: Verificação de Segurança (Professor)**
+1.  Professor em seu tablet vê notificação: "Bancada 3 enviou Foto de EPI".
+2.  Clica para expandir a foto.
+3.  Aprova rapidamente (Swipe Right) ou Rejeita (Swipe Left informando "Joãozinho está sem óculos").
+4.  Se rejeita, o grupo 3 tem a missão 2 reiniciada com alerta do professor.
+
+---
+
+## SEÇÃO 12 — CRITÉRIOS DE ACEITAÇÃO
+
+**CA-1: Trilha Gamificada (Missões e Bloqueios)**
+*   **Dado** que a Bancada Y está atualmente na Missão 4
+*   **Quando** tentarem acessar o roteiro prático da Missão 5
+*   **Então** o sistema deve bloquear o acesso visual e exibir a mensagem "Termine de Filtrar o Óleo antes do Reator" com um cadeado em UI.
+
+**CA-2: Validação de Reagentes Estequiométricos**
+*   **Dado** que o input de óleo pesou `1000g` e o índice padrão do banco é `0.135`
+*   **Quando** o aluno submeter a massa da soda e a mesma for `145g` (falha na tolerância de 5%)
+*   **Então** o sistema deve negar o avanço E retornar um alerta: *"Atenção! Esta formulação está muito cáustica e excedeu a tolerância, tente rever os cálculos"*.
+
+**CA-3: Comportamento Sem Conectividade (Sensibilidade do Local)**
+*   **Dado** que o device do Aluno perdeu conexão na Missão 6 (Tempo de Trace)
+*   **Quando** ele tirar a foto e clicar "Avançar Missão"
+*   **Então** o EcoSabon fará PWA Cache, indicará um ícone flutuante de nuvem cortada (Sync Pendente) e deixará ele iniciar o cronômetro localmente.
+*   **E Quando** a internet voltar, deve subir o payload ao banco automaticamente.
+
+**CA-4: Versão A (Sensores)**
+*   **Dado** que o endpoint MQTT/REST do sistema recebeu temperatura constante (ex: 5 retornos seguidos de 25°C) no período de reação da base,
+*   **Quando** o aluno solicitar "Validar Aumento de Entalpia"
+*   **Então** o EcoSabon deve rejeitar a conclusão e informar ao Professor: *"Alerta de Sensor Bancada X: Sem Variação Térmica Detectada"*.

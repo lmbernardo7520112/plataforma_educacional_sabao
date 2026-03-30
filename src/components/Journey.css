@@ -1,0 +1,119 @@
+.journey {
+  padding: var(--space-3xl) 0;
+  background-color: var(--color-bg-primary);
+}
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 35px; /* Adjust based on marker size */
+  height: 100%;
+  width: 2px;
+  background: var(--color-border);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 2rem;
+}
+
+.timeline-marker {
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-bg-secondary);
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  margin-top: 0.5rem;
+}
+
+.timeline-content {
+  flex: 1;
+  padding: 1.5rem;
+  border-left: 4px solid transparent;
+}
+
+.mission-theme {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-sapphire);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.timeline-content h4 {
+  font-size: 1.25rem;
+  color: var(--color-text-primary);
+  margin-bottom: 0;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.btn-sm {
+  padding: 0.35rem 1rem;
+  font-size: 0.875rem;
+}
+
+.locked-badge {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Status variants */
+.timeline-item.completed .timeline-marker {
+  border-color: var(--color-emerald);
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--color-emerald);
+}
+
+.timeline-item.completed .timeline-content {
+  border-left-color: var(--color-emerald);
+}
+
+.timeline-item.active .timeline-marker {
+  border-color: var(--color-gold);
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--color-gold);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+.timeline-item.active .timeline-content {
+  border-left-color: var(--color-gold);
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.timeline-item.locked .timeline-content {
+  opacity: 0.6;
+}
+
+@media (max-width: 640px) {
+  .timeline {
+    padding-left: 0;
+  }
+}
