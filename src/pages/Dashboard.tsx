@@ -69,9 +69,9 @@ const Dashboard: React.FC = () => {
                   Prepare seu diário de bordo. Você precisa concluir esta etapa com rigor científico 
                   para destravar os equipamentos da próxima missão laboratorial. Segurança em primeiro lugar.
                 </p>
-                <button className="bg-[#3B82F6] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-lg hover:shadow-blue-500/30 cursor-pointer">
+                <Link to={`/dashboard/mission/${activeMission.id}`} className="bg-[#3B82F6] hover:bg-blue-600 inline-block text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-lg hover:shadow-blue-500/30 cursor-pointer">
                   Iniciar Experimento
-                </button>
+                </Link>
               </div>
             </div>
           </section>
