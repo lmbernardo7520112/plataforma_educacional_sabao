@@ -306,3 +306,112 @@ A trilha gamificada é estruturada em 9 missões progressivas, bloqueadas sequen
 *   **Dado** que o endpoint MQTT/REST do sistema recebeu temperatura constante (ex: 5 retornos seguidos de 25°C) no período de reação da base,
 *   **Quando** o aluno solicitar "Validar Aumento de Entalpia"
 *   **Então** o EcoSabon deve rejeitar a conclusão e informar ao Professor: *"Alerta de Sensor Bancada X: Sem Variação Térmica Detectada"*.
+
+---
+
+## SEÇÃO 13 — ESPECIFICAÇÃO FUNCIONAL DOS MÓDULOS
+
+**1. Módulo Core (Saponification Engine)**
+*   **Finalidade:** Módulo isolado, agnóstico a framework, que detém 100% das fórmulas físico-químicas. Representa o *Domain* na Clean Architecture.
+*   **Funcionalidades:** `calculateSaponificationValue(oilType, oilMass)`, `validateEnergyRelease(startTemp, currentTemp)`, `evaluatePHTolerance(ph)`.
+*   **Critérios de Aceitação:** O módulo deve lançar erro explícito `StoichiometryError` se as proporções fornecidas gerarem uma base cáustica fatal. Coberto 100% por testes unitários no Jest/Vitest.
+
+**2. Módulo Integrador IoT (Versão A)**
+*   **Finalidade:** *Gateway* para receber payloads dos Arduinos/ESP32s do laboratório escolar via REST (ou futuramente MQTT).
+*   **Funcionalidades:** Autenticação dos nós sensoriais usando JWT temporários. `IngestTemperatureData()`, `IngestPHData()`.
+*   **Riscos:** Rede instável na escola causando perda de pacote de dados térmicos. (Mitigação: PWA cache no lado cliente humano preenchendo o buraco).
+
+**3. Módulo "Diário de Bordo" e Evidência Visual**
+*   **Finalidade:** Substituto digital do caderno físico do aluno.
+*   **Funcionalidades:** Tirar foto in-app, escolher textura visual do traço, entrada manual de Temperatura e Volume (Versão B).
+*   **Dependências:** Requere Canvas API para compressão de imagem antes de envio ao backend para não estourar payload da request.
+
+---
+
+## SEÇÃO 14 — ESPECIFICAÇÃO TÉCNICA E ARQUITETURA
+
+A arquitetura do projeto segue os princípios de separação de *Frontend/Backend*, componentização, forte tipagem estática e conteinerização para padronização do ambiente local de times distribuídos.
+
+**1. Visão Geral e Stack Exigida**
+*   **Backend:** Node.js (v20 LTS), Express ou Fastify, e *TypeScript*.
+*   **Frontend:** React (v19), SSR/SSG opcional, gerenciamento de build por *Vite*, linguagem *TypeScript*.
+*   **Banco de Dados:** *MongoDB* (NoSQL document-based, ideal para armazenar diários de bordo com arrays variáveis de fotografias e timelines não rígidas).
+*   **Infra/Deploy Local:** *Docker* e *Docker Compose*.
+
+**2. Estrutura de Pastas Sugerida (Monorepo ou Multirepo, exposto como projeto único para a equipe)**
+
+```
+ecosabon/
+├── backend/
+│   ├── src/
+│   │   ├── domain/ (Clean Arch: Regras científicas isoladas - Core Engine)
+│   │   ├── applications/ (Casos de uso: AvançarMissão, CalcularReceita)
+│   │   ├── infrastructure/ (Repos do Mongo, Auth Tokens, Rotas Express)
+│   │   └── server.ts
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/ (Botões, Timelines, Uploaders)
+│   │   ├── core/ (Hooks, Stores - Zustand/Redux)
+│   │   ├── pages/ (Login, Dashboard, LabStation)
+│   │   └── App.tsx
+└── docker-compose.yml
+```
+
+**3. Estratégia de API (Comunicação Fr/Bk)**
+A comunicação principal será *RESTful JSON*. Para a página de "Monitoramento Docente" e para a "Versão A" (Laboratório Conectado), o sistema implementará WebSockets (`Socket.io`) para que o professor veja os dados dos sensores subindo em tempo real sem precisar atualizar a página.
+
+**4. Modelo de Dados de Alto Nível (MongoDB Collections)**
+*   `Users`: _{ _id, role(student/teacher), name, email, passwordHash }_
+*   `Classrooms`: _{ _id, teacherId, inviteCode, name, school }_
+*   `Workbenches`: _{ _id, classroomId, students[], currentMissionId, lockStatus }_
+*   `Journeys`: _{ _id, workbenchId, startTime, mission1Data{}, mission2Data{}, ... }_
+
+**5. Estratégia para Integração de Sensores vs Simplificada**
+A abstração no Backend (`IngestDataUseCase`) será cega à origem.
+Se a requisição vier do endpoint `/api/v1/sensors/temp`, ela acionará o serviço com uma tag `source: 'hardware'`.
+Se vier do Frontend `/api/v1/manual/temp`, acionará com `source: 'manual'`.
+A regra de negócio e os ganhos de XP gamificados serão idênticos, garantindo equidade escolar.
+
+**6. Segurança Básica**
+*   Políticas severas de CORS (apenas domínios `.ecosabon.net` permitidos).
+*   Uploads de fotos de EPIs não devem ser públicos; URLs presigned (ex: `AWS S3`) ou rotas Node bloqueadas por JWT (para os colegas não verem as respostas dos outros).
+*   Rate limiting nos endpoints do Arduino (Versão A) para evitar DDoS escolar (um loop quebrado de `delay()` no Arduino de um aluno não deve derrubar o servidor).
+
+---
+
+## SEÇÃO 15 — UX/UI
+
+O design system adotará a estética **"Dark Science"** (Dark Mode, UI imersiva, "Glassmorphism" — desfoque e translucidez). O visual não deve ser infantil, e sim profissional (jovens anseiam usar algo moderno, similar à interface de naves ou games Sci-Fi).
+
+**Diretrizes de UX (Estudante):**
+*   **Chunking Cognitivo:** O laboratório apresentará APENAS a missão ativa na tela (foco), obscurecendo (dim) as fases passadas e bloqueando cadeados (lock) nas futuras.
+*   **Visualização de Dados Reativos:** Quando o aluno digitar "125g" de soda em um input, uma barra lateral de pH teórico deve responder com uma animação de "verde" (seguro) para "vermelho" (cáustico) em *real-time* no frontend.
+*   **Botões Fat Finger:** Na bancada real, o aluno pode estar com a mão no mouse e luvas sujas (hipoteticamente). Os *Tap Targets* devem ser largos, e interações críticas exigem Swipe ou Double Tap ("Deslize para confirmar mistura de soda e água").
+
+**Diretrizes de UI (Professor):**
+*   **Clean List:** Visual tabular, alto contraste. Ícones de Warning vermelhos grandes ao lado de grupos que tentaram enviar pH > 10.
+*   **Filtros Rápidos:** Botão no topo: "Ver grupos estagnados".
+
+---
+
+## SEÇÃO 16 — DEVOPS, DOCKER E CI/CD
+
+A qualidade técnica é inegociável em desenvolvimento profissional moderno.
+
+**1. Ambiente Local com Docker (DevEx):**
+Nenhum programador deve instalar ou configurar instâncias do MongoDB nativamente. O repositório conterá um `docker-compose.yml` que sobe três containers em uma rede virtual:
+*   `db`: Imagem oficial do MongoDB.
+*   `api`: Node.js rodando o backend em watch mode (Nodemon/ts-node-dev).
+*   `client`: O Vite.js servindo o frontend React para HMR.
+*Gatilho:* Um único comando `docker compose up` deve prover o ambiente 100% funcional.
+
+**2. Lint e Code Quality:**
+*   TypeScript com *Strict Mode = true*.
+*   *ESLint* e *Prettier* travados na pipeline via `Husky` (pre-commit hook). Se não formatar o arquivo ou houver erro TS ou alerta no linter ("any" não justificado), bloqueia o commit.
+
+**3. Pipeline CI/CD (GitHub Actions / GitLab CI):**
+*   **Build:** Compila TS para JS (Back) e gera pacote Bundle+Minified Vite (Front).
+*   **Test:** Roda suíte vitest/jest (Testes no motor de domínio são os mais críticos).
+*   **Lint:** Varredura ESLint de segurança.
+*   **Deploy (Staging/Prod):** Se a branch for `main`, envia o container Docker para o registry (ex: DockerHub/AWS ECR) e aciona serviço em nuvem. A branch não será mergeada sem CI passar no verde (Vínculo de Status Checks).
