@@ -21,9 +21,10 @@ const Navbar: React.FC = () => {
         </div>
         
         <div className="hidden md:flex items-center gap-8">
-          <a href="#about" className="text-gray-300 hover:text-[#10B981] text-sm font-medium transition-colors">O Desafio</a>
-          <a href="#journey" className="text-gray-300 hover:text-[#10B981] text-sm font-medium transition-colors">A Jornada</a>
-          <a href="#versions" className="text-gray-300 hover:text-[#10B981] text-sm font-medium transition-colors">IoT vs Manual</a>
+          <a href="/#about" className="text-gray-300 hover:text-[#10B981] text-sm font-medium transition-colors">O Desafio</a>
+          <a href="/#journey" className="text-gray-300 hover:text-[#10B981] text-sm font-medium transition-colors">A Jornada</a>
+          <a href="/#versions" className="text-gray-300 hover:text-[#10B981] text-sm font-medium transition-colors">IoT vs Manual</a>
+          <Link to="/cartilha" className="text-[#F59E0B] hover:text-white text-sm font-bold transition-colors">Regras / Cartilha</Link>
         </div>
         
         <div className="flex items-center gap-4">
