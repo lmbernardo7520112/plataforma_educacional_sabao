@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "author": "Leonardo Maximino Bernardo",
   "description": "EcoSabon — Plataforma educacional gamificada de Química e Física Experimental",
   "scripts": {
     "dev": "vite",

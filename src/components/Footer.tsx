@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className="footer-bottom text-center">
-        <p>&copy; {new Date().getFullYear()} EcoSabon. Desenvolvido para transformar educação.</p>
+        <p>&copy; {new Date().getFullYear()} EcoSabon. Desenvolvido por Leonardo Maximino Bernardo.</p>
       </div>
     </footer>
   );

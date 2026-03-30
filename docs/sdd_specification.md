@@ -1,6 +1,7 @@
 # EcoSabon — Especificação Formal Completa (SDD)
 
 *Nota: Este documento adota a metodologia Specification Driven Development (SDD) e será a fonte primária da verdade para as equipes de Produto, Pedagogia, Design e Engenharia.*
+**Autor Original e Arquiteto-Chefe:** Leonardo Maximino Bernardo
 
 ---
 
