@@ -415,3 +415,165 @@ Nenhum programador deve instalar ou configurar instâncias do MongoDB nativament
 *   **Test:** Roda suíte vitest/jest (Testes no motor de domínio são os mais críticos).
 *   **Lint:** Varredura ESLint de segurança.
 *   **Deploy (Staging/Prod):** Se a branch for `main`, envia o container Docker para o registry (ex: DockerHub/AWS ECR) e aciona serviço em nuvem. A branch não será mergeada sem CI passar no verde (Vínculo de Status Checks).
+
+---
+
+## SEÇÃO 17 — BACKLOG ESTRUTURADO
+
+**ÉPICO 1: Fundação do Laboratório Digital**
+*   *Feature 1.1:* Autenticação e Perfis (Student/Teacher)
+    *   *História:* Como professor, quero gerar um código de convite para minha turma. (Pedagógico)
+    *   *Tarefa (Tech):* Implementar JWT login.
+    *   *Tarefa (UX):* Desenhar tela de Login estilo Sci-Fi/Dark.
+*   *Feature 1.2:* Criação de Bancadas (Grupos)
+    *   *História:* Como aluno, quero me unir ao Grupo 3 com meu colega.
+
+**ÉPICO 2: Motor Estequiométrico (Domain)**
+*   *Feature 2.1:* Validador de Receita (Missão 3)
+    *   *História:* Como sistema, quero recalcular a quantidade de NaOH baseada no input de óleo.
+    *   *Tarefa (Tech):* Escrever `SaponificationEngine.test.ts` (TDD).
+
+**ÉPICO 3: Trilha de Aulas Práticas (O Backend da Jornada)**
+*   *Feature 3.1:* Mecanismo de Avanço Condicional
+    *   *História:* Como aluno, só posso ver o reator se eu vesti meus EPIs.
+    *   *Tarefa (Tech):* Middleware de bloqueio de rotas se `journeyState < requiredState`.
+*   *Feature 3.2:* Upload de Evidências Fotográficas
+    *   *Tarefa (DevOps):* Configurar bucket S3 para imagens ou Multer local.
+
+**ÉPICO 4: A Versão IoT (Fase 2 / Evolutivo)**
+*   *Feature 4.1:* Endpoint de Ingestão de Telemetria
+    *   *Tarefa (Tech):* Criar rota `/telemetry/temp` rate-limited.
+    *   *Tarefa (UX):* Desenhar gráfico de linha reativo (Recharts.js).
+
+---
+
+## SEÇÃO 18 — ARTEFATOS TEXTUAIS OBRIGATÓRIOS
+
+Para governar a plataforma técnica e metodologicamente sob SDD, existirão os seguintes artefatos versionados em Git (`/docs`):
+
+1.  **Visão do Produto** (Este documento)
+2.  **MTP Base (Model Text Protocol):** Normatiza como IAs/Sistemas devem serializar dados químicos do sabão.
+3.  **Protocolo Experimental Padronizado:** O manual "físico" de como a escola deve fazer a aula, refletido na UI.
+4.  **Matriz de Avaliação:** Tabela de rubricas (Como a Missão 3 gera nota B+).
+5.  **Guia Hard Block de Segurança:** A bula inegociável do uso da soda.
+6.  **Guia de Hardware (Versão A):** Como montar o ESP32, esquema Fritzing, script Arduino `.ino`.
+7.  **Guia de Contingência (Versão B):** O que fazer se o termômetro escolar quebrar na hora da aula.
+8.  **Guia de Arquitetura (Clean Code):** Onde salvar as *entities*, *use-cases* e *adapters*.
+9.  **Plano de CI/CD:** Desenho da pipeline do GitHub Actions.
+
+---
+
+## SEÇÃO 19 — MVP (Minimum Viable Product)
+
+**O que ENTRA no MVP (Entrega 1):**
+*   Versão B (Simplificada) completa de ponta a ponta.
+*   Cadastro de turma, aluno em bancadas.
+*   A trilha de 9 missões operando com inputs manuais (slidders de pH, seleção de "textura de pudim").
+*   Motor de validação estequiométrica rigorosa no backend.
+*   Dashboard tabular simples para o professor.
+*   *Justificativa:* O foco é entregar valor pedagógico imediato às escolas sem depender de compra de hardware (gargalo crítico de adoção escolar).
+
+**O que FICA PARA ITERAÇÃO POSTERIOR:**
+*   Versão A (Sensores MQTT, gráficos real-time Socket.io).
+*   Rankings interescolares na rede municipal.
+*   Correção de relatórios por IA Generativa.
+*   *Justificativa:* Alta complexidade técnica de infraestrutura que pode atrasar a validação do *Core Loop* (ensinar reações exotérmicas via gamificação).
+
+---
+
+## SEÇÃO 20 — RISCOS, PONTOS CEGOS E MITIGAÇÕES
+
+| Dimensão | Risco / Ponto Cego | Mitigação Sistêmica |
+| :--- | :--- | :--- |
+| **Segurança Física** | Alunos podem se queimar gravemente com NaOH ignorando os alertas. | Contrato digital in-app. Bloqueio de fluxo "Sódio na Água". Guia explícito exigindo óculos EPI na foto-evidência para liberar o botão Iniciar. |
+| **Infra/Técnica** | Wi-Fi da escola cai no meio da reação química. | UX Offline-first (PWA Service Workers ou IndexedDB) que permite preencher a missão e sincroniza fundo na nuvem depois. |
+| **Pedagógico** | Aluno clica em "Próximo" sem aprender, como um jogo burro. | Validações assíncronas obrigatórias via motor matemático. Sem chutar "100g de soda" o sistema trava e ensina a regra de três. |
+| **UX/UI** | "Fat finger" em telas sujas. Mãos com sabão/luvas estragam touch. | UI projetada com *oversized targets*, uso de scroll ao invés de clique de precisão em momentos críticos. |
+| **Sensores** (Futuro) | Termistor do Arduino descalibrado envia 1000°C. | Sanitização (Zod/Joi) pesada no endpoint. Backend rejeita outliers e informa na tela "Calibre seu sensor antes de prosseguir". |
+
+---
+
+## SEÇÃO 21 — CRITÉRIOS DE QUALIDADE E SUCESSO
+
+A plataforma EcoSabon só será considerada **"Excelente"** se atender a:
+1.  **Rigor Científico:** Não existe *bugs* de estequiometria. Um químico valida que o sabão gerado na plataforma é seguro e alcalinamente perfeito.
+2.  **Profissionalismo de Engenharia:** Código coberto 90% por testes nos *Use Cases*, builds Docker que funcionam em qualquer máquina Mac/Linux/Windows da equipe de base, deploy contínuo livre de intervenção humana (GitOps).
+3.  **Aplicabilidade Escolar:** Professor leva menos de 5 minutos para orquestrar e engajar uma sala de 35 alunos indisciplinados no experimento do dia.
+4.  **Sustentabilidade (UX):** A métrica base (Fator de Impacto) faz alunos da rede pública perceberem quantitativamente o valor social do projeto.
+
+---
+
+## SEÇÃO 22 — RECOMENDAÇÃO FINAL
+
+Recomenda-se a adoção imediata da **Estratégia Bifurcada Iterativa**:
+*   *Curto Prazo (Mês 1-3):* Implementar a Plataforma Web Base e a Versão Simplificada (Inputs Manuais) sob Clean Architecture. Realizar projeto piloto em *uma* escola estadual.
+*   *Médio Prazo (Mês 4-6):* Validado o modelo pedagógico gamificado, abrir o endpoint de IoT e acoplar a Versão "Sensorizada" (Arduino). Realizar piloto em feiras de ciências.
+*   *Longo Prazo (+6 Meses):* Agregar machine learning e analytics distrital das escolas, tornando o EcoSabon um SaaS governamental ou particular de "Química Ambiental em Escala".
+
+---
+
+## SAÍDAS EXTRAS OBRIGATÓRIAS
+
+### A. Resumo Executivo
+O **EcoSabon** é uma SPA moderna (React/TypeScript + Node.js) concebida sob rigorosos dogmas de engenharia (SDD e Clean Code) e voltada ao ensino prático de Química e Física Ambiental. Ao gamificar a produção de sabão com óleo usado — integrando dados manuais ou IoT —, preenche um buraco curricular crítico: a união entre letramento científico teórico e experimentação engajadora e ecológica de baixo custo em escolas públicas e privadas.
+
+### B. Tabela Comparativa (Versão Sensores vs Simplificada)
+| Fator | Versão A (Sensores) | Versão B (Simplificada) |
+| :--- | :--- | :--- |
+| **Custo Escolar** | Médio (Kit Arduino DS18B20/pH ~$50/bancada) | Baixo (Apenas insumos e celular do aluno) |
+| **Viabilidade Escolar** | Exige Wi-Fi constante p/ telemetria IoT | Funciona offline/online (PWA Sync) |
+| **Profundidade Científica**| Alta (Coleta paramétrica real-time, Big Data) | Moderada (Observação qualitativa e relatórios) |
+| **Complexidade Técnica** | Alta (Sockets, IoT Security, Calibração) | Média (CRUD clássico com validações estritas) |
+| **Escalabilidade** | Baixa a Média (Manutenção de Hardware) | Altíssima (Apenas Software) |
+| **Impacto Pedagógico** | Imersão futurista (Laboratório 4.0) | Conscientização sólida pela superação de obstáculos reais |
+
+### C. Proposta Resumida de Arquitetura
+Arquitetura *Client-Server (REST API)* conteinerizada (Docker).
+Backend em **Node.js + TypeScript** (Express) adotando *Clean Architecture* rigorosa, onde o motor estequiométrico reside isolado e pode ser coberto 100% por Testes Unitários. Banco **MongoDB** focado na flexibilidade de diários de bordo recheados com diferentes arrays visuais e de telemetria. Frontend em **React+Vite** atuando primariamente como uma PWA *Mobile-First* que expede comandos ao Backend via `Bearer Tokens` e retém *offline local-storage*.
+
+### D. Proposta Resumida de Pipeline CI/CD
+Pipeline construída via **GitHub Actions**.
+*Evento:* Push para ramificação de PR (Pull Request).
+*Passos:* 1️⃣ `npm audit` 2️⃣ `ESLint` com zero tolerância 3️⃣ Run Testes (`Vitest`) e gerar badge de cobertura.
+*Evento Merge no Trunk (main):* Action faz build das imagens Docker -> Envia (push) via `AWS ECR/DockerHub` -> Aciona Webhook da infra de Prod (Vercel ou Instância EC2) -> Faz Pull da imagem limpa -> Recarrega sem *Downtime*.
+
+### E. Top 10 Decisões mais críticas de Produto/Arquitetura
+1. Implementar versão "Agnóstica a Hardware" (Versão B) como Core do MVP (Acessibilidade Nacional).
+2. O Motor Matemático Físico-Químico ficar no Servidor (Não confiar no JS do navegador para cálculos corretos).
+3. Hard-blocking pedagógico das Missões (Não se avança a tela 4 sem a 3 perfeita).
+4. Adotar PWA/Offline-first para compensar a péssima rede 3G das escolas públicas periféricas.
+5. Obrigação de Upload de EPI na UI *antes* do cálculo base (Segurança física intrínseca ao Software).
+6. Escolher MongoDB para não lidar com refatoração massiva relacional caso o sensor Y mude seu JSON.
+7. Uso de TypeScript no Full-stack (Compartilhar os Tipos de Saponificação entre Browser e Servidor).
+8. UX em Dark Mode/Sci-Fi (Fator Coolness para adolescentes, sem apelo infantil ou "lousa").
+9. Uso universal do ecossistema Node (Baixa atrito cognitivo para encontrar desenvolvedores que mexam em ambas pontas).
+10. O "Fator de Impacto 25.000L" ser a métrica mestre de gamificação, acima de pontos de Experiência (XP).
+
+### F. Top 10 Erros Mais Prováveis da Equipe Executante
+1. **Pular testes TDD no Engine Químico:** Lançar uma versão que sugere a fórmula errada e causa excesso de soda irritante nas mãos. (Critico).
+2. **Desenvolver desktop primeiro:** O desenvolvedor faz no monitor 4K e a tela fica injogável para um adolescente sujando um celular moto g velhinho na bancada.
+3. **Acoplamento Arduino x API:** Deixar o backend dependente de um formato estrito do ESP32 que muda de laboratório para laboratório. O backend e as rotas precisam abstrair a origem (Adapter pattern).
+4. **Focar em Sensores IoT no primeiro mês:** Gastar meses validando Sockets e esquecer do funil do aluno.
+5. **Abaixar o "Nível" científico:** Transformar os inputs de temperatura e Entalpia num joguinho bobo que basta apertar OK repetidamente. O professor perderia interesse na plataforma, a considerando um "video game" fútil.
+6. **Armazenamento:** Enviar fotos Full HD pro Mongo e travar a banda dos servidores escolares. Carece de compressão massiva LocalJS antes do Upload API.
+7. **UX de "Bloqueio Seco":** Bater a testa no muro da Missão 3 sem dicas de como acertar o cálculo da soda gerando "Churn Rate" massivo de estudantes parando o projeto frustrados.
+8. **Segredos no Client-Side:** Expor margens de superfatting base/arquitetura via React Dev Tools, embora menos critico para uma plataforma educacional, revela falhas arquiteturais.
+9. **Não utilizar SDD na veia:** O dev júnior codifica direto, o requisito muda "O limite de segurança da água cai de 30% a 25% do óleo", e todos perdem a referência da verdade no código bagunçado.
+10. **Tratar professor como secundário:** O Dashboard vira "só uma lista final do que rolou". Ele perde controle pedagógico da baderna do fundo da sala se não houver flags visuais macro-time.
+
+### G. Roadmap Resumido
+*   **Fase 0:** Setup, Repositórios, Especificação MTP/SDD.
+*   **Fase 1 (MVP):** Criação das Contas Turmas, Backend Autenticado, UX PWA das Etapas 1-4, Validador Químico Abstrato.
+*   **Fase 2:** Evolução Gamificada Missões 5-9, Módulo Diário Bordo Visual, Upload Comprimido.
+*   **Fase 3:** Refinamento UI/UX "Sci-Fi", Dashboard Professor Macro, Produção do Guia Pedagógico em PDF. *Lançamento Versão B (Simplificada) Escolas Estaduais Piloto.*
+*   **Fase 4:** Desenvolvimento Firmware Arduino C++, Endpoints IoT Segurança REST/WebSockets em Realtime. *Lançamento Versão A (HighTech).*
+*   **Fase 5:** IA Generativa para validar os "Relatórios Científicos Discursivos Finais".
+
+### H. Sugestão de MVP
+**A Plataforma Versão B para 1 Escola, com 1 Motor Funcional:** O aluno faz login, abre missão "Reator Gamificado", preenche os Inputs textuais (Lí temperatura, Coloquei Óleo X, NaOH Y), o sistema aprova sob estequiometria, envia a foto do resultado, o Professor recebe pelo PC em lista e expede a "Aprovação de Lote". O ciclo end-to-end comprova o engajamento sem precisar comprar fios e arduinos antecipadamente.
+
+### I. Sugestão de Evolução Pós-MVP
+Transformar o "Produto Fechado" num **Hub Científico Aberto**:
+Permitir que a Engine calcule biodiesel no futuro, criação de Hub de Feiras de Ciências e Gamificação Multi-Player assíncrona ("Escola X bateu o recorde em Sabão ecológico salvando Z milhões de litros de esgoto"). Inserção do motor MTP alimentando avaliações pedagógicas baseadas em IA LLM atuando junto ao professor.
+
+***FIM DO DOCUMENTO DE ESPECIFICAÇÃO***
