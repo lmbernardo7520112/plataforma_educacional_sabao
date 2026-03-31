@@ -2,11 +2,25 @@
   "turmas": [
     {
       "nome_turma": "3º ANO A",
-      "alunos": []
+      "alunos": [
+        { "numero": "01", "nome": "Aluno Mock 1A" },
+        { "numero": "02", "nome": "Aluno Mock 2A" },
+        { "numero": "03", "nome": "Aluno Mock 3A" },
+        { "numero": "04", "nome": "Aluno Mock 4A" },
+        { "numero": "05", "nome": "Aluno Mock 5A" },
+        { "numero": "06", "nome": "Aluno Mock 6A" },
+        { "numero": "07", "nome": "Aluno Mock 7A" }
+      ]
     },
     {
       "nome_turma": "3º ANO B",
-      "alunos": []
+      "alunos": [
+        { "numero": "01", "nome": "Aluno Mock 1B" },
+        { "numero": "02", "nome": "Aluno Mock 2B" },
+        { "numero": "03", "nome": "Aluno Mock 3B" },
+        { "numero": "04", "nome": "Aluno Mock 4B" },
+        { "numero": "05", "nome": "Aluno Mock 5B" }
+      ]
     }
   ]
 }

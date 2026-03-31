@@ -12,12 +12,21 @@ export interface Mission {
 }
 
 interface JourneyState {
+  classroomId: string | null;
+  classroomName: string | null;
+  squadId: string | null;
+  squadName: string | null;
+  members: string[];
+
   missions: Mission[];
   currentActiveMissionId: number;
   totalXP: number;
   waterSavedLiters: number; // Fator de Impacto mestre (1 litro de óleo = 25.000L salvos)
   
   // Ações
+  setSquad: (classroomId: string, classroomName: string, squadId: string, squadName: string, members: string[]) => void;
+  clearSession: () => void;
+
   completeMission: (missionId: number, evidenceUrl: string, xpEarned: number, oilRecycledLiters?: number) => void;
   unlockNextMission: () => void;
   resetJourney: () => void;
@@ -36,10 +45,34 @@ const INITIAL_MISSIONS: Mission[] = [
 ];
 
 export const useJourneyStore = create<JourneyState>((set, get) => ({
+  classroomId: null,
+  classroomName: null,
+  squadId: null,
+  squadName: null,
+  members: [],
+
   missions: INITIAL_MISSIONS,
   currentActiveMissionId: 1,
   totalXP: 0,
   waterSavedLiters: 0,
+
+  setSquad: (classroomId, classroomName, squadId, squadName, members) => {
+    set({ classroomId, classroomName, squadId, squadName, members });
+  },
+
+  clearSession: () => {
+    set({
+      classroomId: null,
+      classroomName: null,
+      squadId: null,
+      squadName: null,
+      members: [],
+      missions: INITIAL_MISSIONS,
+      currentActiveMissionId: 1,
+      totalXP: 0,
+      waterSavedLiters: 0,
+    });
+  },
 
   completeMission: (missionId, evidenceUrl, xpEarned, oilRecycledLiters = 0) => {
     set((state) => ({

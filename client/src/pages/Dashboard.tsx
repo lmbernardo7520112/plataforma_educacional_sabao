@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useJourneyStore } from '../core/store/useJourneyStore';
 
 const Dashboard: React.FC = () => {
-  const { missions, currentActiveMissionId, totalXP, waterSavedLiters } = useJourneyStore();
+  const { missions, currentActiveMissionId, totalXP, waterSavedLiters, classroomName, squadName } = useJourneyStore();
 
   const activeMission = missions.find(m => m.id === currentActiveMissionId);
 
@@ -18,11 +18,11 @@ const Dashboard: React.FC = () => {
           </Link>
           <div className="flex items-center gap-6">
             <div className="text-right hidden sm:block">
-              <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">Status: Laboratório</p>
-              <p className="text-sm font-semibold text-[#3B82F6]">Turma 3º Ano A</p>
+              <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">{classroomName || 'Status: Laboratório'}</p>
+              <p className="text-sm font-semibold text-[#3B82F6]">{squadName || 'Turma não selecionada'}</p>
             </div>
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#10B981] to-[#3B82F6] flex items-center justify-center font-bold shadow-lg">
-              AL
+            <div className="w-10 h-10 border border-white/20 rounded-full bg-gradient-to-br from-[#10B981]/20 to-[#3B82F6]/20 flex items-center justify-center font-bold shadow-lg text-lg">
+              👥
             </div>
           </div>
         </div>

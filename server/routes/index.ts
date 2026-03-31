@@ -1,6 +1,8 @@
 // server/routes/index.ts
 
 import express from 'express';
+import classroomRoutes from './classroomRoutes.ts';
+import squadRoutes from './squadRoutes.ts';
 
 const router = express.Router();
 
@@ -22,10 +24,12 @@ router.get('/ping', (_req, res) => {
 // ==========================================================
 // 🚀 API routes (will be added in Phase 2+)
 // ==========================================================
-// router.use('/api', classroomRoutes);
-// router.use('/api', squadRoutes);
-// router.use('/api', missionRoutes);
-// router.use('/api', reportRoutes);
+router.use('/api/classrooms', classroomRoutes);
+router.use('/api/classrooms/:classroomId/squads', squadRoutes); // Nested route for squads inside a classroom
+router.use('/api/squads', squadRoutes); // Standalone GET squad
+
+// router.use('/api/missions', missionRoutes);
+// router.use('/api/report', reportRoutes);
 
 // ==========================================================
 // ⚠️ Fallback
