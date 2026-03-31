@@ -21,8 +21,8 @@ jobs:
         node-version: '20'
         cache: 'npm'
 
-    - name: 📦 Instalar Dependências do Monorepo
-      run: npm install
+    - name: 📦 Instalar Dependências do Monorepo (Blindado CI)
+      run: npm ci --legacy-peer-deps
 
     - name: 🏗️ Compilar Camada 'Shared' (SaponificationEngine)
       run: npm run build:shared
