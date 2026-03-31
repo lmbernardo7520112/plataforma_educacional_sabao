@@ -10,11 +10,18 @@ export interface INumericInputs {
   phLevel?: number;
 }
 
+export interface IScientificMethod {
+  hypothesis?: string;
+  procedure?: string;
+  observations?: string;
+  conclusion?: string;
+}
+
 export interface IJourneyState extends Document {
   squadId: Types.ObjectId;
   missionId: number;
   status: 'PENDING' | 'COMPLETED';
-  observation: string;
+  scientificMethod?: IScientificMethod;
   numericInputs: INumericInputs;
   evidenceUrl: string;
   xpEarned: number;
@@ -40,10 +47,11 @@ const JourneyStateSchema = new Schema<IJourneyState>(
       enum: ['PENDING', 'COMPLETED'],
       default: 'PENDING',
     },
-    observation: {
-      type: String,
-      trim: true,
-      default: '',
+    scientificMethod: {
+      hypothesis: { type: String, trim: true, default: '' },
+      procedure: { type: String, trim: true, default: '' },
+      observations: { type: String, trim: true, default: '' },
+      conclusion: { type: String, trim: true, default: '' },
     },
     numericInputs: {
       oilMassGrams: { type: Number, default: null },

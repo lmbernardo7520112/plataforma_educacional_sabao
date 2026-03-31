@@ -4,6 +4,10 @@ import { Classroom, IClassroom } from '../models/Classroom.ts';
 import { Squad } from '../models/Squad.ts';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export class ClassroomService {
   /**
@@ -30,8 +34,9 @@ export class ClassroomService {
     // Ler JSON para pegar a lista original de alunos da turma
     let alunos: { numero: string; nome: string }[] = [];
     try {
-      const jsonPath = path.resolve('./server/seed/turmas_alunos.json');
-      const data = JSON.parse(fs.readFileSync(jsonPath, 'utf-8'));
+      const jsonPath = path.resolve(__dirname, '../seed/turmas_alunos.json');
+      const fileData = fs.readFileSync(jsonPath, 'utf-8');
+      const data = JSON.parse(fileData);
       const turmaData = data.turmas.find(
         (t: any) => t.nome_turma === classroom.nome
       );
