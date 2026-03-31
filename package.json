@@ -1,37 +1,29 @@
 {
   "name": "ecosabon",
+  "version": "0.2.0",
   "private": true,
-  "version": "0.1.0",
   "type": "module",
   "author": "Leonardo Maximino Bernardo",
   "description": "EcoSabon — Plataforma educacional gamificada de Química e Física Experimental",
+  "workspaces": [
+    "shared",
+    "server",
+    "client"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "start": "concurrently -n \"client,server\" \"npm run dev -w client\" \"npm run dev -w server\"",
+    "client": "npm run dev -w client",
+    "server": "npm run dev -w server",
+    "build:shared": "npm run build -w shared",
+    "lint": "npm run lint --workspaces --if-present",
+    "seed:turmas": "npx tsx server/seed/runAllSeeds.ts",
+    "prestart": "npm run build -w shared"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.2.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^7.13.2",
-    "tailwindcss": "^4.2.2",
-    "zustand": "^5.0.12"
+    "concurrently": "^9.1.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
-    "@types/node": "^25.5.0",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.21.0",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^15.15.0",
-    "typescript": "~5.7.2",
-    "typescript-eslint": "^8.24.1",
-    "vite": "^6.2.0",
-    "vitest": "^4.1.2"
+    "tsx": "^4.0.0",
+    "typescript": "^5.7.2"
   }
 }

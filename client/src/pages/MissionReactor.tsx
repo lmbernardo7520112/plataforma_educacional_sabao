@@ -6,7 +6,7 @@ import { SaponificationEngine } from '../core/domain/SaponificationEngine';
 const MissionReactor: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { missions, currentActiveMissionId, completeMission } = useJourneyStore();
+  const { missions, completeMission } = useJourneyStore();
   
   const missionId = parseInt(id || '0', 10);
   const mission = missions.find(m => m.id === missionId);
@@ -93,8 +93,9 @@ const MissionReactor: React.FC = () => {
         setFeedback({ type: 'success', message: "Observação validada no Diário!" });
         setStep(2);
       }
-    } catch (err: any) {
-      setFeedback({ type: 'error', message: err.message });
+    } catch (err: unknown) {
+      const error = err as Error;
+      setFeedback({ type: 'error', message: error.message });
     }
   };
 

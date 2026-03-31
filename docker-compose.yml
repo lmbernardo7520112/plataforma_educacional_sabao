@@ -1,0 +1,74 @@
+# ============================================================
+# EcoSabon — Docker Compose
+# Usage:
+#   docker compose up -d            → start all services
+#   docker compose exec app npx tsx server/seed/runAllSeeds.ts  → run seeds
+#   docker compose logs -f app      → follow app logs
+#   docker compose down -v          → stop and remove volumes
+# ============================================================
+
+services:
+  # ── MongoDB ──────────────────────────────────────────────
+  mongo:
+    image: mongo:7
+    container_name: ecosabon-mongo
+    restart: unless-stopped
+    ports:
+      - "27019:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ── Application (Server + Client) ───────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecosabon-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+      - "5173:5173"
+    env_file:
+      - ./server/.env
+    environment:
+      # Override DATABASE_URL and MONGO_URI to point to the mongo container
+      - DATABASE_URL=mongodb://mongo:27017/ecosabon_db
+      - MONGO_URI=mongodb://mongo:27017/ecosabon_db
+    # Wait for MongoDB to be fully DNS-resolvable before starting app
+    command: >
+      sh -c "
+        echo '⏳ Waiting for MongoDB to be reachable...'
+        until nc -z mongo 27017 2>/dev/null; do
+          echo '   ...mongo not ready yet, retrying in 2s'
+          sleep 2
+        done
+        echo '✅ MongoDB is reachable! Starting app...'
+        npm run start
+      "
+    depends_on:
+      mongo:
+        condition: service_healthy
+    volumes:
+      # Bind-mount source for hot-reload during development
+      - ./server:/app/server
+      - ./client/src:/app/client/src
+      - ./shared:/app/shared
+      # Persistent storage for uploaded evidence photos
+      - uploads_data:/app/server/uploads
+      # Prevent host node_modules from overriding container ones
+      - /app/node_modules
+      - /app/server/node_modules
+      - /app/client/node_modules
+      - /app/shared/node_modules
+
+volumes:
+  mongo_data:
+    driver: local
+  uploads_data:
+    driver: local
