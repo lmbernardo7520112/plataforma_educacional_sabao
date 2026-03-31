@@ -9,7 +9,16 @@ export const GroupReport: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<{squad: any, missions: any[]} | null>(null);
+
+  // Heurística de Resolução do Bug: Se estamos numa aba nova transparente, "voltar" significa "fechar aba".
+  const handleExit = () => {
+    if (window.history.length > 2) {
+      navigate(-1);
+    } else {
+      window.close();
+    }
+  };
 
   useEffect(() => {
     if (!squadId) return;
@@ -32,7 +41,7 @@ export const GroupReport: React.FC = () => {
       <div className="min-h-screen flex flex-col items-center justify-center bg-white text-black print:hidden space-y-4 text-center">
         <h1 className="text-2xl font-bold font-['Outfit'] text-red-600">Acesso Restrito</h1>
         <p className="max-w-md">{error}</p>
-        <button onClick={() => navigate(-1)} className="mt-4 px-6 py-2 bg-gray-200 hover:bg-gray-300 rounded font-bold transition">← Retornar</button>
+        <button onClick={handleExit} className="mt-4 px-6 py-2 bg-gray-200 hover:bg-gray-300 rounded font-bold transition">← Fechar Exibição</button>
       </div>
     );
   }
@@ -44,7 +53,7 @@ export const GroupReport: React.FC = () => {
       
       {/* Botões Utilitários (Ocultos na Impressão) */}
       <div className="print:hidden sticky top-0 bg-white/90 backdrop-blur border-b border-gray-200 p-4 flex justify-between items-center shadow-sm z-50">
-        <button onClick={() => navigate(-1)} className="text-sm font-bold text-gray-500 hover:text-black">← Voltar</button>
+        <button onClick={handleExit} className="text-sm font-bold text-gray-500 hover:text-black">← Fechar Dossiê</button>
         <button onClick={() => window.print()} className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded shadow transition">
           🖨️ Imprimir / Gravar PDF
         </button>
