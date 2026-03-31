@@ -13,6 +13,14 @@ export const api = axios.create({
   timeout: 10000,
 });
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('ecosabon_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 // Interceptor para tratamento global de erros (opcional)
 api.interceptors.response.use(
   (response) => response,
@@ -22,6 +30,14 @@ api.interceptors.response.use(
     if (customMessage) {
       console.error('API Error:', customMessage);
     }
+    
+    // Auto-Logout na queda do Token
+    if (error.response?.status === 401) {
+      localStorage.removeItem('ecosabon_token');
+      // Despacha o usuário para o lobby
+      window.location.href = '/';
+    }
+
     return Promise.reject(error);
   }
 );

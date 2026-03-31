@@ -22,6 +22,24 @@ export const createSquadSchema = z.object({
   }),
 });
 
+export const updateSquadSchema = z.object({
+  body: z.object({
+    nome: z.string().min(3, 'Nome minímo de 3 caracteres').max(50),
+    members: z.array(z.string().min(2)).min(1).max(5),
+  }),
+  params: z.object({
+    classroomId: z.string().regex(/^[0-9a-fA-F]{24}$/, 'ID de turma inválido.'),
+    squadId: z.string().regex(/^[0-9a-fA-F]{24}$/, 'ID de grupo inválido.'),
+  }),
+});
+
+export const deleteSquadParamsSchema = z.object({
+  params: z.object({
+    classroomId: z.string().regex(/^[0-9a-fA-F]{24}$/, 'ID de turma inválido.'),
+    squadId: z.string().regex(/^[0-9a-fA-F]{24}$/, 'ID de grupo inválido.'),
+  }),
+});
+
 export const getSquadParamsSchema = z.object({
   params: z.object({
     id: z.string().regex(/^[0-9a-fA-F]{24}$/, 'ID de grupo inválido.'),

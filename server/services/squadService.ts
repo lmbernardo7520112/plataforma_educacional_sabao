@@ -2,6 +2,7 @@
 
 import { Squad, ISquad } from '../models/Squad.ts';
 import { Classroom } from '../models/Classroom.ts';
+import { JourneyState } from '../models/JourneyState.ts';
 
 export class SquadService {
   /**
@@ -51,6 +52,41 @@ export class SquadService {
     const squad = await Squad.findById(id).populate('classroomId', 'nome ano').lean();
     if (!squad) throw new Error('Grupo não encontrado');
     return squad;
+  }
+
+  /**
+   * Refatoração Estrutural do Grupo (Editar Nomes/Alunos)
+   */
+  async updateSquad(classroomId: string, squadId: string, nome: string, members: string[]) {
+    // Check de duplicidade de nome ignorando a atual
+    const checkName = await Squad.findOne({
+      classroomId,
+      _id: { $ne: squadId },
+      nome: { $regex: new RegExp(`^${nome}$`, 'i') },
+    });
+    if (checkName) throw new Error('Outra equipe já reservou essa nomenclatura teórica na Turma.');
+
+    const squad = await Squad.findOneAndUpdate(
+      { _id: squadId, classroomId },
+      { $set: { nome, members } },
+      { new: true }
+    );
+    if (!squad) throw new Error('Bancada Extinta ou Falha Referencial de Turma.');
+    
+    return squad;
+  }
+
+  /**
+   * Extinção Global (Teacher Roles Only) operando Deleção Cascata Segura
+   */
+  async deleteSquad(classroomId: string, squadId: string) {
+    const squad = await Squad.findOneAndDelete({ _id: squadId, classroomId });
+    if (!squad) throw new Error('Ataque Negado: A bancada alvo do expurgo não atende aos parâmetros ou vazou do DB.');
+
+    // Cascading Delete Mongoose: Se a bancada cair, as missões e diários biográficos evaporam pra não inflar custos do server
+    await JourneyState.deleteMany({ squadId });
+    
+    return true;
   }
 }
 

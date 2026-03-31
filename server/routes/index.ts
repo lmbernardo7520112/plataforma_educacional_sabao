@@ -4,6 +4,7 @@ import express from 'express';
 import classroomRoutes from './classroomRoutes.ts';
 import squadRoutes from './squadRoutes.ts';
 import missionRoutes from './missionRoutes.ts';
+import authRoutes from './authRoutes.ts';
 
 const router = express.Router();
 
@@ -30,6 +31,7 @@ router.use('/api/classrooms/:classroomId/squads', squadRoutes); // Nested route 
 router.use('/api/squads', squadRoutes); // Standalone GET squad
 
 router.use('/api/squads/:squadId/missions', missionRoutes);
+router.use('/api/auth', authRoutes);
 // router.use('/api/report', reportRoutes);
 
 // ==========================================================

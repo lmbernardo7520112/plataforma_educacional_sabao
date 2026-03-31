@@ -31,8 +31,9 @@ export const Onboarding: React.FC = () => {
   
   // Squad Resumption State
   const [existingSquads, setExistingSquads] = useState<ISquad[]>([]);
+  const [editingSquad, setEditingSquad] = useState<ISquad | null>(null);
   
-  // Squad Creation Form
+  // Squad Creation/Edit Form
   const [squadName, setSquadName] = useState('');
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   
@@ -83,9 +84,30 @@ export const Onboarding: React.FC = () => {
     }
   };
 
+  const handleEditClick = (e: React.MouseEvent, squad: ISquad) => {
+    e.stopPropagation(); // Evita login acidental
+    setEditingSquad(squad);
+    setSquadName(squad.nome);
+    setSelectedStudents(squad.members);
+    setError(null);
+  };
+
+  const cancelEdit = () => {
+    setEditingSquad(null);
+    setSquadName('');
+    setSelectedStudents([]);
+    setError(null);
+  };
+
   const handleSelectExistingSquad = async (squad: ISquad) => {
     if (!selectedClassroom) return;
+    setLoading(true);
     try {
+      // Single-Sign On da Bancada requerindo Token RBAC ao nosso servidor
+      const { data } = await api.post('/auth/squad/login', { squadId: squad._id });
+      
+      localStorage.setItem('ecosabon_token', data.data.token);
+
       // Instancia a loja do Zustand
       setSquad(
         selectedClassroom._id,
@@ -95,11 +117,16 @@ export const Onboarding: React.FC = () => {
         squad.members
       );
       
-      // Navigate to Dashboard. Dashboard's useEffect vai automaticamente disparar a sincronização
       navigate('/dashboard');
-    } catch (err) {
+    } catch (err: unknown) {
       console.error(err);
-      setError('Erro crítico ao carregar perfil de sessão anterior.');
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.message || 'Cátedra bloqueada. Token recusado.');
+      } else {
+        setError('Erro crítico ao carregar perfil cibernético da sua bancada anterior.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -111,7 +138,7 @@ export const Onboarding: React.FC = () => {
     });
   };
 
-  const handleCreateSquad = async (e: React.FormEvent) => {
+  const handleSaveSquad = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedClassroom) return;
     if (selectedStudents.length < 1 || selectedStudents.length > 5) {
@@ -122,25 +149,45 @@ export const Onboarding: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      // Create squad via API First
-      const { data } = await api.post(`/classrooms/${selectedClassroom._id}/squads`, {
-        nome: squadName,
-        members: selectedStudents,
-      });
+      if (editingSquad) {
+        // SDD Protocolo: Pede token provisório para provar Ownership e então dispara PUT
+        const { data: authData } = await api.post('/auth/squad/login', { squadId: editingSquad._id });
+        const tempToken = authData.data.token;
+        
+        await api.put(`/classrooms/${selectedClassroom._id}/squads/${editingSquad._id}`, {
+          nome: squadName,
+          members: selectedStudents,
+        }, { headers: { Authorization: `Bearer ${tempToken}` } });
 
-      // Update local Zustand state
-      setSquad(
-        selectedClassroom._id, 
-        selectedClassroom.nome, 
-        data.data._id, 
-        data.data.nome, 
-        data.data.members
-      );
-      
-      navigate('/dashboard');
+        // Refresh List
+        const squadsRes = await api.get(`/classrooms/${selectedClassroom._id}/squads`);
+        setExistingSquads(squadsRes.data.data);
+        cancelEdit();
+        setError('✅ Bancada atualizada com sucesso! Selecione-a para entrar no laboratório.');
+      } else {
+        // Create squad via API First (Retorna Nativamente Payload RBAC)
+        const { data } = await api.post(`/classrooms/${selectedClassroom._id}/squads`, {
+          nome: squadName,
+          members: selectedStudents,
+        });
+
+        // Storage do token da Escola
+        localStorage.setItem('ecosabon_token', data.token);
+
+        // Update local Zustand state
+        setSquad(
+          selectedClassroom._id, 
+          selectedClassroom.nome, 
+          data.data._id, 
+          data.data.nome, 
+          data.data.members
+        );
+        
+        navigate('/dashboard');
+      }
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.message || 'Erro ao registrar nova bancada. Verifique integridade dos dados.');
+        setError(err.response?.data?.message || 'Erro do Zod Validator na comunicação.');
       } else {
         setError('Erro estrutural do formulário químico.');
       }
@@ -229,36 +276,46 @@ export const Onboarding: React.FC = () => {
                     </div>
                   ) : (
                     existingSquads.map(s => (
-                      <button 
+                      <div 
                         key={s._id}
-                        type="button"
                         onClick={() => handleSelectExistingSquad(s)}
-                        className="w-full text-left p-4 rounded-xl bg-black/40 border border-white/10 hover:border-blue-500/50 hover:bg-blue-600/10 transition-all flex flex-col gap-2 group shadow-sm hover:shadow-[0_0_20px_rgba(59,130,246,0.1)] relative overflow-hidden"
+                        className={`w-full text-left p-4 rounded-xl bg-black/40 border transition-all flex flex-col gap-2 group shadow-sm hover:shadow-[0_0_20px_rgba(59,130,246,0.1)] relative overflow-hidden cursor-pointer
+                         ${editingSquad?._id === s._id ? 'border-orange-500/50 bg-orange-600/10' : 'border-white/10 hover:border-blue-500/50 hover:bg-blue-600/10'}`}
                       >
                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/0 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                          <div className="flex justify-between items-center relative z-10">
                            <span className="font-bold text-lg text-white group-hover:text-blue-400 transition-colors">{s.nome}</span>
-                           <span className="text-xs bg-gray-800 border border-gray-700 px-2 py-1 rounded-md text-gray-300 font-mono">{s.members.length}/5 Vagas</span>
+                           <div className="flex gap-2 items-center">
+                             <button onClick={(e) => handleEditClick(e, s)} className="text-gray-400 hover:text-orange-400 text-xs px-2 py-1 bg-black/50 rounded-md transition border border-gray-700 hover:border-orange-500/50">✏️ Editar</button>
+                             <span className="text-xs bg-gray-800 border border-gray-700 px-2 py-1 rounded-md text-gray-300 font-mono">{s.members.length}/5 Vagas</span>
+                           </div>
                          </div>
                          <div className="text-xs text-gray-400 truncate relative z-10">
                            {s.members.join(' • ')}
                          </div>
-                      </button>
+                      </div>
                     ))
                   )}
                 </div>
               </div>
 
-              {/* RIGHT COLUMN: CREATION (CRIAR BANCADA) */}
+              {/* RIGHT COLUMN: CREATION/EDIT FORM */}
               <div className="flex-1 flex flex-col">
-                <div className="mb-6">
-                  <h3 className="text-xl font-bold text-emerald-400 flex items-center gap-2">
-                    <span>✨</span> Fundar Nova Bancada
-                  </h3>
-                  <p className="text-sm text-gray-400 mt-1">Primeira vez da sua equipe na plataforma Ecológica? Escolha os nomes.</p>
+                <div className="mb-6 flex justify-between items-end">
+                  <div>
+                    <h3 className={`text-xl font-bold flex items-center gap-2 ${editingSquad ? 'text-orange-400' : 'text-emerald-400'}`}>
+                      <span>{editingSquad ? '✏️' : '✨'}</span> {editingSquad ? 'Editando Bancada' : 'Fundar Nova Bancada'}
+                    </h3>
+                    <p className="text-sm text-gray-400 mt-1">{editingSquad ? 'Faça as correções de listagem de nomes' : 'Primeira vez da sua equipe? Escolha os nomes.'}</p>
+                  </div>
+                  {editingSquad && (
+                    <button onClick={cancelEdit} type="button" className="text-xs bg-gray-800 hover:bg-gray-700 border border-gray-600 px-3 py-1.5 rounded-lg transition text-gray-300">
+                      Cancelar Edição
+                    </button>
+                  )}
                 </div>
                 
-                <form onSubmit={handleCreateSquad} className="flex flex-col flex-1 pb-4">
+                <form onSubmit={handleSaveSquad} className="flex flex-col flex-1 pb-4">
                   <div className="mb-5">
                     <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Denominação da Equipe</label>
                     <input 
@@ -317,9 +374,11 @@ export const Onboarding: React.FC = () => {
                   <button 
                     type="submit" 
                     disabled={loading || selectedStudents.length === 0}
-                    className="w-full mt-6 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-5 rounded-xl transition shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed uppercase tracking-wider text-sm"
+                    className={`w-full mt-6 text-white font-bold py-5 rounded-xl transition shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-lg disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed uppercase tracking-wider text-sm
+                      ${editingSquad ? 'bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 shadow-[0_0_20px_rgba(249,115,22,0.2)]' : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500'}
+                    `}
                   >
-                    {loading ? 'Sincronizando Banco de Dados...' : 'Autenticar Novo Laboratório 🧪'}
+                    {loading ? 'Sincronizando Banco de Dados...' : (editingSquad ? 'Salvar Alterações da Cátedra ✅' : 'Autenticar Novo Laboratório 🧪')}
                   </button>
                 </form>
               </div>
