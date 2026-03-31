@@ -27,6 +27,7 @@ export const TeacherArea: React.FC = () => {
   const [classrooms, setClassrooms] = useState<IClassroom[]>([]);
   const [selectedClassroom, setSelectedClassroom] = useState<IClassroom | null>(null);
   const [squads, setSquads] = useState<ISquad[]>([]);
+  const [newSquadName, setNewSquadName] = useState('');
   
   const [loading, setLoading] = useState(false);
   const [processingId, setProcessingId] = useState<string | null>(null);
@@ -98,6 +99,26 @@ export const TeacherArea: React.FC = () => {
       setSquads(prev => prev.filter(s => s._id !== squadId));
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) alert('Falha Administrativa: ' + (err.response?.data?.message || 'Erro Desconhecido'));
+    } finally {
+      setProcessingId(null);
+    }
+  };
+
+  const handleCreateSquad = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedClassroom || !newSquadName.trim()) return;
+    
+    setProcessingId('create');
+    try {
+      // Create empty squad shell. Students will populate their own names in Onboarding.
+      const { data } = await teacherApi.post(`/classrooms/${selectedClassroom._id}/squads`, {
+        nome: newSquadName,
+        members: []
+      });
+      setSquads(prev => [...prev, data.data]);
+      setNewSquadName('');
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) alert('Falha ao instanciar bancada: ' + (err.response?.data?.message || 'Erro Desconhecido'));
     } finally {
       setProcessingId(null);
     }
@@ -193,9 +214,30 @@ export const TeacherArea: React.FC = () => {
             </div>
           ) : (
             <div className="animate-fade-in">
-              <div className="flex justify-between items-end mb-6">
-                <h2 className="text-2xl font-bold text-white font-['Outfit']">2. Bancadas: {selectedClassroom.nome}</h2>
-                <span className="bg-white/10 px-3 py-1 rounded text-xs text-gray-400 font-mono">Total de Grupos: {squads.length}</span>
+              <div className="flex flex-col xl:flex-row justify-between items-start xl:items-end mb-6 gap-4">
+                <div>
+                  <h2 className="text-2xl font-bold text-white font-['Outfit']">2. Bancadas: {selectedClassroom.nome}</h2>
+                  <span className="bg-white/10 px-3 py-1 rounded text-xs text-gray-400 font-mono mt-2 inline-block">Total de Grupos: {squads.length}</span>
+                </div>
+                
+                <form onSubmit={handleCreateSquad} className="flex gap-2 w-full xl:w-auto">
+                  <input 
+                    type="text" 
+                    placeholder="Nome da Nova Equipe" 
+                    value={newSquadName}
+                    onChange={e => setNewSquadName(e.target.value)}
+                    required
+                    maxLength={40}
+                    className="flex-1 bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                  />
+                  <button 
+                    type="submit"
+                    disabled={processingId === 'create'}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg text-sm transition disabled:opacity-50 whitespace-nowrap shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                  >
+                    {processingId === 'create' ? 'Alocando...' : '+ Criar Vaga'}
+                  </button>
+                </form>
               </div>
               
                {loading ? (

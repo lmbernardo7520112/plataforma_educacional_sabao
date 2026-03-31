@@ -301,21 +301,32 @@ export const Onboarding: React.FC = () => {
 
               {/* RIGHT COLUMN: CREATION/EDIT FORM */}
               <div className="flex-1 flex flex-col">
-                <div className="mb-6 flex justify-between items-end">
-                  <div>
-                    <h3 className={`text-xl font-bold flex items-center gap-2 ${editingSquad ? 'text-orange-400' : 'text-emerald-400'}`}>
-                      <span>{editingSquad ? '✏️' : '✨'}</span> {editingSquad ? 'Editando Bancada' : 'Fundar Nova Bancada'}
-                    </h3>
-                    <p className="text-sm text-gray-400 mt-1">{editingSquad ? 'Faça as correções de listagem de nomes' : 'Primeira vez da sua equipe? Escolha os nomes.'}</p>
-                  </div>
-                  {editingSquad && (
+                {editingSquad ? (
+                  <div className="mb-6 flex justify-between items-end">
+                    <div>
+                      <h3 className="text-xl font-bold flex items-center gap-2 text-orange-400">
+                        <span>✏️</span> Editando Bancada
+                      </h3>
+                      <p className="text-sm text-gray-400 mt-1">Faça as correções de listagem de nomes e encerre a edição.</p>
+                    </div>
                     <button onClick={cancelEdit} type="button" className="text-xs bg-gray-800 hover:bg-gray-700 border border-gray-600 px-3 py-1.5 rounded-lg transition text-gray-300">
                       Cancelar Edição
                     </button>
-                  )}
-                </div>
+                  </div>
+                ) : (
+                  <div className="animate-fade-in outline-none rounded-2xl bg-gray-900/40 p-10 border border-white/5 text-center flex flex-col justify-center items-center flex-1 my-4">
+                    <span className="text-5xl mb-6 grayscale opacity-50">🔒</span>
+                    <h2 className="text-xl font-bold font-['Outfit'] text-white">Governança B2B Ativa</h2>
+                    <p className="text-gray-400 text-sm max-w-sm mx-auto mt-4 leading-relaxed">
+                      Este Laboratório opera sob contrato institucional SaaS. Alunos não possuem protocolos de Admin para fundar turmas na rede.
+                      <br /><br />
+                      <span className="text-emerald-400 font-bold uppercase tracking-wider text-xs">Solicite ao seu Professor a alocação do seu grupo.</span>
+                    </p>
+                  </div>
+                )}
                 
-                <form onSubmit={handleSaveSquad} className="flex flex-col flex-1 pb-4">
+                {editingSquad && (
+                  <form onSubmit={handleSaveSquad} className="flex flex-col flex-1 pb-4 animate-fade-in">
                   <div className="mb-5">
                     <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Denominação da Equipe</label>
                     <input 
@@ -381,6 +392,7 @@ export const Onboarding: React.FC = () => {
                     {loading ? 'Sincronizando Banco de Dados...' : (editingSquad ? 'Salvar Alterações da Cátedra ✅' : 'Autenticar Novo Laboratório 🧪')}
                   </button>
                 </form>
+                )}
               </div>
 
             </div>
