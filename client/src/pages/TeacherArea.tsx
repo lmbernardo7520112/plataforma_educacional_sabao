@@ -105,12 +105,18 @@ export const TeacherArea: React.FC = () => {
 
   if (!teacherToken) {
     return (
-      <div className="min-h-screen bg-[#0a0f1a] flex items-center justify-center p-6 font-['Inter'] relative">
-        <div className="absolute top-[20%] left-[20%] w-[500px] h-[500px] rounded-full bg-red-600/10 blur-[120px]" />
+      <div className="min-h-screen bg-[#0a0f1a] flex items-center justify-center p-6 font-['Inter'] relative overflow-hidden">
+        {/* EcoSabon Organic Glow Effects */}
+        <div className="absolute top-[20%] left-[20%] w-[500px] h-[500px] rounded-full bg-[#10B981]/10 blur-[120px]" />
+        <div className="absolute bottom-[20%] right-[20%] w-[500px] h-[500px] rounded-full bg-[#3B82F6]/10 blur-[120px]" />
         
-        <div className="bg-gray-900/80 backdrop-blur-xl border border-red-500/30 p-10 rounded-3xl shadow-2xl max-w-md w-full z-10">
+        <div className="bg-[#0a0f1a]/80 backdrop-blur-xl border border-white/10 p-10 rounded-3xl shadow-2xl max-w-md w-full z-10 relative">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-black font-['Outfit'] text-white"><span className="text-red-500">Área do</span> Professor</h1>
+            <div className="flex justify-center items-center gap-2 font-['Outfit'] font-extrabold text-3xl tracking-tight text-white mb-2">
+              <span className="text-[#10B981]">Eco</span>
+              <span>Sabon</span>
+            </div>
+            <h1 className="text-xl font-bold font-['Outfit'] text-[#F59E0B]">Área do Professor</h1>
             <p className="text-gray-400 text-sm mt-2">Acesso restrito à Direção Acadêmica.</p>
           </div>
           
@@ -120,15 +126,15 @@ export const TeacherArea: React.FC = () => {
             <div>
               <label className="block text-gray-400 text-xs font-bold uppercase mb-2">E-mail Institucional</label>
               <input type="email" required value={email} onChange={e => setEmail(e.target.value)}
-                className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-red-500 focus:outline-none transition" />
+                className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#F59E0B] focus:outline-none transition" />
             </div>
             <div>
               <label className="block text-gray-400 text-xs font-bold uppercase mb-2">Senha Master</label>
               <input type="password" required value={password} onChange={e => setPassword(e.target.value)}
-                className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-red-500 focus:outline-none transition" />
+                className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#F59E0B] focus:outline-none transition" />
             </div>
-            <button type="submit" disabled={loading} className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-xl transition disabled:opacity-50 mt-4">
-              {loading ? 'Acessando Banco Central...' : 'Liberar Catraca'}
+            <button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-[#F59E0B] to-[#D97706] hover:opacity-90 text-white font-bold py-4 rounded-xl transition disabled:opacity-50 mt-4 shadow-[0_0_15px_rgba(245,158,11,0.3)]">
+              {loading ? 'Acessando Reitoria...' : 'Autenticar Área Administrativa'}
             </button>
             <button type="button" onClick={() => navigate('/')} className="w-full text-gray-500 text-sm hover:text-white transition">← Voltar à página pública</button>
           </form>

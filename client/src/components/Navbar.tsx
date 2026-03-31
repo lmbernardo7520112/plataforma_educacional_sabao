@@ -28,9 +28,9 @@ const Navbar: React.FC = () => {
         </div>
         
         <div className="flex items-center gap-4">
-          <button className="hidden md:block text-white hover:text-[#3B82F6] font-semibold text-sm transition-colors cursor-pointer">
-            Portal da Escola
-          </button>
+          <Link to="/professor" className="hidden md:block text-white hover:text-[#F59E0B] font-semibold text-sm transition-colors cursor-pointer">
+            Área do Professor
+          </Link>
           <Link to="/dashboard" className="bg-gradient-to-r from-[#10B981] to-[#3B82F6] hover:opacity-90 text-white px-6 py-2.5 rounded-full font-bold text-sm transition-opacity shadow-[0_0_15px_rgba(16,185,129,0.3)] cursor-pointer inline-block">
             Área do Aluno
           </Link>
