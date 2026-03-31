@@ -35,6 +35,17 @@ const Dashboard: React.FC = () => {
       </nav>
 
       <main className="max-w-7xl mx-auto px-6 py-12">
+        {/* Painel Title & Export */}
+        <header className="mb-10 animate-fade-in flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+          <div>
+            <h1 className="text-3xl font-black font-['Outfit'] mb-2">Painel da Bancada</h1>
+            <p className="text-gray-400">Turma: {classroomName} | Equipe: <span className="text-white font-bold">{squadName}</span></p>
+          </div>
+          <Link to={`/report/${squadId}`} target="_blank" className="bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-600 hover:to-indigo-600 px-6 py-3 rounded-xl border border-blue-500/30 text-white font-bold text-sm transition shadow-[0_0_15px_rgba(59,130,246,0.3)] flex items-center gap-2">
+            <span>📜</span> Extrato Acadêmico (PDF)
+          </Link>
+        </header>
+
         {/* Gamification Hub */}
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <div className="bg-gray-900/60 border border-white/10 rounded-2xl p-6 flex flex-col justify-between hover:border-[#F59E0B]/50 transition-colors">
@@ -47,7 +58,7 @@ const Dashboard: React.FC = () => {
               💧 Fator de Impacto Ambiental
             </span>
             <div className="text-4xl sm:text-5xl font-black text-[#10B981] tracking-tight">
-              {waterSavedLiters.toLocaleString('pt-BR')} <span className="text-xl text-white">Litros de água salvos</span>
+              {waterSavedLiters.toLocaleString('pt-BR')} <span className="text-xl text-white">Litros salvos</span>
             </div>
           </div>
           <div className="bg-gray-900/60 border border-white/10 rounded-2xl p-6 flex flex-col justify-between hover:border-[#3B82F6]/50 transition-colors">

@@ -5,6 +5,7 @@ import classroomRoutes from './classroomRoutes.ts';
 import squadRoutes from './squadRoutes.ts';
 import missionRoutes from './missionRoutes.ts';
 import authRoutes from './authRoutes.ts';
+import reportRoutes from './reportRoutes.ts';
 
 const router = express.Router();
 
@@ -32,7 +33,7 @@ router.use('/api/squads', squadRoutes); // Standalone GET squad
 
 router.use('/api/squads/:squadId/missions', missionRoutes);
 router.use('/api/auth', authRoutes);
-// router.use('/api/report', reportRoutes);
+router.use('/api/report', reportRoutes);
 
 // ==========================================================
 // ⚠️ Fallback

@@ -219,6 +219,13 @@ export const TeacherArea: React.FC = () => {
                            <span className="text-xs px-2 py-1 bg-red-900/30 text-red-300 rounded border border-red-500/20 font-mono">
                              ID: {s._id.slice(-6)}
                            </span>
+                           <a 
+                             href={`/report/${s._id}`} target="_blank" rel="noopener noreferrer"
+                             className="bg-blue-600/10 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/50 p-2 rounded-lg font-bold transition flex items-center gap-2"
+                             title="Gerar Dossiê PDF"
+                           >
+                             📜 Avaliar PDF
+                           </a>
                            <button 
                              onClick={() => handleDeleteSquad(s._id)}
                              disabled={processingId === s._id}

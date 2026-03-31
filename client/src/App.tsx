@@ -5,6 +5,7 @@ import MissionReactor from './pages/MissionReactor';
 import Cartilha from './pages/Cartilha';
 import Onboarding from './pages/Onboarding';
 import TeacherArea from './pages/TeacherArea';
+import GroupReport from './pages/GroupReport';
 import { useJourneyStore } from './core/store/useJourneyStore';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/cartilha" element={<Cartilha />} />
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/professor" element={<TeacherArea />} />
+        <Route path="/report/:squadId" element={<GroupReport />} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/dashboard/mission/:id" element={<ProtectedRoute><MissionReactor /></ProtectedRoute>} />
       </Routes>

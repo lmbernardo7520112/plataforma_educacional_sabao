@@ -30,5 +30,8 @@ export const SubmitMissionSchema = z.object({
       }
       return val;
     }, numericInputsSchema.optional()),
-  })
+  }),
+  params: z.object({
+    squadId: z.string(),
+  }),
 });

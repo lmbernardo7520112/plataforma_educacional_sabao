@@ -14,7 +14,8 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('ecosabon_token');
+  // Coleta tanto token nativo SQUAD quanto token Root de PROFESSOR caindo na Malha de RBAC Segura
+  const token = localStorage.getItem('ecosabon_token') || localStorage.getItem('ecosabon_teacher_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
