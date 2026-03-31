@@ -7,6 +7,16 @@ import { SubmitMissionSchema } from '../schemas/mission.schema.ts';
 const router = Router({ mergeParams: true });
 const missionService = new MissionService();
 
+router.get('/', async (req, res) => {
+  try {
+    const { squadId } = req.params as { squadId: string };
+    const missions = await missionService.getSquadMissions(squadId);
+    res.status(200).json({ success: true, data: missions });
+  } catch (error: any) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+});
+
 router.post('/submit', upload.single('evidencePhoto'), validate(SubmitMissionSchema), async (req, res) => {
   try {
     const { squadId } = req.params;

@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { api } from '../../lib/api';
 
 export type MissionStatus = 'LOCKED' | 'ACTIVE' | 'COMPLETED';
 
@@ -30,6 +31,7 @@ interface JourneyState {
   completeMission: (missionId: number, evidenceUrl: string, xpEarned: number, oilRecycledLiters?: number) => void;
   unlockNextMission: () => void;
   resetJourney: () => void;
+  fetchMissions: () => Promise<void>;
 }
 
 const INITIAL_MISSIONS: Mission[] = [
@@ -106,5 +108,64 @@ export const useJourneyStore = create<JourneyState>((set, get) => ({
       totalXP: 0,
       waterSavedLiters: 0,
     });
+  },
+
+  fetchMissions: async () => {
+    const squadId = get().squadId;
+    if (!squadId) return;
+
+    try {
+      const { data } = await api.get(`/squads/${squadId}/missions`);
+      const backendMissions = data.data; // Array of JourneyStates from DB
+
+      let newTotalXP = 0;
+      let newWaterSaved = 0;
+      let highestCompleted = 0;
+
+      interface BackendMission {
+        missionId: number;
+        status: string;
+        evidenceUrl?: string;
+        xpEarned?: number;
+        numericInputs?: { oilMassGrams?: number };
+      }
+
+      const updatedMissions = INITIAL_MISSIONS.map((m) => {
+        // Encontra o registro persistido na nuvem deste squad para esta missão
+        const backendRecord = backendMissions.find((bm: BackendMission) => bm.missionId === m.id);
+        
+        if (backendRecord && backendRecord.status === 'COMPLETED') {
+          newTotalXP += backendRecord.xpEarned || 0;
+          
+          if (m.id === 3 && backendRecord.numericInputs?.oilMassGrams) {
+            newWaterSaved += backendRecord.numericInputs.oilMassGrams / 1000;
+          } else if (m.id === 1) {
+            newWaterSaved += 0.5; // Aula teórica dá cota simbólica
+          }
+          
+          if (m.id > highestCompleted) highestCompleted = m.id;
+          
+          return {
+            ...m,
+            status: 'COMPLETED' as const,
+            evidenceUrl: backendRecord.evidenceUrl,
+            xpEarned: backendRecord.xpEarned,
+          };
+        }
+        return m;
+      });
+
+      // O próximo passo ativo é sempre o "Mais Alto Terminado + 1"
+      const nextActiveId = highestCompleted < 9 ? highestCompleted + 1 : 9;
+
+      set({
+        missions: updatedMissions.map((m) => (m.id === nextActiveId && m.status !== 'COMPLETED' ? { ...m, status: 'ACTIVE' } : m)),
+        currentActiveMissionId: nextActiveId,
+        totalXP: newTotalXP,
+        waterSavedLiters: newWaterSaved * 25000,
+      });
+    } catch (error) {
+      console.error('Falha ao sincronizar o diário de bordo com o servidor:', error);
+    }
   },
 }));

@@ -4,6 +4,13 @@ import { SaponificationEngine } from '../domain/SaponificationEngine.ts';
 import { MISSION_DOCS } from 'shared/config/missionDocs.js';
 
 export class MissionService {
+  async getSquadMissions(squadId: string) {
+    const missions = await JourneyState.find({ squadId: new Types.ObjectId(squadId) })
+      .sort({ missionId: 1 })
+      .lean();
+    return missions;
+  }
+
   async evaluateAndCompleteMission(
     squadId: string,
     missionId: number,

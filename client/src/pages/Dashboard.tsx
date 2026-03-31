@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom';
 import { useJourneyStore } from '../core/store/useJourneyStore';
 
 const Dashboard: React.FC = () => {
-  const { missions, currentActiveMissionId, totalXP, waterSavedLiters, classroomName, squadName } = useJourneyStore();
+  const { missions, currentActiveMissionId, totalXP, waterSavedLiters, classroomName, squadName, squadId, fetchMissions } = useJourneyStore();
+
+  React.useEffect(() => {
+    if (squadId) {
+      fetchMissions();
+    }
+  }, [squadId, fetchMissions]);
 
   const activeMission = missions.find(m => m.id === currentActiveMissionId);
 
