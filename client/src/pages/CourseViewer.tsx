@@ -8,16 +8,16 @@
 // ============================================================================
 
 import { useEffect, useRef } from 'react';
-import { ecosabon } from '../../curso-interativo/src/content/index.js';
-import { VanillaRenderer } from '../../curso-interativo/src/presentation/VanillaRenderer.js';
-import { LocalStorageAdapter } from '../../curso-interativo/src/infrastructure/adapters/LocalStorageAdapter.js';
-import { NullScormAdapter } from '../../curso-interativo/src/infrastructure/adapters/NullScormAdapter.js';
+import { ecosabon } from '@curso/content/index';
+import { VanillaRenderer } from '@curso/presentation/VanillaRenderer';
+import { LocalStorageAdapter } from '@curso/infrastructure/adapters/LocalStorageAdapter';
+import { NullScormAdapter } from '@curso/infrastructure/adapters/NullScormAdapter';
 
-// Import CSS
-import '../../curso-interativo/src/presentation/styles/design-tokens.css';
-import '../../curso-interativo/src/presentation/styles/layout.css';
-import '../../curso-interativo/src/presentation/styles/components.css';
-import '../../curso-interativo/src/presentation/styles/animations.css';
+// Import CSS — Design System "Dark Science"
+import '@curso/presentation/styles/design-tokens.css';
+import '@curso/presentation/styles/layout.css';
+import '@curso/presentation/styles/components.css';
+import '@curso/presentation/styles/animations.css';
 
 /**
  * React component that wraps the VanillaRenderer for embedding
