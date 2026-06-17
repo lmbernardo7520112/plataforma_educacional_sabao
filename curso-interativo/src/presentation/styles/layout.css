@@ -1,0 +1,217 @@
+/* ============================================================================
+ * EcoSabon — Curso Interativo | Layout System
+ * ============================================================================
+ * Grid responsivo, breakpoints e estrutura principal.
+ * RNF: RNF-CUR-003 (responsividade: 360px, 768px, 1440px)
+ * ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  line-height: 1.7;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── Container principal ───────────────────────────────────────── */
+.curso-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-4);
+}
+
+/* ─── Header do curso ───────────────────────────────────────────── */
+.curso-header {
+  text-align: center;
+  padding: var(--space-16) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-12);
+}
+
+.curso-header__title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-4);
+}
+
+.curso-header__subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--text-lg);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ─── Módulo ────────────────────────────────────────────────────── */
+.module-header {
+  margin: var(--space-12) 0 var(--space-8);
+  padding: var(--space-8);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-shadow);
+}
+
+.module-header__number {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+
+.module-header__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.module-header__subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--text-base);
+}
+
+/* ─── Lição ─────────────────────────────────────────────────────── */
+.lesson-section {
+  margin-bottom: var(--space-12);
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.lesson-section__title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.lesson-section__meta {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.lesson-section__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.lesson-section__badge--time {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--color-primary);
+}
+
+.lesson-section__badge--bloom {
+  background: rgba(139, 92, 246, 0.15);
+  color: var(--color-info);
+}
+
+/* ─── Navigation ────────────────────────────────────────────────── */
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-8);
+  gap: var(--space-4);
+}
+
+.lesson-nav__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--glass-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(var(--glass-blur));
+}
+
+.lesson-nav__btn:hover:not(:disabled) {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+}
+
+.lesson-nav__btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.lesson-nav__btn--primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* ─── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .curso-header__title {
+    font-size: var(--text-3xl);
+  }
+  .module-header__title {
+    font-size: var(--text-2xl);
+  }
+  .module-header {
+    padding: var(--space-6);
+  }
+  .curso-container {
+    padding: var(--space-3);
+  }
+}
+
+@media (max-width: 360px) {
+  html {
+    font-size: 14px;
+  }
+  .curso-header__title {
+    font-size: var(--text-2xl);
+  }
+  .lesson-nav {
+    flex-direction: column;
+  }
+  .lesson-nav__btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
