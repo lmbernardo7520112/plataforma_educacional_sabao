@@ -61,9 +61,10 @@
 .flip-card {
   position: relative;
   width: 100%;
-  transition: transform 300ms ease;
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
   cursor: pointer;
+  display: grid;
 }
 
 .flip-card.flipped {
@@ -71,23 +72,23 @@
 }
 
 .flip-card__face {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   padding: var(--space-6);
   border-radius: var(--radius-xl);
   border: var(--glass-border);
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
+  background: #111827;
 }
 
 .flip-card__face--back {
   transform: rotateY(180deg);
-  background: rgba(16, 185, 129, 0.1);
-  border-color: rgba(16, 185, 129, 0.3);
+  background: #064e3b; /* Solid dark green */
+  border-color: #059669; /* Solid green border */
 }
 
 /* ─── Progress Bar Fill ─────────────────────────────────────────── */
