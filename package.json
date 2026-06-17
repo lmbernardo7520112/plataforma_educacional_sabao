@@ -8,7 +8,8 @@
   "workspaces": [
     "shared",
     "server",
-    "client"
+    "client",
+    "curso-interativo"
   ],
   "scripts": {
     "start": "concurrently -n \"client,server\" \"npm run dev -w client\" \"npm run dev -w server\"",
@@ -16,6 +17,9 @@
     "server": "npm run dev -w server",
     "build:shared": "npm run build -w shared",
     "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:curso": "npm test -w curso-interativo",
+    "test:curso:coverage": "npm run test:coverage -w curso-interativo",
     "seed:turmas": "npx tsx server/seed/runAllSeeds.ts",
     "prestart": "npm run build -w shared"
   },

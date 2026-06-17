@@ -1,0 +1,32 @@
+{
+  "name": "ecosabon-curso-interativo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "author": "Leonardo Maximino Bernardo",
+  "description": "EcoSabon — Curso Interativo Standalone (Nível 3 + Nível 4)",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/ __tests__/",
+    "build": "npm run build:standalone && npm run build:scorm",
+    "build:standalone": "tsx scripts/build-standalone.ts",
+    "build:scorm": "tsx scripts/build-scorm.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "shared": "file:../shared"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@vitest/coverage-v8": "^4.1.2",
+    "eslint": "^9.21.0",
+    "globals": "^15.15.0",
+    "jsdom": "^26.1.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.24.1",
+    "vitest": "^4.1.2"
+  }
+}
