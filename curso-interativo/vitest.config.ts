@@ -9,7 +9,11 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json-summary', 'html'],
       include: ['src/**/*.ts'],
-      exclude: ['src/content/**/*.ts', 'src/presentation/**/*.css'],
+      exclude: [
+        'src/content/**/*.ts',       // Static data, not logic
+        'src/presentation/**',       // DOM-dependent (tested via E2E)
+        'src/main.ts',               // Bootstrap entry point
+      ],
       thresholds: {
         branches: 80,
         functions: 80,
