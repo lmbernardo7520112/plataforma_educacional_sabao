@@ -6,13 +6,13 @@
   "author": "Leonardo Maximino Bernardo",
   "description": "EcoSabon — Curso Interativo Standalone (Nível 3 + Nível 4)",
   "scripts": {
+    "dev": "vite",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint src/ __tests__/",
-    "build": "npm run build:standalone && npm run build:scorm",
-    "build:standalone": "tsx scripts/build-standalone.ts",
-    "build:scorm": "tsx scripts/build-scorm.ts",
+    "build": "vite build",
+    "build:scorm": "node scripts/build-scorm.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -27,6 +27,7 @@
     "tsx": "^4.0.0",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.24.1",
+    "vite": "^6.3.5",
     "vitest": "^4.1.2"
   }
 }
