@@ -11,8 +11,7 @@ import { NullScormAdapter } from '../../src/infrastructure/adapters/NullScormAda
 describe('ScormApiAdapter (Infrastructure)', () => {
 
   beforeEach(() => {
-    // Clean up any mock API
-    // @ts-expect-error - Mocking global window.API for SCORM
+    // Clean up any mock API from previous tests
     delete (globalThis as Record<string, unknown>).API;
   });
 
@@ -70,6 +69,50 @@ describe('ScormApiAdapter (Infrastructure)', () => {
     adapter.initialize();
     adapter.setStatus('completed');
     expect(mockApi.LMSSetValue).toHaveBeenCalledWith('cmi.core.lesson_status', 'completed');
+  });
+
+  it('should call LMSCommit when committing', () => {
+    const mockApi = {
+      LMSInitialize: vi.fn().mockReturnValue('true'),
+      LMSSetValue: vi.fn().mockReturnValue('true'),
+      LMSCommit: vi.fn().mockReturnValue('true'),
+      LMSFinish: vi.fn().mockReturnValue('true'),
+      LMSGetLastError: vi.fn().mockReturnValue('0'),
+    };
+    (globalThis as Record<string, unknown>).API = mockApi;
+
+    const adapter = new ScormApiAdapter();
+    adapter.initialize();
+    adapter.commit();
+    expect(mockApi.LMSCommit).toHaveBeenCalledWith('');
+  });
+
+  it('should call LMSFinish when terminating', () => {
+    const mockApi = {
+      LMSInitialize: vi.fn().mockReturnValue('true'),
+      LMSSetValue: vi.fn().mockReturnValue('true'),
+      LMSCommit: vi.fn().mockReturnValue('true'),
+      LMSFinish: vi.fn().mockReturnValue('true'),
+      LMSGetLastError: vi.fn().mockReturnValue('0'),
+    };
+    (globalThis as Record<string, unknown>).API = mockApi;
+
+    const adapter = new ScormApiAdapter();
+    adapter.initialize();
+    adapter.terminate();
+    expect(mockApi.LMSFinish).toHaveBeenCalledWith('');
+    expect(adapter.isConnected()).toBe(false);
+  });
+
+  it('should no-op setScore/setStatus/commit/terminate when not connected', () => {
+    const adapter = new ScormApiAdapter();
+    // Not calling initialize — not connected
+    expect(() => {
+      adapter.setScore(100);
+      adapter.setStatus('completed');
+      adapter.commit();
+      adapter.terminate();
+    }).not.toThrow();
   });
 });
 
