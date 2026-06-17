@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Protótipo de e-book interativo sobre ensino de saponificação e Química Verde por rotação de estações — EcoSabon." />
+  <title>Saponificação em Estações — E-book Interativo | EcoSabon</title>
+  <link rel="stylesheet" href="/src/styles/main.css" />
+  <link rel="stylesheet" href="/src/styles/print.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- NAVBAR                                                                 -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <nav class="navbar" role="navigation" aria-label="Navegação principal do e-book">
+    <div class="navbar__inner">
+      <div class="navbar__brand"><span>Eco</span>Sabon — E-book</div>
+      <ul class="navbar__links">
+        <li><button class="navbar__link active" data-nav="mod-inicio" id="nav-inicio">Início</button></li>
+        <li><button class="navbar__link" data-nav="mod-1" id="nav-mod1">Módulo 1</button></li>
+        <li><button class="navbar__link" data-nav="mod-2" id="nav-mod2">Módulo 2</button></li>
+        <li><button class="navbar__link" data-nav="mod-3" id="nav-mod3">Módulo 3</button></li>
+        <li><button class="navbar__link" data-nav="mod-4" id="nav-mod4">Caixa de Ferramentas</button></li>
+        <li><button class="navbar__link" data-nav="mod-governanca" id="nav-gov">Governança</button></li>
+        <li><button class="navbar__link" data-nav="mod-validacao" id="nav-val">Validação</button></li>
+        <li><button class="navbar__link" data-nav="mod-checklist" id="nav-check">Go/No-Go</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- TELA INICIAL                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-inicio" class="module-section active" aria-hidden="false">
+      <div class="hero">
+        <h1 class="hero__title">Saponificação em Estações</h1>
+        <p class="hero__subtitle">Protótipo de e-book interativo para ensino de proporções, relações quantitativas e Química Verde por rotação de estações</p>
+        <div class="hero__warning">⚠️ Protótipo com dados fictícios para teste. Substituir por dados reais da dissertação.</div>
+        <div class="hero__actions">
+          <button class="btn btn--primary" data-nav="mod-1" id="btn-start">Começar pelo Módulo 1 →</button>
+          <button class="btn btn--outline" data-nav="mod-4" id="btn-tools">Ir para Caixa de Ferramentas</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- MÓDULO 1 — O Desafio Proporcional                                  -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-1" class="module-section" aria-hidden="true">
+      <div class="module-header">
+        <p class="module-header__number">Módulo 1</p>
+        <h2 class="module-header__title">O Desafio Proporcional na Saponificação</h2>
+        <p class="module-header__subtitle">Por que proporções, conversões e relações quantitativas costumam dificultar o aprendizado em Química Verde</p>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">O Problema na Prática Docente</h3>
+        <div class="card__content">
+          <p>Professor(a), você já percebeu como a produção de sabão ecológico parece simples na teoria, mas na prática os alunos tropeçam nos cálculos? A conversão entre volume e massa, a proporção molar óleo–NaOH e o controle de temperatura são pontos de ruptura frequentes.</p>
+          <p style="margin-top: 0.75rem;">O desafio não é apenas "ensinar estequiometria". É fazer o aluno <strong>perceber que sem a proporção correta</strong>, o sabão não solidifica, o pH fica perigoso, e o produto final é inutilizável. A Química Verde depende de rigor quantitativo.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">O que é <span class="tooltip-trigger" tabindex="0">saponificação<span class="tooltip-content">Saponificação é a reação química entre um éster (geralmente um triglicerídeo presente em óleos e gorduras) e uma base forte (como NaOH), produzindo sabão (sal de ácido graxo) e glicerol.</span></span>?</h3>
+        <div class="card__content">
+          <p>A saponificação é o processo químico que transforma óleos e gorduras em sabão. No contexto do EcoSabon, utilizamos óleo de cozinha residual — um resíduo ambiental — como matéria-prima, conectando estequiometria à sustentabilidade.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">💭 Pergunta Reflexiva</h3>
+        <div class="card__content">
+          <p style="font-style: italic; color: var(--color-accent);">Na sua experiência, em que momento da aula os alunos mais demonstram dificuldade com proporções: na montagem do experimento, no cálculo prévio, ou na interpretação dos resultados?</p>
+          <p style="margin-top: 0.5rem; font-size: 0.82rem; color: var(--color-text-muted);">Esta pergunta é reflexiva e não avaliativa. Serve para o professor situar sua própria prática antes de conhecer as estações.</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <button class="btn btn--primary" data-nav="mod-2" id="btn-to-mod2">Avançar para Módulo 2 — Missões na Prática →</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- MÓDULO 2 — A Rotação na Prática (Missões/Estações)                 -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-2" class="module-section" aria-hidden="true">
+      <div class="module-header">
+        <p class="module-header__number">Módulo 2</p>
+        <h2 class="module-header__title">Missões na Prática — Rotação por Estações</h2>
+        <p class="module-header__subtitle">3 estações demonstrativas para ensino de saponificação e Química Verde</p>
+      </div>
+
+      <div class="placeholder-block">
+        <span class="placeholder-block__tag">⚠️ Dados Fictícios para Teste</span>
+        <p>As 3 estações abaixo são <strong>demonstrativas</strong>. Devem ser substituídas por estações reais após definição metodológica da dissertação.</p>
+      </div>
+
+      <!-- Diagrama de Sala -->
+      <div class="card">
+        <h3 class="card__title">📐 Organização da Sala (Diagrama)</h3>
+        <div class="classroom-diagram">
+          <div class="classroom-diagram__station">🧪 Estação 1<br/>Filtração do Óleo</div>
+          <div class="classroom-diagram__station">⚗️ Estação 2<br/>Reator IoT vs Manual</div>
+          <div class="classroom-diagram__station">📊 Estação 3<br/>Teste de pH</div>
+          <div class="classroom-diagram__center">👩‍🏫 Professor circula entre as estações · Grupos de 4-6 alunos · Rotação a cada ~25 min</div>
+        </div>
+      </div>
+
+      <!-- Checklist Pré-Aula -->
+      <div class="card">
+        <h3 class="card__title">✅ Checklist Pré-Aula</h3>
+        <ul class="checklist">
+          <li class="checklist__item"><input type="checkbox" id="pre-1" /> EPIs disponíveis em quantidade suficiente</li>
+          <li class="checklist__item"><input type="checkbox" id="pre-2" /> Óleo residual coletado e armazenado</li>
+          <li class="checklist__item"><input type="checkbox" id="pre-3" /> Solução de NaOH preparada na concentração correta</li>
+          <li class="checklist__item"><input type="checkbox" id="pre-4" /> Roteiros dos estudantes impressos ou acessíveis</li>
+          <li class="checklist__item"><input type="checkbox" id="pre-5" /> Sensor IoT carregado (ou termômetro analógico)</li>
+          <li class="checklist__item"><input type="checkbox" id="pre-6" /> Ambiente ventilado para a estação de saponificação</li>
+          <li class="checklist__item"><input type="checkbox" id="pre-7" /> Indicadores de pH dentro do prazo de validade</li>
+        </ul>
+      </div>
+
+      <!-- ─── ESTAÇÃO 1 ──────────────────────────────────────────────── -->
+      <div class="card" id="estacao-1">
+        <span class="placeholder-block__tag" style="margin-bottom: 0.75rem;">Dados Fictícios para Teste</span>
+        <h3 class="card__title">🧪 Estação 1 — Filtração e Preparo do Óleo Residual</h3>
+        <div class="station-fields">
+          <div class="station-field">
+            <p class="card__label">Objetivo Pedagógico</p>
+            <p class="card__content">Compreender a importância da purificação da matéria-prima e calcular a proporção óleo:solvente</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Conteúdo Específico</p>
+            <p class="card__content">Filtração simples, cálculo de rendimento mássico, proporções e conversão de unidades (mL → g via densidade)</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Materiais</p>
+            <p class="card__content">Óleo usado, filtro de papel/tecido, funil, béquer, balança, calculadora</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Tempo Estimado</p>
+            <p class="card__content">20 minutos</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Mediação Docente</p>
+            <p class="card__content">Circular entre os grupos. Perguntar: "Por que filtrar antes de reagir?". Validar cálculos de rendimento.</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Avaliação</p>
+            <p class="card__content">Registro no roteiro do estudante (proporção calculada + justificativa escrita)</p>
+          </div>
+        </div>
+        <div style="margin-top: 1rem;">
+          <button class="btn btn--reveal" data-reveal="reveal-e1-planob" id="btn-e1-planob" aria-expanded="false">📋 Ver Adaptação de Baixo Recurso</button>
+          <button class="btn btn--reveal" data-reveal="reveal-e1-erro" id="btn-e1-erro" aria-expanded="false">⚠️ Erro Comum dos Alunos</button>
+        </div>
+        <div id="reveal-e1-planob" class="reveal-block hidden" aria-hidden="true">
+          <strong>Plano B:</strong> Substituir balança por medida volumétrica com copo graduado; usar coador doméstico ao invés de funil de laboratório.
+        </div>
+        <div id="reveal-e1-erro" class="reveal-block hidden" aria-hidden="true">
+          <strong>Erro comum:</strong> Esquecer de pesar o óleo antes de filtrar. Dica: peça que anotem a massa ANTES de montar o funil.
+        </div>
+        <p style="margin-top: 0.75rem; font-size: 0.85rem;"><a href="anexos/roteiro-estudante-estacao-1.md">Acessar roteiro do estudante — Estação 1</a></p>
+      </div>
+
+      <!-- ─── ESTAÇÃO 2 ──────────────────────────────────────────────── -->
+      <div class="card" id="estacao-2">
+        <span class="placeholder-block__tag" style="margin-bottom: 0.75rem;">Dados Fictícios para Teste</span>
+        <h3 class="card__title">⚗️ Estação 2 — Reator de Saponificação (IoT vs Manual)</h3>
+        <div class="station-fields">
+          <div class="station-field">
+            <p class="card__label">Objetivo Pedagógico</p>
+            <p class="card__content">Comparar o processo de saponificação com e sem mediação tecnológica, identificando variáveis controladas</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Conteúdo Específico</p>
+            <p class="card__content">Reação de saponificação (triglicerídeo + NaOH → sabão + glicerol), estequiometria molar, controle de temperatura</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Materiais</p>
+            <p class="card__content">NaOH diluído, óleo filtrado, termômetro (ou sensor IoT), cronômetro, EPIs obrigatórios</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Tempo Estimado</p>
+            <p class="card__content">30 minutos</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Mediação Docente</p>
+            <p class="card__content">Demonstrar procedimento seguro. Perguntar: "Que variáveis mudam entre o método IoT e o manual?". Supervisionar EPIs.</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Avaliação</p>
+            <p class="card__content">Tabela comparativa IoT vs Manual preenchida no roteiro + cálculo estequiométrico</p>
+          </div>
+        </div>
+        <div style="margin-top: 1rem;">
+          <button class="btn btn--reveal" data-reveal="reveal-e2-planob" id="btn-e2-planob" aria-expanded="false">📋 Ver Adaptação de Baixo Recurso</button>
+          <button class="btn btn--reveal" data-reveal="reveal-e2-dica" id="btn-e2-dica" aria-expanded="false">💡 Dica de Mediação</button>
+        </div>
+        <div id="reveal-e2-planob" class="reveal-block hidden" aria-hidden="true">
+          <strong>Plano B:</strong> Sem sensor IoT: usar termômetro analógico e cronômetro do celular. Registrar manualmente no roteiro.
+        </div>
+        <div id="reveal-e2-dica" class="reveal-block hidden" aria-hidden="true">
+          <strong>Dica:</strong> Demonstre o manuseio seguro de NaOH antes de liberar os grupos. Fique fisicamente próximo desta estação durante toda a rotação.
+        </div>
+        <p style="margin-top: 0.75rem; font-size: 0.85rem;"><a href="anexos/roteiro-estudante-estacao-2.md">Acessar roteiro do estudante — Estação 2</a></p>
+      </div>
+
+      <!-- ─── ESTAÇÃO 3 ──────────────────────────────────────────────── -->
+      <div class="card" id="estacao-3">
+        <span class="placeholder-block__tag" style="margin-bottom: 0.75rem;">Dados Fictícios para Teste</span>
+        <h3 class="card__title">📊 Estação 3 — Controle de Qualidade (Teste de pH)</h3>
+        <div class="station-fields">
+          <div class="station-field">
+            <p class="card__label">Objetivo Pedagógico</p>
+            <p class="card__content">Avaliar a qualidade do sabão produzido por meio de indicadores de pH e interpretar resultados quantitativos</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Conteúdo Específico</p>
+            <p class="card__content">Escala de pH, indicadores ácido-base (fenolftaleína, papel indicador), faixa ideal para sabão (pH 8-10)</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Materiais</p>
+            <p class="card__content">Amostras de sabão, papel indicador de pH, fenolftaleína, água destilada, tabela de referência</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Tempo Estimado</p>
+            <p class="card__content">15 minutos</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Mediação Docente</p>
+            <p class="card__content">Perguntar: "O que significa um pH acima de 10 para a pele?". Relacionar com excesso de NaOH.</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Avaliação</p>
+            <p class="card__content">Registro do pH medido + classificação (ácido/neutro/básico) + parecer sobre adequação</p>
+          </div>
+        </div>
+        <div style="margin-top: 1rem;">
+          <button class="btn btn--reveal" data-reveal="reveal-e3-planob" id="btn-e3-planob" aria-expanded="false">📋 Ver Adaptação de Baixo Recurso</button>
+          <button class="btn btn--reveal" data-reveal="reveal-e3-erro" id="btn-e3-erro" aria-expanded="false">⚠️ Erro Comum dos Alunos</button>
+        </div>
+        <div id="reveal-e3-planob" class="reveal-block hidden" aria-hidden="true">
+          <strong>Plano B:</strong> Usar extrato de repolho roxo como indicador natural. Substituir água destilada por água filtrada.
+        </div>
+        <div id="reveal-e3-erro" class="reveal-block hidden" aria-hidden="true">
+          <strong>Erro comum:</strong> Interpretar a cor do indicador por intuição, sem comparar com a tabela de referência. Entregue a tabela impressa junto com o roteiro.
+        </div>
+        <p style="margin-top: 0.75rem; font-size: 0.85rem;"><a href="anexos/roteiro-estudante-estacao-3.md">Acessar roteiro do estudante — Estação 3</a></p>
+      </div>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <button class="btn btn--primary" data-nav="mod-3" id="btn-to-mod3">Avançar para Módulo 3 — Evidências →</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- MÓDULO 3 — Evidências da Aplicação                                 -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-3" class="module-section" aria-hidden="true">
+      <div class="module-header">
+        <p class="module-header__number">Módulo 3</p>
+        <h2 class="module-header__title">Evidências da Aplicação e Discussão dos Resultados</h2>
+        <p class="module-header__subtitle">Espaço para inserção futura de dados reais da dissertação</p>
+      </div>
+
+      <div class="hero__warning" style="display: block; margin-bottom: 1.5rem;">
+        ⚠️ Os resultados reais deverão ser inseridos após validação e análise da dissertação.
+      </div>
+
+      <div class="placeholder-block">
+        <span class="placeholder-block__tag">Placeholder — Resultado da Dissertação</span>
+        <p>[resultado da dissertação] — Os resultados apresentam evidências de aplicação e devem ser interpretados dentro dos limites metodológicos da pesquisa.</p>
+      </div>
+
+      <div class="placeholder-block">
+        <span class="placeholder-block__tag">Placeholder — Instrumento de Coleta</span>
+        <p>[instrumento de coleta] — O instrumento utilizado para coleta de dados será descrito após definição metodológica.</p>
+      </div>
+
+      <div class="placeholder-block">
+        <span class="placeholder-block__tag">Placeholder — Limitação Metodológica</span>
+        <p>[limitação metodológica] — Toda pesquisa possui limitações. As limitações específicas deste estudo serão declaradas após a análise dos dados.</p>
+      </div>
+
+      <div class="card" style="border-color: rgba(245, 158, 11, 0.3);">
+        <h3 class="card__title" style="color: var(--color-warning);">⚠️ Nota de Governança</h3>
+        <div class="card__content">
+          <p>Este módulo <strong>não contém resultados reais</strong>. Nenhuma afirmação de que a metodologia "provou", "garantiu" ou "atestou" melhoria universal foi inserida. Os blocos acima são placeholders para substituição futura.</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <button class="btn btn--primary" data-nav="mod-4" id="btn-to-mod4">Avançar para Caixa de Ferramentas →</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- MÓDULO 4 — Caixa de Ferramentas                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-4" class="module-section" aria-hidden="true">
+      <div class="module-header">
+        <p class="module-header__number">Módulo 4</p>
+        <h2 class="module-header__title">Caixa de Ferramentas</h2>
+        <p class="module-header__subtitle">Anexos, roteiros e materiais de apoio</p>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">📎 Materiais Disponíveis</h3>
+        <ul style="list-style: none; padding: 0;">
+          <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+            <a href="anexos/roteiro-estudante-estacao-1.md">Roteiro do estudante — Estação 1 (Filtração do Óleo)</a>
+          </li>
+          <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+            <a href="anexos/roteiro-estudante-estacao-2.md">Roteiro do estudante — Estação 2 (Reator IoT vs Manual)</a>
+          </li>
+          <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+            <a href="anexos/roteiro-estudante-estacao-3.md">Roteiro do estudante — Estação 3 (Teste de pH)</a>
+          </li>
+          <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+            <a href="anexos/guia-rapido-professor.md">Guia rápido do professor</a>
+          </li>
+          <li style="padding: 0.5rem 0;">
+            <a href="anexos/instrumento-avaliacao.md">Instrumento de avaliação por estação</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card" style="border-color: rgba(245, 158, 11, 0.3);">
+        <h3 class="card__title" style="color: var(--color-warning);">📌 Alinhamento Curricular</h3>
+        <div class="card__content">
+          <p>[habilidade BNCC/currículo local a validar]</p>
+          <p style="margin-top: 0.5rem;">O alinhamento à BNCC ou currículo local deve ser validado após definição do segmento, série, habilidade e recorte curricular da dissertação.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">🔗 Links de Acesso Rápido (Placeholders)</h3>
+        <div class="card__content">
+          <p>Os links abaixo são placeholders e devem ser substituídos por URLs reais após publicação:</p>
+          <ul style="margin-top: 0.5rem; list-style: disc; padding-left: 1.25rem;">
+            <li>Estação 1: <code>https://exemplo.edu/estacao1</code></li>
+            <li>Estação 2: <code>https://exemplo.edu/estacao2</code></li>
+            <li>Estação 3: <code>https://exemplo.edu/estacao3</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- GOVERNANÇA E QUALIDADE                                             -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-governanca" class="module-section" aria-hidden="true">
+      <div class="module-header">
+        <p class="module-header__number">Governança</p>
+        <h2 class="module-header__title">Rubrica de Qualidade (0–10)</h2>
+        <p class="module-header__subtitle">Critérios técnicos para avaliação do produto educacional</p>
+      </div>
+
+      <div class="scale-cards">
+        <div class="scale-card scale-card--red">
+          <div class="scale-card__range">0–3</div>
+          <div class="scale-card__label">Inadequado</div>
+        </div>
+        <div class="scale-card scale-card--orange">
+          <div class="scale-card__range">4–6</div>
+          <div class="scale-card__label">Insuficiente</div>
+        </div>
+        <div class="scale-card scale-card--green">
+          <div class="scale-card__range">7–8</div>
+          <div class="scale-card__label">Adequado</div>
+        </div>
+        <div class="scale-card scale-card--blue">
+          <div class="scale-card__range">9–10</div>
+          <div class="scale-card__label">Excelência</div>
+        </div>
+      </div>
+
+      <table class="rubric-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Dimensão</th>
+            <th>Peso</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Rigor conceitual em Química / Saponificação</td><td>2 pts</td></tr>
+          <tr><td>2</td><td>Reprodutibilidade das estações</td><td>3 pts</td></tr>
+          <tr><td>3</td><td>Transposição didática e linguagem docente</td><td>2 pts</td></tr>
+          <tr><td>4</td><td>Interatividade significativa / e-learning</td><td>1 pt</td></tr>
+          <tr><td>5</td><td>Acessibilidade e usabilidade</td><td>1 pt</td></tr>
+          <tr><td>6</td><td>Rastreabilidade com a dissertação</td><td>1 pt</td></tr>
+        </tbody>
+      </table>
+
+      <div class="card" style="margin-top: 1.5rem;">
+        <div class="card__content">
+          <p>A avaliação de rigor conceitual utiliza a formulação: <em>"ausência de erros conceituais detectáveis após revisão técnica especializada"</em>, e <strong>não</strong> "rigor perfeito", reconhecendo que toda produção editorial está sujeita a revisão contínua.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- VALIDAÇÃO EXTERNA                                                  -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-validacao" class="module-section" aria-hidden="true">
+      <div class="module-header">
+        <p class="module-header__number">Validação</p>
+        <h2 class="module-header__title">Formulário de Validação Docente</h2>
+        <p class="module-header__subtitle">Instrumento demonstrativo — escala 1 a 5</p>
+      </div>
+
+      <div class="placeholder-block">
+        <span class="placeholder-block__tag">Instrumento Demonstrativo</span>
+        <p>Este formulário é demonstrativo. Para uso real, deve ser submetido ao Comitê de Ética em Pesquisa (CEP).</p>
+      </div>
+
+      <!-- Item 1 -->
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">1. Clareza da linguagem</label>
+          <p class="card__content">O texto do e-book é compreensível para um professor de Química do Ensino Médio?</p>
+          <div class="likert-scale">
+            <label><input type="radio" name="q1" value="1" />1</label>
+            <label><input type="radio" name="q1" value="2" />2</label>
+            <label><input type="radio" name="q1" value="3" />3</label>
+            <label><input type="radio" name="q1" value="4" />4</label>
+            <label><input type="radio" name="q1" value="5" />5</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">2. Viabilidade do tempo das estações</label>
+          <p class="card__content">Os tempos estimados são realistas para uma aula de 50 minutos?</p>
+          <div class="likert-scale">
+            <label><input type="radio" name="q2" value="1" />1</label>
+            <label><input type="radio" name="q2" value="2" />2</label>
+            <label><input type="radio" name="q2" value="3" />3</label>
+            <label><input type="radio" name="q2" value="4" />4</label>
+            <label><input type="radio" name="q2" value="5" />5</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">3. Completude dos materiais anexos</label>
+          <p class="card__content">Os roteiros e guias são suficientes para aplicar as estações sem material complementar?</p>
+          <div class="likert-scale">
+            <label><input type="radio" name="q3" value="1" />1</label>
+            <label><input type="radio" name="q3" value="2" />2</label>
+            <label><input type="radio" name="q3" value="3" />3</label>
+            <label><input type="radio" name="q3" value="4" />4</label>
+            <label><input type="radio" name="q3" value="5" />5</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">4. Facilidade de navegação</label>
+          <p class="card__content">A interface permite localizar rapidamente módulos, estações e anexos?</p>
+          <div class="likert-scale">
+            <label><input type="radio" name="q4" value="1" />1</label>
+            <label><input type="radio" name="q4" value="2" />2</label>
+            <label><input type="radio" name="q4" value="3" />3</label>
+            <label><input type="radio" name="q4" value="4" />4</label>
+            <label><input type="radio" name="q4" value="5" />5</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 5 -->
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">5. Possibilidade de adaptação à realidade escolar</label>
+          <p class="card__content">O material pode ser adaptado para escolas com poucos recursos?</p>
+          <div class="likert-scale">
+            <label><input type="radio" name="q5" value="1" />1</label>
+            <label><input type="radio" name="q5" value="2" />2</label>
+            <label><input type="radio" name="q5" value="3" />3</label>
+            <label><input type="radio" name="q5" value="4" />4</label>
+            <label><input type="radio" name="q5" value="5" />5</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pergunta Aberta -->
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">Pergunta aberta obrigatória:</label>
+          <p class="card__content" style="font-style: italic;">Qual parte do e-book impediria ou dificultaria sua aplicação real?</p>
+          <textarea id="open-question" placeholder="Escreva sua resposta aqui..." aria-label="Resposta à pergunta aberta"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- CHECKLIST GO/NO-GO                                                 -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-checklist" class="module-section" aria-hidden="true">
+      <div class="module-header">
+        <p class="module-header__number">Aceite Final</p>
+        <h2 class="module-header__title">Checklist Go / No-Go</h2>
+        <p class="module-header__subtitle">O produto só será considerado pronto se todas as dimensões forem verificadas</p>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">📋 Qualidade Acadêmica e Pedagógica</h3>
+        <div id="checklist-go">
+          <ul class="checklist">
+            <li class="checklist__item"><input type="checkbox" id="go-1" /> Cada estação possui objetivo pedagógico definido</li>
+            <li class="checklist__item"><input type="checkbox" id="go-2" /> Cada estação possui conteúdo de estequiometria/proporções</li>
+            <li class="checklist__item"><input type="checkbox" id="go-3" /> Cada estação possui lista de materiais necessários</li>
+            <li class="checklist__item"><input type="checkbox" id="go-4" /> Cada estação possui tempo estimado</li>
+            <li class="checklist__item"><input type="checkbox" id="go-5" /> Cada estação possui orientação de mediação docente</li>
+            <li class="checklist__item"><input type="checkbox" id="go-6" /> Cada estação possui instrumento de avaliação</li>
+            <li class="checklist__item"><input type="checkbox" id="go-7" /> Cada estação possui adaptação de baixo recurso</li>
+            <li class="checklist__item"><input type="checkbox" id="go-8" /> Cada estação possui anexo correspondente</li>
+            <li class="checklist__item"><input type="checkbox" id="go-9" /> Rubrica 0-10 com pesos está presente</li>
+            <li class="checklist__item"><input type="checkbox" id="go-10" /> Formulário de validação docente está presente</li>
+            <li class="checklist__item"><input type="checkbox" id="go-11" /> Todo conteúdo fictício está claramente sinalizado</li>
+            <li class="checklist__item"><input type="checkbox" id="go-12" /> Nenhuma afirmação indevida de resultado real foi inserida</li>
+            <li class="checklist__item"><input type="checkbox" id="go-13" /> O design é responsivo (mobile + desktop)</li>
+            <li class="checklist__item"><input type="checkbox" id="go-14" /> A impressão gera material minimamente legível</li>
+          </ul>
+        </div>
+        <div id="checklist-result" class="checklist-result checklist-result--fail">
+          ⏳ 0/14 dimensões verificadas. Complete todas para aprovar.
+        </div>
+      </div>
+
+      <div class="card" style="border-color: rgba(245, 158, 11, 0.3);">
+        <h3 class="card__title" style="color: var(--color-warning);">📌 Regra Final de Aceite</h3>
+        <div class="card__content">
+          <p><strong>O produto só será considerado pronto se cada estação possuir objetivo, conteúdo, materiais, tempo, mediação docente, avaliação, adaptação de baixo recurso e anexo correspondente.</strong></p>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /.container -->
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="btn-top" aria-label="Voltar ao topo" title="Voltar ao topo">↑</button>
+
+  <!-- Script -->
+  <script type="module" src="/src/scripts/app.js"></script>
+</body>
+</html>

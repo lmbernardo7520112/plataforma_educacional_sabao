@@ -1,0 +1,17 @@
+{
+  "name": "ebook-ecosabon-prototipo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Protótipo de e-book interativo EcoSabon — Saponificação e Química Verde por Estações",
+  "scripts": {
+    "dev": "npx -y vite --open",
+    "test": "npx -y vitest run",
+    "test:watch": "npx -y vitest",
+    "preview": "npx -y vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.3.0",
+    "vitest": "^3.2.0",
+    "jsdom": "^26.1.0"
+  }
+}
