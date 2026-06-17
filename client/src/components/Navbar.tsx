@@ -25,6 +25,7 @@ const Navbar: React.FC = () => {
           <a href="/#journey" className="text-gray-300 hover:text-[#10B981] text-sm font-medium transition-colors">A Jornada</a>
           <a href="/#versions" className="text-gray-300 hover:text-[#10B981] text-sm font-medium transition-colors">IoT vs Manual</a>
           <Link to="/cartilha" className="text-[#F59E0B] hover:text-white text-sm font-bold transition-colors">Regras / Cartilha</Link>
+          <Link to="/curso" className="text-[#3B82F6] hover:text-white text-sm font-bold transition-colors">Curso Interativo</Link>
         </div>
         
         <div className="flex items-center gap-4">
