@@ -8,6 +8,10 @@ node_modules/
 # Build outputs
 shared/dist/
 client/dist/
+curso-interativo/dist/
+curso-interativo/dist-scorm/
+curso-interativo/coverage/
+*.zip
 
 # Environment (secrets)
 server/.env
