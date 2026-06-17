@@ -29,3 +29,65 @@ jobs:
 
     - name: 🔍 Acionar Fiscal de Linting Global
       run: npm run lint
+
+  Test-Suite:
+    runs-on: ubuntu-latest
+    name: 🧪 Test Suite + Coverage
+
+    steps:
+    - name: 📥 Clonar Repositório
+      uses: actions/checkout@v4
+
+    - name: ⚙️ Configurar Node.js (v20 LTS)
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: 📦 Instalar Dependências
+      run: npm ci --legacy-peer-deps
+
+    - name: 🏗️ Compilar Shared
+      run: npm run build:shared
+
+    - name: 🧪 Executar Testes com Cobertura (Curso Interativo)
+      run: npm run test:curso:coverage
+
+    - name: 📊 Upload Coverage Report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: coverage-report
+        path: curso-interativo/coverage/
+        retention-days: 30
+
+  Build-Course:
+    runs-on: ubuntu-latest
+    name: 🏗️ Build Standalone + SCORM
+    needs: [Quality-Assurance, Test-Suite]
+
+    steps:
+    - name: 📥 Clonar Repositório
+      uses: actions/checkout@v4
+
+    - name: ⚙️ Configurar Node.js (v20 LTS)
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: 📦 Instalar Dependências
+      run: npm ci --legacy-peer-deps
+
+    - name: 🏗️ Compilar Shared
+      run: npm run build:shared
+
+    - name: 🔨 Build Curso Interativo (Standalone + SCORM)
+      run: npm run build -w curso-interativo
+
+    - name: 📦 Upload Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: curso-interativo-dist
+        path: curso-interativo/dist/
+        retention-days: 90
