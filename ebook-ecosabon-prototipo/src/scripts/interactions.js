@@ -2,35 +2,128 @@
  * ============================================================================
  * EcoSabon — E-book Protótipo | Interactions Module
  * ============================================================================
- * Lógica de interatividade do e-book: navegação por módulos, toggles de
- * conteúdo ("Plano B", "Dica de Mediação", "Erro Comum"), checklist Go/No-Go,
- * e scroll-to-top.
+ * Lógica de interatividade do e-book: navegação por seções (scroll contínuo),
+ * toggles de conteúdo ("Plano B", "Dica de Mediação", "Erro Comum"),
+ * checklist Go/No-Go, sidebar de navegação e scroll-to-top.
  *
  * Este módulo é testado via TDD (vitest + jsdom) antes da integração na UI.
  * O produto final continua exportável como web estático, sem dependência de backend.
  * ============================================================================
  */
 
+// ─── Navegação para Seção (scroll contínuo) ─────────────────────────────────
+
 /**
- * Mostra o módulo correspondente ao ID e esconde todos os outros.
+ * Rola suavemente até a seção correspondente ao ID informado.
+ * Substitui o antigo navigateToModule (que alternava display:none).
+ * @param {string} sectionId - O ID da seção para a qual rolar.
+ * @param {Document} doc - O documento DOM (para testabilidade com jsdom).
+ * @returns {boolean} true se a seção foi encontrada e o scroll iniciado.
+ */
+export function scrollToSection(sectionId, doc = document) {
+  const section = doc.getElementById(sectionId);
+  if (!section) return false;
+
+  if (typeof section.scrollIntoView === 'function') {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  return true;
+}
+
+/**
+ * Atualiza o item ativo no sumário lateral.
+ * Remove aria-current e classe ativa de todos os itens, aplica no alvo.
+ * @param {string} sectionId - O ID da seção atualmente visível.
+ * @param {Document} doc - O documento DOM.
+ * @returns {boolean} true se o item foi encontrado e atualizado.
+ */
+export function setActiveNavItem(sectionId, doc = document) {
+  const navItems = doc.querySelectorAll('.sidebar__link');
+  if (navItems.length === 0) return false;
+
+  let found = false;
+  navItems.forEach((item) => {
+    const href = item.getAttribute('href');
+    const isTarget = href === `#${sectionId}`;
+    item.classList.toggle('sidebar__link--active', isTarget);
+    item.setAttribute('aria-current', isTarget ? 'true' : 'false');
+    if (isTarget) found = true;
+  });
+
+  return found;
+}
+
+// ─── IntersectionObserver (progressive enhancement) ──────────────────────────
+
+/**
+ * Inicializa o IntersectionObserver para detectar a seção visível
+ * e atualizar o sumário lateral automaticamente.
+ *
+ * Usa detecção de feature: se IntersectionObserver não existir, retorna
+ * sem erro (fallback gracioso — sumário continua navegável por cliques).
+ *
+ * @param {Document} doc - O documento DOM.
+ * @param {Window} win - O objeto window (para detecção de feature).
+ * @returns {IntersectionObserver|null} A instância do observer ou null se indisponível.
+ */
+export function initScrollObserver(doc = document, win = window) {
+  if (!win || !('IntersectionObserver' in win)) return null;
+
+  const sections = doc.querySelectorAll('.ebook-section');
+  if (sections.length === 0) return null;
+
+  const observer = new win.IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0) {
+          setActiveNavItem(entry.target.id, doc);
+        }
+      });
+    },
+    {
+      root: null,
+      rootMargin: '-20% 0px -70% 0px',
+      threshold: 0,
+    }
+  );
+
+  sections.forEach((section) => observer.observe(section));
+  return observer;
+}
+
+// ─── Sidebar Toggle (mobile) ────────────────────────────────────────────────
+
+/**
+ * Alterna a visibilidade da sidebar em telas pequenas.
+ * @param {Document} doc - O documento DOM.
+ * @returns {boolean} true se a sidebar está agora visível.
+ */
+export function toggleSidebar(doc = document) {
+  const sidebar = doc.querySelector('.sidebar');
+  if (!sidebar) return false;
+
+  const isOpen = sidebar.classList.toggle('sidebar--open');
+  sidebar.setAttribute('aria-hidden', String(!isOpen));
+
+  const toggle = doc.querySelector('.sidebar-toggle');
+  if (toggle) {
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  }
+
+  return isOpen;
+}
+
+// ─── Funções preservadas da Execução 1 ──────────────────────────────────────
+
+/**
+ * Navega para um módulo/seção (mantida para compatibilidade com botões internos).
+ * Na Execução 2, esta função rola até a seção ao invés de alternar display.
  * @param {string} targetId - O ID da seção do módulo a exibir.
  * @param {Document} doc - O documento DOM (para testabilidade com jsdom).
  */
 export function navigateToModule(targetId, doc = document) {
-  const modules = doc.querySelectorAll('.module-section');
-  modules.forEach((mod) => {
-    mod.classList.remove('active');
-    mod.setAttribute('aria-hidden', 'true');
-  });
-
-  const target = doc.getElementById(targetId);
-  if (target) {
-    target.classList.add('active');
-    target.setAttribute('aria-hidden', 'false');
-    if (typeof target.scrollIntoView === 'function') {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
+  scrollToSection(targetId, doc);
+  setActiveNavItem(targetId, doc);
 }
 
 /**
