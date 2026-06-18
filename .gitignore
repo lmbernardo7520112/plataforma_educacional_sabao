@@ -41,3 +41,41 @@ lerna-debug.log*
 
 # Gemini
 .gemini/
+
+# ============================================================
+# E-book EcoSabon — Build & temp artifacts
+# ============================================================
+ebook-ecosabon-prototipo/dist/
+ebook-ecosabon-prototipo/demo-assets/
+ebook-ecosabon-prototipo/scripts/
+ebook-ecosabon-prototipo/*.mp4
+ebook-ecosabon-prototipo/*.py
+ebook-ecosabon-prototipo/src/styles/main-print.css
+
+# ============================================================
+# Tools & utilities (Kotobee, EPUB temp, etc.)
+# ============================================================
+tools/
+
+# ============================================================
+# Reports (generated analysis artifacts)
+# ============================================================
+reports/
+
+# ============================================================
+# Python cache
+# ============================================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# ============================================================
+# Large media / binary files (general)
+# ============================================================
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.epub
