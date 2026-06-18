@@ -15,29 +15,44 @@
   <!-- ═══════════════════════════════════════════════════════════════════════ -->
   <nav class="navbar" role="navigation" aria-label="Navegação principal do e-book">
     <div class="navbar__inner">
+      <button class="sidebar-toggle" aria-expanded="false" aria-controls="sidebar-nav" aria-label="Alternar sumário lateral" id="btn-sidebar-toggle">☰</button>
       <div class="navbar__brand"><span>Eco</span>Sabon — E-book</div>
-      <ul class="navbar__links">
-        <li><button class="navbar__link active" data-nav="mod-inicio" id="nav-inicio">Início</button></li>
-        <li><button class="navbar__link" data-nav="mod-1" id="nav-mod1">Módulo 1</button></li>
-        <li><button class="navbar__link" data-nav="mod-2" id="nav-mod2">Módulo 2</button></li>
-        <li><button class="navbar__link" data-nav="mod-3" id="nav-mod3">Módulo 3</button></li>
-        <li><button class="navbar__link" data-nav="mod-4" id="nav-mod4">Caixa de Ferramentas</button></li>
-        <li><button class="navbar__link" data-nav="mod-governanca" id="nav-gov">Governança</button></li>
-        <li><button class="navbar__link" data-nav="mod-validacao" id="nav-val">Validação</button></li>
-        <li><button class="navbar__link" data-nav="mod-checklist" id="nav-check">Go/No-Go</button></li>
-      </ul>
     </div>
   </nav>
+
+  <!-- Sumário Lateral (Sidebar) -->
+  <aside class="sidebar" id="sidebar-nav" aria-label="Sumário" aria-hidden="true">
+    <nav class="sidebar__nav">
+      <ul class="sidebar__links">
+        <li><a href="#mod-inicio" class="sidebar__link sidebar__link--active" aria-current="true" id="nav-inicio">Início</a></li>
+        <li><a href="#mod-1" class="sidebar__link" id="nav-mod1">Módulo 1: O Desafio Proporcional</a></li>
+        <li><a href="#mod-2" class="sidebar__link" id="nav-mod2">Módulo 2: Missões na Prática</a></li>
+        <li><a href="#mod-3" class="sidebar__link" id="nav-mod3">Módulo 3: Evidências</a></li>
+        <li><a href="#mod-4" class="sidebar__link" id="nav-mod4">Caixa de Ferramentas</a></li>
+        <li><a href="#mod-governanca" class="sidebar__link" id="nav-gov">Governança de Qualidade</a></li>
+        <li><a href="#mod-validacao" class="sidebar__link" id="nav-val">Validação Docente</a></li>
+        <li><a href="#mod-checklist" class="sidebar__link" id="nav-check">Checklist Go/No-Go</a></li>
+      </ul>
+    </nav>
+  </aside>
 
   <div class="container">
 
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- TELA INICIAL                                                       -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section id="mod-inicio" class="module-section active" aria-hidden="false">
+    <section id="mod-inicio" class="ebook-section">
       <div class="hero">
+        <div class="hero__eyebrow">Produto Educacional</div>
         <h1 class="hero__title">Saponificação em Estações</h1>
         <p class="hero__subtitle">Protótipo de e-book interativo para ensino de proporções, relações quantitativas e Química Verde por rotação de estações</p>
+        
+        <div class="cover-metadata">
+          <div class="cover-metadata__item"><strong>Mestrado Profissional em Ensino de Ciências</strong></div>
+          <div class="cover-metadata__item">Autor: <span>[DADOS FICTÍCIOS PARA TESTE]</span></div>
+          <div class="cover-metadata__item">Orientador: <span>[DADOS FICTÍCIOS PARA TESTE]</span></div>
+        </div>
+
         <div class="hero__warning">⚠️ Protótipo com dados fictícios para teste. Substituir por dados reais da dissertação.</div>
         <div class="hero__actions">
           <button class="btn btn--primary" data-nav="mod-1" id="btn-start">Começar pelo Módulo 1 →</button>
@@ -49,7 +64,7 @@
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- MÓDULO 1 — O Desafio Proporcional                                  -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section id="mod-1" class="module-section" aria-hidden="true">
+    <section id="mod-1" class="ebook-section">
       <div class="module-header">
         <p class="module-header__number">Módulo 1</p>
         <h2 class="module-header__title">O Desafio Proporcional na Saponificação</h2>
@@ -87,7 +102,7 @@
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- MÓDULO 2 — A Rotação na Prática (Missões/Estações)                 -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section id="mod-2" class="module-section" aria-hidden="true">
+    <section id="mod-2" class="ebook-section">
       <div class="module-header">
         <p class="module-header__number">Módulo 2</p>
         <h2 class="module-header__title">Missões na Prática — Rotação por Estações</h2>
@@ -291,7 +306,7 @@
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- MÓDULO 3 — Evidências da Aplicação                                 -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section id="mod-3" class="module-section" aria-hidden="true">
+    <section id="mod-3" class="ebook-section">
       <div class="module-header">
         <p class="module-header__number">Módulo 3</p>
         <h2 class="module-header__title">Evidências da Aplicação e Discussão dos Resultados</h2>
@@ -332,7 +347,7 @@
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- MÓDULO 4 — Caixa de Ferramentas                                    -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section id="mod-4" class="module-section" aria-hidden="true">
+    <section id="mod-4" class="ebook-section">
       <div class="module-header">
         <p class="module-header__number">Módulo 4</p>
         <h2 class="module-header__title">Caixa de Ferramentas</h2>
@@ -384,7 +399,7 @@
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- GOVERNANÇA E QUALIDADE                                             -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section id="mod-governanca" class="module-section" aria-hidden="true">
+    <section id="mod-governanca" class="ebook-section">
       <div class="module-header">
         <p class="module-header__number">Governança</p>
         <h2 class="module-header__title">Rubrica de Qualidade (0–10)</h2>
@@ -438,7 +453,7 @@
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- VALIDAÇÃO EXTERNA                                                  -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section id="mod-validacao" class="module-section" aria-hidden="true">
+    <section id="mod-validacao" class="ebook-section">
       <div class="module-header">
         <p class="module-header__number">Validação</p>
         <h2 class="module-header__title">Formulário de Validação Docente</h2>
@@ -538,7 +553,7 @@
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- CHECKLIST GO/NO-GO                                                 -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section id="mod-checklist" class="module-section" aria-hidden="true">
+    <section id="mod-checklist" class="ebook-section">
       <div class="module-header">
         <p class="module-header__number">Aceite Final</p>
         <h2 class="module-header__title">Checklist Go / No-Go</h2>
