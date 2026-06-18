@@ -81,7 +81,7 @@ export class VanillaRenderer {
   // ─── Lesson Renderer ──────────────────────────────────────────────
 
   private renderLesson(lesson: Lesson): string {
-    const canNavigate = this.tracker.canNavigateTo(lesson.id);
+    const canNavigate = true; // TEMPORARILY UNLOCKED: this.tracker.canNavigateTo(lesson.id);
     const isComplete = this.tracker.isLessonComplete(lesson.id);
     const lockClass = canNavigate ? '' : 'locked';
     const completeClass = isComplete ? 'complete' : '';

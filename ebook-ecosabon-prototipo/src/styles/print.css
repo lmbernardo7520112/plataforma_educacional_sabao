@@ -10,7 +10,8 @@
   .back-to-top,
   .btn--reveal,
   .hero__actions,
-  .navbar__links { display: none !important; }
+  .navbar__links,
+  .reveal-block__icon { display: none !important; }
 
   /* Força fundo branco e texto escuro */
   body {
