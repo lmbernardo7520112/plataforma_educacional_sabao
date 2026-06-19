@@ -114,14 +114,71 @@
         <p>As 3 estações abaixo são <strong>demonstrativas</strong>. Devem ser substituídas por estações reais após definição metodológica da dissertação.</p>
       </div>
 
-      <!-- Diagrama de Sala -->
+      <!-- Diagrama de Sala (Mapa Interativo) -->
       <div class="card">
-        <h3 class="card__title">📐 Organização da Sala (Diagrama)</h3>
+        <h3 class="card__title">📐 Organização da Sala (Mapa Interativo)</h3>
+        <p class="card__content" style="margin-bottom: 1rem;">Clique ou toque em uma estação para navegar até sua descrição detalhada.</p>
         <div class="classroom-diagram">
-          <div class="classroom-diagram__station">🧪 Estação 1<br/>Filtração do Óleo</div>
-          <div class="classroom-diagram__station">⚗️ Estação 2<br/>Reator IoT vs Manual</div>
-          <div class="classroom-diagram__station">📊 Estação 3<br/>Teste de pH</div>
+          <div class="classroom-diagram__station" data-station="estacao-1"
+               role="button" tabindex="0" aria-label="Ir para Estação 1 — Filtração do Óleo">
+            🧪 Estação 1<br/>Filtração do Óleo
+          </div>
+          <div class="classroom-diagram__station" data-station="estacao-2"
+               role="button" tabindex="0" aria-label="Ir para Estação 2 — Reator IoT vs Manual">
+            ⚗️ Estação 2<br/>Reator IoT vs Manual
+          </div>
+          <div class="classroom-diagram__station" data-station="estacao-3"
+               role="button" tabindex="0" aria-label="Ir para Estação 3 — Teste de pH">
+            📊 Estação 3<br/>Teste de pH
+          </div>
           <div class="classroom-diagram__center">👩‍🏫 Professor circula entre as estações · Grupos de 4-6 alunos · Rotação a cada ~25 min</div>
+        </div>
+      </div>
+
+      <!-- Infográfico da Reação de Saponificação -->
+      <div class="card" id="infografico-saponificacao">
+        <h3 class="card__title">🔬 Reação de Saponificação (Visão Geral)</h3>
+        <div class="infographic">
+          <div class="infographic__side infographic__side--reagents">
+            <div class="infographic__molecule infographic__reagent">
+              <div class="infographic__molecule-icon">
+                <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><circle cx="24" cy="18" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="14" cy="34" r="6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="34" r="6" fill="none" stroke="currentColor" stroke-width="2"/><line x1="20" y1="24" x2="16" y2="29" stroke="currentColor" stroke-width="2"/><line x1="28" y1="24" x2="32" y2="29" stroke="currentColor" stroke-width="2"/></svg>
+              </div>
+              <span class="infographic__label">Triglicerídeo</span>
+              <span class="infographic__sublabel">(óleo/gordura)</span>
+            </div>
+            <span class="infographic__operator">+</span>
+            <div class="infographic__molecule infographic__reagent">
+              <div class="infographic__molecule-icon">
+                <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><text x="24" y="30" text-anchor="middle" font-size="16" fill="currentColor" font-weight="bold">3×</text></svg>
+              </div>
+              <span class="infographic__label">3 NaOH</span>
+              <span class="infographic__sublabel">(base forte)</span>
+            </div>
+          </div>
+          <div class="infographic__arrow" aria-hidden="true">
+            <svg class="infographic__arrow-svg" viewBox="0 0 60 30" aria-hidden="true">
+              <line x1="5" y1="15" x2="45" y2="15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              <polygon points="45,8 55,15 45,22" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="infographic__side infographic__side--products">
+            <div class="infographic__molecule infographic__product">
+              <div class="infographic__molecule-icon">
+                <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="6" fill="none" stroke="currentColor" stroke-width="2"/><line x1="18" y1="20" x2="30" y2="20" stroke="currentColor" stroke-width="1.5" opacity="0.5"/><line x1="18" y1="26" x2="30" y2="26" stroke="currentColor" stroke-width="1.5" opacity="0.5"/></svg>
+              </div>
+              <span class="infographic__label">3 Sabão</span>
+              <span class="infographic__sublabel">(sal de ác. graxo)</span>
+            </div>
+            <span class="infographic__operator">+</span>
+            <div class="infographic__molecule infographic__product">
+              <div class="infographic__molecule-icon">
+                <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><circle cx="24" cy="24" r="10" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="4" fill="currentColor" opacity="0.3"/></svg>
+              </div>
+              <span class="infographic__label">Glicerol</span>
+              <span class="infographic__sublabel">(subproduto)</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -140,10 +197,16 @@
       </div>
 
       <!-- ─── ESTAÇÃO 1 ──────────────────────────────────────────────── -->
-      <div class="card" id="estacao-1">
+      <div class="card station-card station-card--e1" id="estacao-1">
+        <div class="station-card__header station-card__header--e1">
+          <svg class="station-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h4l2 3h4a2 2 0 0 1 2 2v3"/><path d="M6 14h12"/><path d="M10 22V14"/><path d="M14 22V14"/></svg>
+          <div>
+            <span class="station-card__number">Estação 1</span>
+            <h3 class="card__title">Filtração e Preparo do Óleo Residual</h3>
+          </div>
+        </div>
         <span class="placeholder-block__tag" style="margin-bottom: 0.75rem;">Dados Fictícios para Teste</span>
-        <h3 class="card__title">🧪 Estação 1 — Filtração e Preparo do Óleo Residual</h3>
-        <div class="station-fields">
+        <div class="station-card__grid">
           <div class="station-field">
             <p class="card__label">Objetivo Pedagógico</p>
             <p class="card__content">Compreender a importância da purificação da matéria-prima e calcular a proporção óleo:solvente</p>
@@ -168,7 +231,7 @@
             <p class="card__label">Avaliação</p>
             <p class="card__content">Registro no roteiro do estudante (proporção calculada + justificativa escrita)</p>
           </div>
-        </div>
+        </div><!-- /.station-card__grid -->
         <div style="margin-top: 1rem;">
           <button class="btn btn--reveal" data-reveal="reveal-e1-planob" id="btn-e1-planob" aria-expanded="false">📋 Ver Adaptação de Baixo Recurso</button>
           <button class="btn btn--reveal" data-reveal="reveal-e1-erro" id="btn-e1-erro" aria-expanded="false">⚠️ Erro Comum dos Alunos</button>
@@ -193,10 +256,16 @@
       </div>
 
       <!-- ─── ESTAÇÃO 2 ──────────────────────────────────────────────── -->
-      <div class="card" id="estacao-2">
+      <div class="card station-card station-card--e2" id="estacao-2">
+        <div class="station-card__header station-card__header--e2">
+          <svg class="station-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6v4H9z"/><path d="M12 7v4"/><path d="M8 11h8l1 9H7l1-9z"/><circle cx="12" cy="15" r="1"/></svg>
+          <div>
+            <span class="station-card__number">Estação 2</span>
+            <h3 class="card__title">Reator de Saponificação (IoT vs Manual)</h3>
+          </div>
+        </div>
         <span class="placeholder-block__tag" style="margin-bottom: 0.75rem;">Dados Fictícios para Teste</span>
-        <h3 class="card__title">⚗️ Estação 2 — Reator de Saponificação (IoT vs Manual)</h3>
-        <div class="station-fields">
+        <div class="station-card__grid">
           <div class="station-field">
             <p class="card__label">Objetivo Pedagógico</p>
             <p class="card__content">Comparar o processo de saponificação com e sem mediação tecnológica, identificando variáveis controladas</p>
@@ -221,7 +290,7 @@
             <p class="card__label">Avaliação</p>
             <p class="card__content">Tabela comparativa IoT vs Manual preenchida no roteiro + cálculo estequiométrico</p>
           </div>
-        </div>
+        </div><!-- /.station-card__grid -->
         <div style="margin-top: 1rem;">
           <button class="btn btn--reveal" data-reveal="reveal-e2-planob" id="btn-e2-planob" aria-expanded="false">📋 Ver Adaptação de Baixo Recurso</button>
           <button class="btn btn--reveal" data-reveal="reveal-e2-dica" id="btn-e2-dica" aria-expanded="false">💡 Dica de Mediação</button>
@@ -246,10 +315,16 @@
       </div>
 
       <!-- ─── ESTAÇÃO 3 ──────────────────────────────────────────────── -->
-      <div class="card" id="estacao-3">
+      <div class="card station-card station-card--e3" id="estacao-3">
+        <div class="station-card__header station-card__header--e3">
+          <svg class="station-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 17l4-8 4 4 4-10"/></svg>
+          <div>
+            <span class="station-card__number">Estação 3</span>
+            <h3 class="card__title">Controle de Qualidade (Teste de pH)</h3>
+          </div>
+        </div>
         <span class="placeholder-block__tag" style="margin-bottom: 0.75rem;">Dados Fictícios para Teste</span>
-        <h3 class="card__title">📊 Estação 3 — Controle de Qualidade (Teste de pH)</h3>
-        <div class="station-fields">
+        <div class="station-card__grid">
           <div class="station-field">
             <p class="card__label">Objetivo Pedagógico</p>
             <p class="card__content">Avaliar a qualidade do sabão produzido por meio de indicadores de pH e interpretar resultados quantitativos</p>
@@ -274,7 +349,7 @@
             <p class="card__label">Avaliação</p>
             <p class="card__content">Registro do pH medido + classificação (ácido/neutro/básico) + parecer sobre adequação</p>
           </div>
-        </div>
+        </div><!-- /.station-card__grid -->
         <div style="margin-top: 1rem;">
           <button class="btn btn--reveal" data-reveal="reveal-e3-planob" id="btn-e3-planob" aria-expanded="false">📋 Ver Adaptação de Baixo Recurso</button>
           <button class="btn btn--reveal" data-reveal="reveal-e3-erro" id="btn-e3-erro" aria-expanded="false">⚠️ Erro Comum dos Alunos</button>
