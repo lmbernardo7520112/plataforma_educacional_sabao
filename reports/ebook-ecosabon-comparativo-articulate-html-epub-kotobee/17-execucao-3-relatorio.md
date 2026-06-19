@@ -76,7 +76,7 @@
 | `src/scripts/app.js` | +5/-1 — Importar e inicializar `initStationMap()` |
 | `src/styles/main.css` | +189 — Estilos C1, C2, C3, responsivo |
 | `src/styles/print.css` | +57 — Impressão para componentes enriquecidos |
-| `tests/interactions.test.js` | +209 — Testes T27–T40, helper `createStationTestDOM()` |
+| `tests/interactions.test.js` | +209 + 81 — Testes T27–T40 + Smoke T41–T50 contra HTML real |
 
 ---
 
@@ -114,17 +114,35 @@
 | T39 | Nó de estação tem `role="button"` | ✅ |
 | T40 | Nó de estação tem `tabindex="0"` | ✅ |
 
+#### Testes de Smoke — HTML Real (T41–T50)
+
+Adicionados via ultramicrocorreção QA/TDD pré-PR. Lêem o arquivo real `index.html` via `fs.readFileSync` + JSDOM.
+
+| # | Teste | Status |
+|---|-------|--------|
+| T41 | 3 cartões com `.station-card` no HTML real | ✅ |
+| T42 | Cada cartão possui `.station-card__header` | ✅ |
+| T43 | Cada cartão possui `.station-card__grid` | ✅ |
+| T44 | `#infografico-saponificacao` existe | ✅ |
+| T45 | Infográfico contém reagentes e produtos | ✅ |
+| T46 | Mapa possui nós com `data-station` | ✅ |
+| T47 | Nós do mapa possuem `role`, `tabindex`, `aria-label` | ✅ |
+| T48 | Contagem de "DADOS FICTÍCIOS" ≥ baseline (2) | ✅ |
+| T49 | "habilidade BNCC" preservada | ✅ |
+| T50 | Nenhum sinal de C4/3E (slider, range, simulation) | ✅ |
+
 #### Resultado Final
 
 ```
 Test Files  1 passed (1)
-     Tests  40 passed (40)
-  Duration  ~550ms
+     Tests  50 passed (50)
+  Duration  ~600ms
 ```
 
-- **26 testes existentes:** ✅ Todos preservados e passando
-- **14 testes novos:** ✅ Todos passando
-- **Total:** 40/40 ✅
+- **26 testes Execução 1+2:** ✅ Todos preservados
+- **14 testes unitários Execução 3 (T27–T40):** ✅ Todos passando
+- **10 testes smoke HTML real (T41–T50):** ✅ Todos passando
+- **Total:** 50/50 ✅
 
 ---
 
@@ -168,13 +186,14 @@ Test Files  1 passed (1)
 | G3 — Risco | Documento 15 criado antes da implementação | ✅ |
 | G4 — Plano | Documento 16 criado antes da implementação | ✅ |
 | G5 — Testes existentes | 26/26 preservados | ✅ |
-| G6 — Testes novos | 14 adicionados (T27–T40) | ✅ |
+| G6 — Testes novos | 24 adicionados (T27–T50) | ✅ |
 | G7 — Clean Code | Funções pequenas, nomeadas, sem código morto | ✅ |
 | G8 — Acessibilidade | role, tabindex, aria-label, focus-visible | ✅ |
 | G9 — Impressão | print.css ajustado para C1, C2, C3 | ✅ |
 | G10 — Governança Acadêmica | Placeholders preservados | ✅ |
-| G11 — Commits | 6 commits semânticos e rastreáveis | ✅ |
-| G12 — npm test | 40/40 passando | ✅ |
+| G11 — Commits | 8 commits semânticos e rastreáveis | ✅ |
+| G12 — npm test | 50/50 passando | ✅ |
+| G13 — Smoke HTML real | T41–T50 validam HTML de produção | ✅ |
 
 ---
 
@@ -201,3 +220,20 @@ O componente C4 (simulação demonstrativa de parâmetros) foi deliberadamente *
 - Se implementado no futuro, deve seguir rigorosamente o plano de contingência do documento 15;
 - Exigirá 3 avisos visuais obrigatórios na interface;
 - Deve ser função pura sem side effects, persistência ou rede.
+
+---
+
+### 10. Ultramicrocorreção QA/TDD (pré-PR)
+
+**Motivo:** Reforçar rastreabilidade garantindo que o HTML real (`index.html`) seja validado automaticamente, não apenas o DOM sintético dos testes unitários.
+
+**Alterações:**
+- Adicionados 10 testes de smoke (T41–T50) em `tests/interactions.test.js`
+- Atualizado este relatório (`17-execucao-3-relatorio.md`)
+
+**Confirmações:**
+- HTML **NÃO** alterado
+- CSS **NÃO** alterado
+- JS de produção **NÃO** alterado
+- C4/3E continua **bloqueado** (verificado automaticamente por T50)
+- `npm test`: 50/50 ✅

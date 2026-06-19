@@ -12,6 +12,9 @@
 
 import { describe, it, expect, beforeEach } from 'vitest';
 import { JSDOM } from 'jsdom';
+import { readFileSync } from 'node:fs';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   scrollToSection,
   setActiveNavItem,
@@ -521,5 +524,85 @@ describe('Visualizador de rotação interativo (C3)', () => {
     nodes.forEach((node) => {
       expect(node.getAttribute('tabindex')).toBe('0');
     });
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// TESTES DE SMOKE / INTEGRIDADE — HTML REAL (Execução 3)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const htmlPath = resolve(__dirname, '..', 'index.html');
+const realHTML = readFileSync(htmlPath, 'utf-8');
+const realDOM = new JSDOM(realHTML);
+const realDoc = realDOM.window.document;
+
+describe('Smoke tests — HTML real (index.html)', () => {
+  it('T41 — existem 3 cartões de estação com classe .station-card', () => {
+    const cards = realDoc.querySelectorAll('.station-card');
+    expect(cards.length).toBe(3);
+  });
+
+  it('T42 — cada cartão possui .station-card__header', () => {
+    const headers = realDoc.querySelectorAll('.station-card__header');
+    expect(headers.length).toBe(3);
+  });
+
+  it('T43 — cada cartão possui .station-card__grid', () => {
+    const grids = realDoc.querySelectorAll('.station-card__grid');
+    expect(grids.length).toBe(3);
+  });
+
+  it('T44 — infográfico #infografico-saponificacao existe', () => {
+    const infographic = realDoc.getElementById('infografico-saponificacao');
+    expect(infographic).not.toBeNull();
+  });
+
+  it('T45 — infográfico contém reagentes e produtos no HTML real', () => {
+    const infographic = realDoc.getElementById('infografico-saponificacao');
+    const text = infographic.textContent;
+    expect(text).toContain('Triglicerídeo');
+    expect(text).toContain('NaOH');
+    expect(text).toContain('Sabão');
+    expect(text).toContain('Glicerol');
+  });
+
+  it('T46 — mapa de estações possui nós com data-station', () => {
+    const stations = realDoc.querySelectorAll('[data-station]');
+    expect(stations.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('T47 — nós interativos do mapa possuem role, tabindex e aria-label', () => {
+    const stations = realDoc.querySelectorAll('.classroom-diagram__station[data-station]');
+    stations.forEach((node) => {
+      expect(node.getAttribute('role')).toBe('button');
+      expect(node.getAttribute('tabindex')).toBe('0');
+      expect(node.getAttribute('aria-label')).toBeTruthy();
+    });
+  });
+
+  it('T48 — contagem de "DADOS FICTÍCIOS" não inferior ao baseline (2)', () => {
+    const matches = realHTML.match(/DADOS FICTÍCIOS/g) || [];
+    expect(matches.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('T49 — ocorrência de "habilidade BNCC" preservada', () => {
+    expect(realHTML).toContain('habilidade BNCC');
+  });
+
+  it('T50 — nenhum sinal de C4/3E implementado (slider, range, simulation)', () => {
+    // Nenhum input type="range" (slider)
+    const sliders = realDoc.querySelectorAll('input[type="range"]');
+    expect(sliders.length).toBe(0);
+
+    // Nenhum elemento com classe ou ID contendo "simulation"
+    const simByClass = realDoc.querySelectorAll('[class*="simulation"]');
+    const simById = realDoc.querySelectorAll('[id*="simulation"]');
+    expect(simByClass.length).toBe(0);
+    expect(simById.length).toBe(0);
+
+    // Nenhuma string "[SIMULAÇÃO DEMONSTRATIVA]"
+    expect(realHTML).not.toContain('[SIMULAÇÃO DEMONSTRATIVA]');
   });
 });
