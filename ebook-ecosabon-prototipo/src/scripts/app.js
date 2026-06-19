@@ -7,23 +7,53 @@
  * ============================================================================
  */
 
-import { navigateToModule, toggleRevealBlock, evaluateChecklist, scrollToTop } from './interactions.js';
+import {
+  scrollToSection,
+  setActiveNavItem,
+  initScrollObserver,
+  toggleSidebar,
+  toggleRevealBlock,
+  evaluateChecklist,
+  scrollToTop
+} from './interactions.js';
 
-// ─── Navegação por módulos ───────────────────────────────────────────────────
+// ─── Botão toggle da sidebar (mobile) ───────────────────────────────────────
+const toggleBtn = document.getElementById('btn-sidebar-toggle');
+if (toggleBtn) {
+  toggleBtn.addEventListener('click', () => {
+    toggleSidebar();
+  });
+}
 
-document.querySelectorAll('[data-nav]').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const target = btn.getAttribute('data-nav');
-    navigateToModule(target);
+// ─── Cliques nas âncoras da sidebar ──────────────────────────────────────────
+document.querySelectorAll('.sidebar__link').forEach((link) => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const targetId = link.getAttribute('href').substring(1);
+    scrollToSection(targetId);
+    setActiveNavItem(targetId);
 
-    // Atualizar estilo ativo na navbar
-    document.querySelectorAll('.navbar__link').forEach((l) => l.classList.remove('active'));
-    btn.classList.add('active');
+    // Fecha a sidebar no mobile se estiver aberta
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar && sidebar.classList.contains('sidebar--open')) {
+      toggleSidebar();
+    }
   });
 });
 
-// ─── Botões de reveal (Plano B, Dica de Mediação, etc.) ─────────────────────
+// ─── Cliques em outros botões de navegação (ex: "Começar pelo Módulo 1") ─────
+document.querySelectorAll('[data-nav]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const targetId = btn.getAttribute('data-nav');
+    scrollToSection(targetId);
+    setActiveNavItem(targetId);
+  });
+});
 
+// ─── Inicialização do IntersectionObserver (Progressive Enhancement) ────────
+initScrollObserver();
+
+// ─── Botões de reveal (Plano B, Dica de Mediação, etc.) ─────────────────────
 document.querySelectorAll('[data-reveal]').forEach((btn) => {
   btn.addEventListener('click', () => {
     const target = btn.getAttribute('data-reveal');
@@ -32,7 +62,6 @@ document.querySelectorAll('[data-reveal]').forEach((btn) => {
 });
 
 // ─── Checklist Go/No-Go ─────────────────────────────────────────────────────
-
 const checklistContainer = document.getElementById('checklist-go');
 const checklistResultEl = document.getElementById('checklist-result');
 
@@ -47,12 +76,10 @@ if (checklistContainer && checklistResultEl) {
 }
 
 // ─── Scroll to Top ──────────────────────────────────────────────────────────
-
 const topBtn = document.getElementById('btn-top');
 if (topBtn) {
   topBtn.addEventListener('click', scrollToTop);
 }
 
-// ─── Inicialização: mostrar módulo Início ───────────────────────────────────
-
-navigateToModule('mod-inicio');
+// ─── Inicialização: definir item ativo inicial no sumário ───────────────────
+setActiveNavItem('mod-inicio');

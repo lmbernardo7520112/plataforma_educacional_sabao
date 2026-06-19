@@ -58,9 +58,9 @@ ebook-ecosabon-prototipo/src/styles/main-print.css
 tools/
 
 # ============================================================
-# Reports (generated analysis artifacts)
+# Reports — governance docs are tracked; only temp logs ignored
 # ============================================================
-reports/
+# reports/  (tracked — governance and SDD artifacts)
 
 # ============================================================
 # Python cache
