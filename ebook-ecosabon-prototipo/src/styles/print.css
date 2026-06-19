@@ -77,5 +77,62 @@
     background: #f0f0f0 !important;
     border-color: #333 !important;
     color: #111 !important;
+    cursor: default !important;
+    border-top-width: 3px !important;
+  }
+
+  /* Station Cards Enriquecidos (Execução 3) */
+  .station-card {
+    page-break-inside: avoid;
+  }
+
+  .station-card__header {
+    background: #f0f0f0 !important;
+    border-bottom-color: #ccc !important;
+    color: #333 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .station-card__icon {
+    color: #333 !important;
+    stroke: #333 !important;
+  }
+
+  .station-card__number {
+    color: #555 !important;
+  }
+
+  .station-card__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Infográfico (Execução 3) */
+  .infographic {
+    flex-direction: row !important;
+    page-break-inside: avoid;
+  }
+
+  .infographic__molecule-icon {
+    border-color: #999 !important;
+    background: #f5f5f5 !important;
+  }
+
+  .infographic__svg {
+    color: #333 !important;
+  }
+
+  .infographic__arrow-svg {
+    color: #333 !important;
+    transform: none !important;
+  }
+
+  .infographic__label {
+    color: #111 !important;
+  }
+
+  .infographic__sublabel,
+  .infographic__operator {
+    color: #555 !important;
   }
 }
