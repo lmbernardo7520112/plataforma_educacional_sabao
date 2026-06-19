@@ -532,12 +532,19 @@ a:focus-visible { outline: 2px solid var(--color-success); outline-offset: 2px; 
   line-height: 1.4;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: var(--transition);
+  cursor: pointer;
 }
 
 .classroom-diagram__station:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
   border-color: rgba(255, 255, 255, 0.12);
+}
+
+.classroom-diagram__station:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  transform: translateY(-2px);
 }
 
 .classroom-diagram__station:nth-child(1) { border-top-color: var(--color-primary); }
@@ -554,6 +561,185 @@ a:focus-visible { outline: 2px solid var(--color-success); outline-offset: 2px; 
   border: 1px dashed var(--color-border);
   border-radius: var(--radius-md);
   line-height: 1.5;
+}
+
+/* ─── Station Cards Enriquecidos (Execução 3 — C1) ──────────────── */
+.station-card {
+  overflow: hidden;
+  padding: 0;
+}
+
+.station-card__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.station-card__header--e1 {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.04));
+  border-bottom-color: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+}
+
+.station-card__header--e2 {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.04));
+  border-bottom-color: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+}
+
+.station-card__header--e3 {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(139, 92, 246, 0.04));
+  border-bottom-color: rgba(139, 92, 246, 0.2);
+  color: #a78bfa;
+}
+
+.station-card__icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.station-card__number {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.15rem;
+}
+
+.station-card__header .card__title {
+  margin-bottom: 0;
+  color: var(--color-text);
+}
+
+.station-card > .placeholder-block__tag {
+  margin: 1.5rem 2rem 0;
+  display: inline-block;
+}
+
+.station-card__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 1.5rem 2rem 0;
+}
+
+.station-card__grid + div,
+.station-card__grid ~ p,
+.station-card__grid ~ .reveal-block {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.station-card > div:last-child {
+  padding-bottom: 2rem;
+}
+
+.station-card > p:last-child {
+  padding-bottom: 2rem;
+  margin-left: 2rem;
+}
+
+.station-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.station-card--e1:hover { border-color: rgba(16, 185, 129, 0.3); }
+.station-card--e2:hover { border-color: rgba(245, 158, 11, 0.3); }
+.station-card--e3:hover { border-color: rgba(139, 92, 246, 0.3); }
+
+.station-card:focus-within {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ─── Infográfico da Saponificação (Execução 3 — C2) ─────────────── */
+.infographic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem 1rem;
+  flex-wrap: wrap;
+}
+
+.infographic__side {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.infographic__molecule {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  min-width: 90px;
+}
+
+.infographic__molecule-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  background: var(--color-surface-2);
+  transition: var(--transition);
+}
+
+.infographic__reagent .infographic__molecule-icon {
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.infographic__product .infographic__molecule-icon {
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.infographic__svg {
+  width: 36px;
+  height: 36px;
+  color: var(--color-text-secondary);
+}
+
+.infographic__reagent .infographic__svg { color: var(--color-primary); }
+.infographic__product .infographic__svg { color: var(--color-warning); }
+
+.infographic__label {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--color-text);
+}
+
+.infographic__sublabel {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.infographic__operator {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.infographic__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.infographic__arrow-svg {
+  width: 60px;
+  height: 30px;
+  color: var(--color-primary);
 }
 
 /* ─── Rubric Table ───────────────────────────────────────────────── */
@@ -796,7 +982,10 @@ textarea:focus { border-color: var(--color-primary); outline: none; }
 
 @media (max-width: 640px) {
   .station-fields { grid-template-columns: 1fr; }
+  .station-card__grid { grid-template-columns: 1fr; }
   .navbar__inner { flex-direction: row; justify-content: space-between; align-items: center; }
   .hero { padding: 3rem 1rem; }
   .classroom-diagram { grid-template-columns: 1fr; max-width: 220px; }
+  .infographic { flex-direction: column; gap: 1rem; }
+  .infographic__arrow-svg { transform: rotate(90deg); }
 }
