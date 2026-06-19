@@ -3,12 +3,13 @@
 
 **Branch de Trabalho:** `style/ebook-ecosabon-execucao-2`  
 **Data:** 2026-06-18  
-**Status Final:** ✅ APROVADO (Todos os gates cumpridos)
+**Status Final:** ✅ APROVADO (Todos os gates cumpridos + Ultramicrocorreção técnica aplicada)
 
 ---
 
-### 1. Registro do Ponto de Falha no Teste
+### 1. Registro do Ponto de Falha no Teste e Ultramicrocorreção
 
+#### A. Falha Inicial de Teste Registrada
 Em observância ao modo estrito, registramos detalhadamente a falha de teste inicial identificada e corrigida na suíte de testes unitários:
 
 1. **Qual teste falhou:**
@@ -36,6 +37,16 @@ Em observância ao modo estrito, registramos detalhadamente a falha de teste ini
 7. **Confirmação de que nenhum teste anterior foi removido ou enfraquecido indevidamente:**
    Confirmamos que todos os 10 testes originais da Execução 1 foram mantidos ativos e adaptados para a nova arquitetura (usando `scrollIntoView` para `navigateToModule` no lugar do antigo chaveamento de visibilidade por abas). 14 novos testes foram adicionados de maneira complementar.
 
+#### B. Ultramicrocorreção Técnica (Robustez Absoluta no Fallback)
+Para fortalecer a robustez da biblioteca de interações fora de ambientes baseados em navegadores (como testes em servidores, scripts SSR ou executados diretamente via NodeJS puro), implementamos uma ultramicrocorreção técnica com escopo cirúrgico:
+
+* **Motivo da microcorreção:** Remover qualquer dependência de `document` e `window` globais avaliados no momento da declaração das assinaturas de função (Default Parameters), que causavam erros em contextos sem browser.
+* **Resolução segura adotada:** Substituição de parâmetros padrões em todas as funções de `interactions.js` pela resolução inline usando o operador de coalescência nula `??` avaliado sob verificação de tipo `typeof`:
+  * `const safeDoc = doc ?? (typeof document !== 'undefined' ? document : null);`
+  * `const safeWin = win ?? (typeof window !== 'undefined' ? window : null);`
+* **Garantia de Fallback:** Todas as funções validam se `safeDoc` ou `safeWin` são nulos e retornam fallback seguro (`null` ou `false`), sem disparar ReferenceErrors.
+* **Confirmação de Integridade:** Nenhuma alteração visual, pedagógica, ética ou acadêmica foi realizada. Nenhum placeholder, BNCC ou dado foi modificado.
+
 ---
 
 ### 2. Commits Realizados
@@ -46,6 +57,8 @@ A evolução foi realizada de forma incremental, limpa e com commits pequenos e 
 * `132772b` `test(ebook): implement continuous scroll navigation and fallback observer`
 * `edc1514` `docs(ebook): create execution 2 report and record test failure details`
 * `ba2397d` `style(ebook): implement responsive sidebar navigation and continuous scroll flow`
+* `e4e1e1b` `docs(ebook): finalize execution 2 report with gate statuses and test results`
+* `d4ebbc4` `fix(ebook): harden scroll observer fallback for non-browser environments`
 
 ---
 
@@ -59,37 +72,39 @@ Durante o ciclo de desenvolvimento, removemos a pasta `reports/` do arquivo `.gi
 
 ### 4. Resultados Finais dos Testes
 
-A suíte de testes foi executada localmente via Vitest e obteve **100% de sucesso**:
+A suíte de testes foi executada localmente via Vitest e obteve **100% de sucesso** com a inclusão de 2 novos testes de robustez adicionados na suíte:
 
 ```
-✓ tests/interactions.test.js (24 tests) 138ms
-  ✓ navigateToModule (compatibilidade) > deve rolar até a seção alvo sem lançar erro (35ms)
-  ✓ navigateToModule (compatibilidade) > deve não lançar erro se o ID alvo não existir (6ms)
+✓ tests/interactions.test.js (26 tests) 131ms
+  ✓ navigateToModule (compatibilidade) > deve rolar até a seção alvo sem lançar erro (34ms)
+  ✓ navigateToModule (compatibilidade) > deve não lançar erro se o ID alvo não existir (5ms)
   ✓ toggleRevealBlock > deve mostrar o bloco oculto e retornar true (6ms)
   ✓ toggleRevealBlock > deve esconder o bloco visível ao chamar novamente (5ms)
   ✓ toggleRevealBlock > deve atualizar aria-expanded no botão trigger (4ms)
-  ✓ toggleRevealBlock > deve retornar false se o bloco não existir (4ms)
-  ✓ evaluateChecklist > deve retornar allChecked=false quando nenhum item está marcado (6ms)
-  ✓ evaluateChecklist > deve retornar allChecked=false quando apenas alguns estão marcados (5ms)
-  ✓ evaluateChecklist > deve retornar allChecked=true quando TODOS estão marcados (10ms)
+  ✓ toggleRevealBlock > deve retornar false se o bloco não existir (3ms)
+  ✓ evaluateChecklist > deve retornar allChecked=false quando nenhum item está marcado (5ms)
+  ✓ evaluateChecklist > deve retornar allChecked=false quando apenas alguns estão marcados (4ms)
+  ✓ evaluateChecklist > deve retornar allChecked=true quando TODOS estão marcados (6ms)
   ✓ evaluateChecklist > deve retornar allChecked=false se o container não existir (4ms)
-  ✓ scrollToSection > deve retornar true e chamar scrollIntoView quando a seção existe (4ms)
+  ✓ scrollToSection > deve retornar true e chamar scrollIntoView quando a seção existe (3ms)
   ✓ scrollToSection > deve retornar false quando o ID não existe (3ms)
   ✓ scrollToSection > não deve lançar erro com ID inexistente (3ms)
-  ✓ setActiveNavItem > deve ativar o item correto e desativar os demais (4ms)
-  ✓ setActiveNavItem > deve retornar false com ID inexistente sem lançar erro (6ms)
-  ✓ setActiveNavItem > deve desativar todos os itens quando nenhum corresponde (5ms)
+  ✓ setActiveNavItem > deve ativar o item correto e desativar os demais (6ms)
+  ✓ setActiveNavItem > deve retornar false com ID inexistente sem lançar erro (3ms)
+  ✓ setActiveNavItem > deve desativar todos os itens quando nenhum corresponde (3ms)
   ✓ setActiveNavItem > deve permitir navegação por teclado (links são focáveis) (3ms)
   ✓ initScrollObserver > deve retornar null e não lançar erro quando IntersectionObserver não existe (3ms)
-  ✓ initScrollObserver > deve retornar null quando window é null (sem ambiente de janela) (3ms)
-  ✓ initScrollObserver > deve retornar null quando não há seções observáveis (4ms)
+  ✓ initScrollObserver > deve retornar null quando window é null (2ms)
+  ✓ initScrollObserver > deve retornar null e não lançar erro quando o parâmetro window é undefined (2ms)
+  ✓ initScrollObserver > deve retornar null quando ambos os parâmetros são null (2ms)
+  ✓ initScrollObserver > deve retornar null quando não há seções observáveis (6ms)
   ✓ toggleSidebar > deve abrir a sidebar e atualizar aria-hidden (3ms)
-  ✓ toggleSidebar > deve fechar a sidebar ao chamar novamente (5ms)
+  ✓ toggleSidebar > deve fechar a sidebar ao chamar novamente (3ms)
   ✓ toggleSidebar > deve atualizar aria-expanded no botão toggle (3ms)
   ✓ toggleSidebar > deve retornar false se a sidebar não existir (4ms)
 
 Test Files  1 passed (1)
-     Tests  24 passed (24)
+     Tests  26 passed (26)
 ```
 
 ---
@@ -118,7 +133,7 @@ Test Files  1 passed (1)
 | **G9** | Acessibilidade Teclado | ✅ Cumprido | Foco visual demarcado com contraste nos links. Links com tags `<a>` semantizadas. |
 | **** | Impressão Limpa | ✅ Cumprido | `print.css` oculta a sidebar/toggle e exibe os módulos em ordem linear sem quebras. |
 | **** | Sem Invenção de Dados | ✅ Cumprido | Preservação das tags éticas de dados fictícios. |
-| **** | npm test Passando | ✅ Cumprido | 24/24 testes unitários passing em ambiente simulado. |
+| **** | npm test Passando | ✅ Cumprido | 26/26 testes unitários passing em ambiente simulado (incluindo testes de robustez). |
 
 ---
 

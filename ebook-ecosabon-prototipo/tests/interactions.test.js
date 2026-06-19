@@ -252,8 +252,18 @@ describe('initScrollObserver', () => {
     expect(result).toBeNull();
   });
 
-  it('deve retornar null quando window é null (sem ambiente de janela)', () => {
+  it('deve retornar null quando window é null', () => {
     const result = initScrollObserver(doc, null);
+    expect(result).toBeNull();
+  });
+
+  it('deve retornar null e não lançar erro quando o parâmetro window é undefined', () => {
+    const result = initScrollObserver(doc, undefined);
+    expect(result).toBeNull();
+  });
+
+  it('deve retornar null quando ambos os parâmetros são null', () => {
+    const result = initScrollObserver(null, null);
     expect(result).toBeNull();
   });
 

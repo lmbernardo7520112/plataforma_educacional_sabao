@@ -20,8 +20,10 @@
  * @param {Document} doc - O documento DOM (para testabilidade com jsdom).
  * @returns {boolean} true se a seção foi encontrada e o scroll iniciado.
  */
-export function scrollToSection(sectionId, doc = document) {
-  const section = doc.getElementById(sectionId);
+export function scrollToSection(sectionId, doc) {
+  const safeDoc = doc ?? (typeof document !== 'undefined' ? document : null);
+  if (!safeDoc) return false;
+  const section = safeDoc.getElementById(sectionId);
   if (!section) return false;
 
   if (typeof section.scrollIntoView === 'function') {
@@ -37,8 +39,10 @@ export function scrollToSection(sectionId, doc = document) {
  * @param {Document} doc - O documento DOM.
  * @returns {boolean} true se o item foi encontrado e atualizado.
  */
-export function setActiveNavItem(sectionId, doc = document) {
-  const navItems = doc.querySelectorAll('.sidebar__link');
+export function setActiveNavItem(sectionId, doc) {
+  const safeDoc = doc ?? (typeof document !== 'undefined' ? document : null);
+  if (!safeDoc) return false;
+  const navItems = safeDoc.querySelectorAll('.sidebar__link');
   if (navItems.length === 0) return false;
 
   let found = false;
@@ -66,17 +70,19 @@ export function setActiveNavItem(sectionId, doc = document) {
  * @param {Window} win - O objeto window (para detecção de feature).
  * @returns {IntersectionObserver|null} A instância do observer ou null se indisponível.
  */
-export function initScrollObserver(doc = document, win = window) {
-  if (!win || !('IntersectionObserver' in win)) return null;
+export function initScrollObserver(doc, win) {
+  const safeDoc = doc ?? (typeof document !== 'undefined' ? document : null);
+  const safeWin = win ?? (typeof window !== 'undefined' ? window : null);
+  if (!safeDoc || !safeWin || !('IntersectionObserver' in safeWin)) return null;
 
-  const sections = doc.querySelectorAll('.ebook-section');
+  const sections = safeDoc.querySelectorAll('.ebook-section');
   if (sections.length === 0) return null;
 
-  const observer = new win.IntersectionObserver(
+  const observer = new safeWin.IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting && entry.intersectionRatio > 0) {
-          setActiveNavItem(entry.target.id, doc);
+          setActiveNavItem(entry.target.id, safeDoc);
         }
       });
     },
@@ -98,14 +104,16 @@ export function initScrollObserver(doc = document, win = window) {
  * @param {Document} doc - O documento DOM.
  * @returns {boolean} true se a sidebar está agora visível.
  */
-export function toggleSidebar(doc = document) {
-  const sidebar = doc.querySelector('.sidebar');
+export function toggleSidebar(doc) {
+  const safeDoc = doc ?? (typeof document !== 'undefined' ? document : null);
+  if (!safeDoc) return false;
+  const sidebar = safeDoc.querySelector('.sidebar');
   if (!sidebar) return false;
 
   const isOpen = sidebar.classList.toggle('sidebar--open');
   sidebar.setAttribute('aria-hidden', String(!isOpen));
 
-  const toggle = doc.querySelector('.sidebar-toggle');
+  const toggle = safeDoc.querySelector('.sidebar-toggle');
   if (toggle) {
     toggle.setAttribute('aria-expanded', String(isOpen));
   }
@@ -121,9 +129,10 @@ export function toggleSidebar(doc = document) {
  * @param {string} targetId - O ID da seção do módulo a exibir.
  * @param {Document} doc - O documento DOM (para testabilidade com jsdom).
  */
-export function navigateToModule(targetId, doc = document) {
-  scrollToSection(targetId, doc);
-  setActiveNavItem(targetId, doc);
+export function navigateToModule(targetId, doc) {
+  const safeDoc = doc ?? (typeof document !== 'undefined' ? document : null);
+  scrollToSection(targetId, safeDoc);
+  setActiveNavItem(targetId, safeDoc);
 }
 
 /**
@@ -133,8 +142,10 @@ export function navigateToModule(targetId, doc = document) {
  * @param {Document} doc - O documento DOM.
  * @returns {boolean} O novo estado de visibilidade (true = visível).
  */
-export function toggleRevealBlock(toggleId, doc = document) {
-  const block = doc.getElementById(toggleId);
+export function toggleRevealBlock(toggleId, doc) {
+  const safeDoc = doc ?? (typeof document !== 'undefined' ? document : null);
+  if (!safeDoc) return false;
+  const block = safeDoc.getElementById(toggleId);
   if (!block) return false;
 
   const isCurrentlyHidden = block.classList.contains('hidden');
@@ -142,7 +153,7 @@ export function toggleRevealBlock(toggleId, doc = document) {
   block.setAttribute('aria-hidden', String(!isCurrentlyHidden));
 
   // Atualizar o botão que controla este bloco
-  const trigger = doc.querySelector(`[data-reveal="${toggleId}"]`);
+  const trigger = safeDoc.querySelector(`[data-reveal="${toggleId}"]`);
   if (trigger) {
     trigger.setAttribute('aria-expanded', String(isCurrentlyHidden));
   }
@@ -157,8 +168,10 @@ export function toggleRevealBlock(toggleId, doc = document) {
  * @param {Document} doc - O documento DOM.
  * @returns {{ allChecked: boolean, total: number, checked: number }}
  */
-export function evaluateChecklist(checklistId, doc = document) {
-  const container = doc.getElementById(checklistId);
+export function evaluateChecklist(checklistId, doc) {
+  const safeDoc = doc ?? (typeof document !== 'undefined' ? document : null);
+  if (!safeDoc) return { allChecked: false, total: 0, checked: 0 };
+  const container = safeDoc.getElementById(checklistId);
   if (!container) return { allChecked: false, total: 0, checked: 0 };
 
   const checkboxes = container.querySelectorAll('input[type="checkbox"]');
