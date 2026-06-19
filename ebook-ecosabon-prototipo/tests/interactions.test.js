@@ -20,6 +20,8 @@ import {
   navigateToModule,
   toggleRevealBlock,
   evaluateChecklist,
+  scrollToStation,
+  initStationMap,
 } from '../src/scripts/interactions.js';
 
 // ─── Helper: cria um DOM mínimo para testes ──────────────────────────────────
@@ -61,6 +63,99 @@ function createTestDOM() {
         <label><input type="checkbox" /> Item 1</label>
         <label><input type="checkbox" /> Item 2</label>
         <label><input type="checkbox" /> Item 3</label>
+      </div>
+    </body>
+    </html>
+  `);
+  return dom.window.document;
+}
+
+// ─── Helper: DOM com estrutura de estações enriquecidas (Execução 3) ─────────
+
+function createStationTestDOM() {
+  const dom = new JSDOM(`
+    <!DOCTYPE html>
+    <html>
+    <body>
+      <!-- Diagrama de sala interativo -->
+      <div class="classroom-diagram">
+        <div class="classroom-diagram__station" data-station="estacao-1"
+             role="button" tabindex="0" aria-label="Ir para Estação 1 — Filtração do Óleo">
+          🧪 Estação 1<br/>Filtração do Óleo
+        </div>
+        <div class="classroom-diagram__station" data-station="estacao-2"
+             role="button" tabindex="0" aria-label="Ir para Estação 2 — Reator IoT vs Manual">
+          ⚗️ Estação 2<br/>Reator IoT vs Manual
+        </div>
+        <div class="classroom-diagram__station" data-station="estacao-3"
+             role="button" tabindex="0" aria-label="Ir para Estação 3 — Teste de pH">
+          📊 Estação 3<br/>Teste de pH
+        </div>
+        <div class="classroom-diagram__center">
+          👩‍🏫 Professor circula entre as estações
+        </div>
+      </div>
+
+      <!-- Infográfico da saponificação -->
+      <div id="infografico-saponificacao" class="infographic">
+        <div class="infographic__reagent">Triglicerídeo</div>
+        <div class="infographic__reagent">3 NaOH</div>
+        <div class="infographic__arrow" aria-hidden="true">
+          <svg class="infographic__arrow-svg" viewBox="0 0 40 20"><path d="M0 10 L30 10 L25 5 M30 10 L25 15"/></svg>
+        </div>
+        <div class="infographic__product">3 Sabão</div>
+        <div class="infographic__product">Glicerol</div>
+      </div>
+
+      <!-- Cartão de estação enriquecido -->
+      <div class="card station-card" id="estacao-1">
+        <div class="station-card__header">
+          <svg class="station-card__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+          <div>
+            <span class="station-card__number">Estação 1</span>
+            <h3 class="card__title">Filtração e Preparo do Óleo</h3>
+          </div>
+        </div>
+        <div class="station-card__grid">
+          <div class="station-field"><p class="card__label">Objetivo</p><p>Obj 1</p></div>
+          <div class="station-field"><p class="card__label">Conteúdo</p><p>Cont 1</p></div>
+          <div class="station-field"><p class="card__label">Materiais</p><p>Mat 1</p></div>
+          <div class="station-field"><p class="card__label">Tempo</p><p>20 min</p></div>
+        </div>
+        <button data-reveal="reveal-e1-planob" aria-expanded="false">Ver Plano B</button>
+        <div id="reveal-e1-planob" class="hidden" aria-hidden="true"><p>Plano B conteúdo</p></div>
+      </div>
+
+      <div class="card station-card" id="estacao-2">
+        <div class="station-card__header">
+          <svg class="station-card__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+          <div>
+            <span class="station-card__number">Estação 2</span>
+            <h3 class="card__title">Reator de Saponificação</h3>
+          </div>
+        </div>
+        <div class="station-card__grid">
+          <div class="station-field"><p class="card__label">Objetivo</p><p>Obj 2</p></div>
+          <div class="station-field"><p class="card__label">Conteúdo</p><p>Cont 2</p></div>
+          <div class="station-field"><p class="card__label">Materiais</p><p>Mat 2</p></div>
+          <div class="station-field"><p class="card__label">Tempo</p><p>30 min</p></div>
+        </div>
+      </div>
+
+      <div class="card station-card" id="estacao-3">
+        <div class="station-card__header">
+          <svg class="station-card__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+          <div>
+            <span class="station-card__number">Estação 3</span>
+            <h3 class="card__title">Controle de Qualidade</h3>
+          </div>
+        </div>
+        <div class="station-card__grid">
+          <div class="station-field"><p class="card__label">Objetivo</p><p>Obj 3</p></div>
+          <div class="station-field"><p class="card__label">Conteúdo</p><p>Cont 3</p></div>
+          <div class="station-field"><p class="card__label">Materiais</p><p>Mat 3</p></div>
+          <div class="station-field"><p class="card__label">Tempo</p><p>15 min</p></div>
+        </div>
       </div>
     </body>
     </html>
@@ -312,5 +407,119 @@ describe('toggleSidebar', () => {
     const emptyDOM = new JSDOM('<!DOCTYPE html><html><body></body></html>');
     const result = toggleSidebar(emptyDOM.window.document);
     expect(result).toBe(false);
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// NOVOS TESTES — EXECUÇÃO 3 (Sublotes 3A, 3B, 3C)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ─── T27-T30: Cartões Interativos de Estação (C1) ───────────────────────────
+
+describe('Cartões interativos de estação (C1)', () => {
+  let doc;
+  beforeEach(() => { doc = createStationTestDOM(); });
+
+  it('T27 — cartão de estação tem cabeçalho visual com conteúdo', () => {
+    const header = doc.querySelector('#estacao-1 .station-card__header');
+    expect(header).not.toBeNull();
+    expect(header.textContent.length).toBeGreaterThan(0);
+  });
+
+  it('T28 — cartão de estação tem grid de campos com ≥ 4 filhos', () => {
+    const grid = doc.querySelector('#estacao-1 .station-card__grid');
+    expect(grid).not.toBeNull();
+    expect(grid.children.length).toBeGreaterThanOrEqual(4);
+  });
+
+  it('T29 — blocos de revelação preservados nos cartões enriquecidos', () => {
+    const isNowVisible = toggleRevealBlock('reveal-e1-planob', doc);
+    expect(isNowVisible).toBe(true);
+
+    const block = doc.getElementById('reveal-e1-planob');
+    expect(block.classList.contains('hidden')).toBe(false);
+  });
+
+  it('T30 — cartão de estação possui ícone SVG no cabeçalho', () => {
+    const svg = doc.querySelector('#estacao-1 .station-card__header svg');
+    expect(svg).not.toBeNull();
+  });
+});
+
+// ─── T31-T33: Infográfico da Saponificação (C2) ─────────────────────────────
+
+describe('Infográfico da saponificação (C2)', () => {
+  let doc;
+  beforeEach(() => { doc = createStationTestDOM(); });
+
+  it('T31 — infográfico existe no DOM', () => {
+    const infographic = doc.getElementById('infografico-saponificacao');
+    expect(infographic).not.toBeNull();
+  });
+
+  it('T32 — infográfico contém reagentes e produtos', () => {
+    const infographic = doc.getElementById('infografico-saponificacao');
+    const text = infographic.textContent;
+    expect(text).toContain('Triglicerídeo');
+    expect(text).toContain('NaOH');
+    expect(text).toContain('Sabão');
+    expect(text).toContain('Glicerol');
+  });
+
+  it('T33 — infográfico contém seta de reação (SVG)', () => {
+    const arrow = doc.querySelector('#infografico-saponificacao .infographic__arrow svg');
+    expect(arrow).not.toBeNull();
+  });
+});
+
+// ─── T34-T40: Visualizador de Rotação Interativo (C3) ───────────────────────
+
+describe('Visualizador de rotação interativo (C3)', () => {
+  let doc;
+  beforeEach(() => { doc = createStationTestDOM(); });
+
+  it('T34 — scrollToStation rola para a estação correspondente', () => {
+    const station = doc.getElementById('estacao-1');
+    let scrollCalled = false;
+    station.scrollIntoView = () => { scrollCalled = true; };
+
+    const result = scrollToStation('estacao-1', doc);
+    expect(result).toBe(true);
+    expect(scrollCalled).toBe(true);
+  });
+
+  it('T35 — scrollToStation retorna false para ID inexistente', () => {
+    const result = scrollToStation('estacao-99', doc);
+    expect(result).toBe(false);
+  });
+
+  it('T36 — scrollToStation retorna false sem document', () => {
+    const result = scrollToStation('estacao-1', null);
+    expect(result).toBe(false);
+  });
+
+  it('T37 — initStationMap registra estações e retorna contagem', () => {
+    const count = initStationMap(doc);
+    expect(count).toBe(3);
+  });
+
+  it('T38 — initStationMap retorna 0 sem estações no DOM', () => {
+    const emptyDOM = new JSDOM('<!DOCTYPE html><html><body></body></html>');
+    const count = initStationMap(emptyDOM.window.document);
+    expect(count).toBe(0);
+  });
+
+  it('T39 — nó de estação no mapa tem role="button"', () => {
+    const nodes = doc.querySelectorAll('.classroom-diagram__station');
+    nodes.forEach((node) => {
+      expect(node.getAttribute('role')).toBe('button');
+    });
+  });
+
+  it('T40 — nó de estação no mapa tem tabindex="0"', () => {
+    const nodes = doc.querySelectorAll('.classroom-diagram__station');
+    nodes.forEach((node) => {
+      expect(node.getAttribute('tabindex')).toBe('0');
+    });
   });
 });
