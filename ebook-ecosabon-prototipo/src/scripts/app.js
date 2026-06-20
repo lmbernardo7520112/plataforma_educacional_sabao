@@ -8,18 +8,32 @@
  */
 
 import {
-  scrollToSection,
-  setActiveNavItem,
-  initScrollObserver,
-  toggleSidebar,
-  toggleRevealBlock,
-  evaluateChecklist,
-  scrollToTop,
-  initStationMap,
-  initSaponificationHotspots,
-  activateModule,
   initModulePagination,
-} from './interactions.js';
+  activateModule,
+  setActiveNavItem,
+  toggleSidebar
+} from './navigation.js';
+
+import {
+  scrollToSection,
+  scrollToTop
+} from './scroll.js';
+
+import {
+  initStationMap
+} from './station-map.js';
+
+import {
+  initSaponificationHotspots
+} from './hotspots.js';
+
+import {
+  toggleRevealBlock
+} from './reveal.js';
+
+import {
+  evaluateChecklist
+} from './checklist.js';
 
 // ─── Botão toggle da sidebar (mobile) ───────────────────────────────────────
 const toggleBtn = document.getElementById('btn-sidebar-toggle');
