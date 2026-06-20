@@ -9,64 +9,62 @@
 ---
 
 ### 1. Diagnóstico do Problema e Causa Raiz
-*   **Problema:** Anteriormente, o e-book operava em fluxo contínuo de scroll. Quando o usuário chegava ao final de um módulo e clicava no botão "Avançar para o próximo módulo", a página apenas executava uma rolagem. O módulo destino e os subsequentes continuavam aparecendo imediatamente abaixo do botão, quebrando a metáfora conceitual de "página seguinte" de um e-book estruturado e causando poluição visual.
-*   **Causa Raiz:** O CSS de tela exibia todas as seções `.ebook-section` sequencialmente de forma incondicional (`display: block`). A navegação era meramente baseada em âncoras de rolagem suave.
+*   **Problema:** Anteriormente, o e-book operava em fluxo contínuo de scroll. Ao final de um módulo, o botão "Avançar para o próximo módulo" apenas realizava rolagem vertical, deixando o módulo destino e subsequentes visíveis logo abaixo no fluxo. Isso prejudicava a sensação clássica de "virar de página" de um livro digital.
+*   **Causa Raiz:** O CSS de tela renderizava todas as seções `.ebook-section` sequencialmente de forma incondicional (`display: block`).
 
 ---
 
-### 2. Estratégia Adotada e Melhoria Progressiva
-Para sanar o problema mantendo a resiliência offline e a simplicidade, foi adotada a paginação por seções ativas com **Melhoria Progressiva (Progressive Enhancement)**:
+### 2. Estratégia Adotada e Ultramicrocorreção Técnica
+Implementamos a paginação por módulo ativo via **Melhoria Progressiva (Progressive Enhancement)** e aplicamos melhorias arquiteturais robustas:
 
-1.  **Ativação Dinâmica:** O bootstrap da aplicação adiciona a classe `js-enabled` ao elemento `body`.
-2.  **Ocultação Condicional (Tela):** Se a classe `js-enabled` estiver ativa no body, o CSS de tela (`main.css`) oculta todas as seções `.ebook-section` (`display: none !important`) e exibe apenas a seção que contiver a classe `.ebook-section--active`.
-3.  **Navegação Inteligente (JS):** A nova função `activateModule` atualiza a classe ativa, define os atributos de acessibilidade `hidden` e `aria-hidden` para leitores de tela, atualiza a barra de navegação ativa (`setActiveNavItem`), altera o hash da URL de forma segura (envolvido em `try-catch` para isolar comportamentos do JSDOM) e rola suavemente para o topo do módulo ativo.
-4.  **Fallback Seguro (Sem JavaScript):** Se o script falhar ao carregar, a classe `js-enabled` não é injetada no `body`. O e-book se comporta de forma linear, exibindo todos os capítulos de modo contínuo (degradação graciosa).
-5.  **Preservação de Impressão:** O arquivo `print.css` força todas as seções a serem renderizadas (`.ebook-section, .ebook-section[hidden] { display: block !important }`), permitindo a impressão e exportação completa do PDF com todos os módulos sequenciados por quebras de página.
+1.  **Sem Atributo `hidden` em Módulos Principais:** Removemos o uso de `setAttribute("hidden", "true")` nas seções `.ebook-section` para evitar fragilidades na renderização em impressoras e PDFs (o atributo `hidden` tem forte peso semântico). Controlamos a exibição em tela estritamente via classe `.ebook-section--active`, `aria-hidden="true"/"false"` e CSS. O atributo `hidden` permanece restrito apenas a componentes internos pequenos (como blocos de reveal e painéis de hotspots).
+2.  **CSS de Tela e Impressão:** Sob JS ativo (`js-enabled` no body), ocultamos seções inativas na tela. No `print.css`, a regra explícita `.ebook-section, .ebook-section[hidden] { display: block !important; }` força todos os módulos a aparecerem de forma linearizada, com quebras de página automáticas.
+3.  **Remoção de Conflito com `IntersectionObserver`:** Desativamos a chamada a `initScrollObserver()` no bootstrap principal do `app.js` para que a sincronização da sidebar não dispute foco com a rolagem no modo de visualização paginada. A função permanece exportada e testada para compatibilidade de modo legado.
+4.  **Histórico e Navegação por Hash:** Integramos suporte a eventos `popstate` e `hashchange` através da função `activateModuleFromHash()`. Agora, voltar/avançar no histórico do navegador ou carregar links diretos (hashes válidos) ativa o módulo correto sem empilhar conteúdo. Hashes inválidos mantêm `mod-inicio` como padrão ativo sem quebrar a execução.
 
 ---
 
 ### 3. Arquivos Alterados
-*   [ebook-ecosabon-prototipo/index.html](file:///home/leonardomaximinobernardo/My_projects/plataforma_educacional_sabao/ebook-ecosabon-prototipo/index.html)
-*   [ebook-ecosabon-prototipo/src/styles/main.css](file:///home/leonardomaximinobernardo/My_projects/plataforma_educacional_sabao/ebook-ecosabon-prototipo/src/styles/main.css)
 *   [ebook-ecosabon-prototipo/src/styles/print.css](file:///home/leonardomaximinobernardo/My_projects/plataforma_educacional_sabao/ebook-ecosabon-prototipo/src/styles/print.css)
 *   [ebook-ecosabon-prototipo/src/scripts/app.js](file:///home/leonardomaximinobernardo/My_projects/plataforma_educacional_sabao/ebook-ecosabon-prototipo/src/scripts/app.js)
 *   [ebook-ecosabon-prototipo/src/scripts/interactions.js](file:///home/leonardomaximinobernardo/My_projects/plataforma_educacional_sabao/ebook-ecosabon-prototipo/src/scripts/interactions.js)
 *   [ebook-ecosabon-prototipo/tests/interactions.test.js](file:///home/leonardomaximinobernardo/My_projects/plataforma_educacional_sabao/ebook-ecosabon-prototipo/tests/interactions.test.js)
-*   [reports/visualizacao-3d-molecular-ecosabon/05-plano-sdd-tdd-implementacao-futura.md](file:///home/leonardomaximinobernardo/My_projects/plataforma_educacional_sabao/reports/visualizacao-3d-molecular-ecosabon/05-plano-sdd-tdd-implementacao-futura.md) (Saneamento Documental)
 
 ---
 
 ### 4. Testes Adicionados e Execução `npm test`
-A suíte de testes locais foi expandida em 8 novos casos de teste (`T64` a `T69`, `T70`, `T71`):
-*   **T64:** Apenas uma seção activa existe após inicialização.
-*   **T65:** Valida que `activateModule("mod-2")` exibe `mod-2` e oculta `mod-1`.
-*   **T66:** Módulo inexistente retorna `false` sem erros.
-*   **T67:** Fallback sem classe `js-enabled` mantém HTML degradável e legível.
-*   **T68:** Apenas o item ativo da sidebar possui `aria-current="true"`.
-*   **T69:** Impressão linearizada é preservada com todas as seções exibidas.
-*   **T70:** Hotspots continuam funcionando e respondendo após troca de módulo.
-*   **T71:** Checklist Go/No-Go continua funcionando em seções trocadas.
+Expandimos a suíte de testes locais com 12 novos casos de teste (`T64` a `T75`):
+*   **T64:** Apenas uma `.ebook-section--active` existe na inicialização.
+*   **T65:** Módulos principais não recebem atributo `hidden` e atualizam `aria-hidden`.
+*   **T66:** Comportamento seguro com ID de módulo inexistente.
+*   **T67:** Sem classe `js-enabled`, todas as seções permanecem degradáveis na tela.
+*   **T68:** Sincronização e unicidade do `aria-current="true"` nos links da sidebar.
+*   **T69:** Impressão robusta linearizada sem depender de `hidden`.
+*   **T70:** Hotspots continuam funcionando após a ativação/troca de módulo.
+*   **T71:** Checklist Go/No-Go continua funcional em novos módulos ativos.
+*   **T72:** Hash inicial válido ativa o módulo correto.
+*   **T73:** Hash inicial inválido não quebra a tela e ativa `mod-inicio`.
+*   **T74:** Evento `popstate` reativa o módulo correspondente corretamente.
+*   **T75:** Bootstrap em `app.js` não chama `initScrollObserver()` na paginação ativa.
 
-*   **Número Final de Testes:** **71** testes.
-*   **Resultado de `npm test`:** **PASS** (100% de aprovação de todos os 71 testes).
+*   **Número Final de Testes:** **75** testes.
+*   **Resultado de `npm test`:** **PASS** (75 de 75 testes com sucesso).
 
 ---
 
 ### 5. Confirmações de UX e Portões de Segurança
-*   **Confirmação de Ocultação do Módulo Seguinte:** Verificado. O módulo subsequente não aparece mais abaixo do botão "Avançar".
-*   **Confirmação dos Botões "Avançar":** Verificado. Clicar em "Avançar" oculta o módulo atual, exibe o próximo e rola para o topo dele de forma suave.
-*   **Confirmação da Sidebar:** Verificado. A sidebar atualiza dinamicamente e de forma acessível os estados ativos de navegação.
-*   **Confirmação de Impressão Linear:** Verificado. O arquivo `print.css` força a renderização linear e sem ocultação de todos os módulos.
-*   **Confirmação dos Hotspots:** Verificado. Os hotspots do infográfico permanecem funcionais após trocas de seções.
-*   **Saneamento Documental 3D:** Confirmado. A pasta de planejamento molecular tridimensional foi estritamente saneada e organizada, contendo apenas arquivos markdown autorais e limpos (zero código ou texturas copiadas, zero impacto direto no código do produto).
-*   **Bloqueio C4/3E:** Confirmado. Nenhuma lógica reativa de simulação experimental, range sliders, persistência local ou chamadas de rede foi introduzida no EcoSabon.
+*   **Módulo seguinte ocultado:** Confirmado. Não há empilhamento de seções.
+*   **Botões "Avançar" e Sidebar:** Funcionam perfeitamente integrados com a paginação de seção ativa.
+*   **Preservação de Hotspots e Checklist:** Totalmente funcionais e testados.
+*   **Bloqueio C4/3E:** Totalmente mantido. Zero simulações quantitativas ou dependências externas.
+*   **Saneamento Documental 3D:** A análise de visualização 3D/Kotobee foi estritamente saneada e restrita a documentos de planejamento local. A preparação arquitetural e diretrizes contra complexidade ciclomática para próximas etapas foram registradas no [Documento 31](file:///home/leonardomaximinobernardo/My_projects/plataforma_educacional_sabao/reports/ebook-ecosabon-comparativo-articulate-html-epub-kotobee/31-preparacao-arquitetural-pos-paginacao-e-visualizacao-3d-4d.md).
 
 ---
 
 ### 6. Riscos Residuais
-Não há riscos residuais técnicos. A navegação paginada por seções ativas foi estruturada no ciclo de vida local do navegador sem dependências, o que garante a portabilidade offline completa do web-book.
+Os riscos residuais foram classificados como **baixos e controlados**. A navegação se baseia no histórico nativo e APIs do navegador. Não há risco de travamentos ou concorrência na sidebar devido à desativação do IntersectionObserver no bootstrap.
 
 ---
 
 ### 7. Recomendação
-Recomenda-se a abertura de Pull Request da branch `fix/ebook-module-pagination-ux` para `main` e merge subsequente para consolidar a navegação paginada por módulos na versão demonstrável estável.
+Recomenda-se abrir a Pull Request da branch `fix/ebook-module-pagination-ux` para a `main`, consolidando a paginação por módulo e as bases de governança arquitetural.
