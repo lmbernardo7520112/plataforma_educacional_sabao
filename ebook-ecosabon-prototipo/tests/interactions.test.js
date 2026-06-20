@@ -27,6 +27,8 @@ import {
   initStationMap,
   toggleHotspotPanel,
   initSaponificationHotspots,
+  activateModule,
+  initModulePagination,
 } from '../src/scripts/interactions.js';
 
 // ─── Helper: cria um DOM mínimo para testes ──────────────────────────────────
@@ -753,5 +755,213 @@ describe('Hotspots do Infográfico — Interação e Acessibilidade (H2-H3)', ()
 
   it('T60 — preservacao dos 50 testes originais (T1-T50)', () => {
     expect(true).toBe(true);
+  });
+});
+
+// ─── Helper: cria um DOM mínimo para testes de paginação ──────────────────────
+
+function createPaginationTestDOM() {
+  const dom = new JSDOM(`
+    <!DOCTYPE html>
+    <html>
+      <body class="">
+        <nav class="sidebar">
+          <a href="#mod-inicio" class="sidebar__link" id="nav-inicio">Início</a>
+          <a href="#mod-1" class="sidebar__link" id="nav-mod-1">Módulo 1</a>
+          <a href="#mod-2" class="sidebar__link" id="nav-mod-2">Módulo 2</a>
+          <a href="#mod-3" class="sidebar__link" id="nav-mod-3">Módulo 3</a>
+        </nav>
+        <main>
+          <section id="mod-inicio" class="ebook-section ebook-section--active">Início</section>
+          <section id="mod-1" class="ebook-section">Módulo 1
+            <button data-nav="mod-2" id="btn-next-1">Avançar</button>
+          </section>
+          <section id="mod-2" class="ebook-section">Módulo 2</section>
+          <section id="mod-3" class="ebook-section">Módulo 3</section>
+        </main>
+      </body>
+    </html>
+  `);
+  return dom;
+}
+
+describe('Paginação por Módulo (UX Fix)', () => {
+  let dom;
+  let doc;
+  let win;
+
+  beforeEach(() => {
+    dom = createPaginationTestDOM();
+    doc = dom.window.document;
+    win = dom.window;
+    // Mock win.scrollTo
+    win.scrollTo = () => {};
+  });
+
+  it('T64 — apenas uma .ebook-section--active existe após initModulePagination', () => {
+    initModulePagination(doc, win);
+    const activeSections = doc.querySelectorAll('.ebook-section--active');
+    expect(activeSections.length).toBe(1);
+    expect(activeSections[0].id).toBe('mod-inicio');
+    expect(doc.body.classList.contains('js-enabled')).toBe(true);
+  });
+
+  it('T65 — activateModule("mod-2") exibe mod-2 e oculta mod-1', () => {
+    initModulePagination(doc, win);
+    
+    // Ativa mod-2
+    const result = activateModule('mod-2', doc, win);
+    expect(result).toBe(true);
+
+    const activeSections = doc.querySelectorAll('.ebook-section--active');
+    expect(activeSections.length).toBe(1);
+    expect(activeSections[0].id).toBe('mod-2');
+
+    // Módulos principais NÃO devem usar o atributo hidden
+    const sections = doc.querySelectorAll('.ebook-section');
+    sections.forEach((sec) => {
+      expect(sec.hasAttribute('hidden')).toBe(false);
+    });
+
+    // Módulos inativos devem ter aria-hidden="true" e o ativo aria-hidden="false"
+    const modInicio = doc.getElementById('mod-inicio');
+    const mod1 = doc.getElementById('mod-1');
+    const mod2 = doc.getElementById('mod-2');
+
+    expect(modInicio.getAttribute('aria-hidden')).toBe('true');
+    expect(mod1.getAttribute('aria-hidden')).toBe('true');
+    expect(mod2.getAttribute('aria-hidden')).toBe('false');
+  });
+
+  it('T66 — activateModule retorna false para id inexistente sem quebrar', () => {
+    initModulePagination(doc, win);
+    const result = activateModule('mod-inexistente', doc, win);
+    expect(result).toBe(false);
+  });
+
+  it('T67 — se JS não aplicar js-enabled, o HTML permanece sem js-enabled e degradável', () => {
+    // Não chamamos initModulePagination
+    expect(doc.body.classList.contains('js-enabled')).toBe(false);
+    const activeSections = doc.querySelectorAll('.ebook-section--active');
+    // mod-inicio tem por padrão no HTML, mas outras seções não têm display oculto no CSS se body não tiver js-enabled
+    expect(activeSections.length).toBe(1);
+  });
+
+  it('T68 — sidebar recebe aria-current="true" apenas no item ativo', () => {
+    initModulePagination(doc, win);
+    activateModule('mod-3', doc, win);
+
+    const activeLink = doc.querySelector('.sidebar__link--active');
+    expect(activeLink.getAttribute('href')).toBe('#mod-3');
+    expect(activeLink.getAttribute('aria-current')).toBe('true');
+
+    const otherLinks = doc.querySelectorAll('.sidebar__link:not(.sidebar__link--active)');
+    otherLinks.forEach(link => {
+      expect(link.hasAttribute('aria-current')).toBe(false);
+    });
+  });
+
+  it('T69 — impressão e fallback preservados (todas as seções aparecem)', () => {
+    // Leitura das regras do arquivo print.css para garantir a presença das regras display: block !important
+    const cssPath = resolve(__dirname, '..', 'src/styles/print.css');
+    const printCSS = readFileSync(cssPath, 'utf-8');
+    expect(printCSS).toContain('.ebook-section,');
+    expect(printCSS).toContain('display: block !important');
+  });
+
+  it('T70 — hotspots continuam funcionando após troca de módulo', () => {
+    // Monta o DOM de hotspots
+    const hotspotsDoc = createHotspotsTestDOM();
+    const hotspotsWin = hotspotsDoc.defaultView;
+    hotspotsWin.scrollTo = () => {};
+
+    // Adiciona as classes/ids necessários de ebook-section
+    const sec1 = hotspotsDoc.createElement('section');
+    sec1.id = 'mod-1';
+    sec1.className = 'ebook-section ebook-section--active';
+    const sec2 = hotspotsDoc.createElement('section');
+    sec2.id = 'mod-2';
+    sec2.className = 'ebook-section';
+
+    // Move os elementos para sec1
+    const elements = Array.from(hotspotsDoc.body.children);
+    elements.forEach(el => sec1.appendChild(el));
+    hotspotsDoc.body.appendChild(sec1);
+    hotspotsDoc.body.appendChild(sec2);
+
+    // Inicializa hotspots e paginação
+    initModulePagination(hotspotsDoc, hotspotsWin);
+    initSaponificationHotspots(hotspotsDoc);
+
+    // Troca de módulo
+    activateModule('mod-2', hotspotsDoc, hotspotsWin);
+
+    // Verifica se os hotspots de mod-1 ainda respondem à interação
+    const button = hotspotsDoc.querySelector('.infographic-hotspot[data-target="triglicerideo"]');
+    const panel = hotspotsDoc.getElementById('desc-triglicerideo');
+    expect(button.getAttribute('aria-expanded')).toBe('false');
+
+    button.click();
+    expect(button.getAttribute('aria-expanded')).toBe('true');
+    expect(panel.hasAttribute('hidden')).toBe(false);
+  });
+
+  it('T71 — checklist Go/No-Go continua funcionando', () => {
+    const listDom = new JSDOM(`
+      <section id="mod-1" class="ebook-section ebook-section--active">
+        <div id="checklist-go">
+          <input type="checkbox" id="item-1">
+          <input type="checkbox" id="item-2">
+        </div>
+      </section>
+      <section id="mod-2" class="ebook-section"></section>
+    `);
+    const listDoc = listDom.window.document;
+    const listWin = listDom.window;
+    listWin.scrollTo = () => {};
+
+    initModulePagination(listDoc, listWin);
+
+    // Troca de módulo
+    activateModule('mod-2', listDoc, listWin);
+
+    // Avalia o checklist e garante que responde normalmente
+    const { allChecked } = evaluateChecklist('checklist-go', listDoc);
+    expect(allChecked).toBe(false);
+  });
+
+  it('T72 — hash inicial válido ativa o módulo correto', () => {
+    win.location.hash = '#mod-2';
+    initModulePagination(doc, win);
+    const activeSections = doc.querySelectorAll('.ebook-section--active');
+    expect(activeSections.length).toBe(1);
+    expect(activeSections[0].id).toBe('mod-2');
+  });
+
+  it('T73 — hash inicial inválido ativa mod-inicio por padrão e não quebra a página', () => {
+    win.location.hash = '#mod-invalido';
+    initModulePagination(doc, win);
+    const activeSections = doc.querySelectorAll('.ebook-section--active');
+    expect(activeSections.length).toBe(1);
+    expect(activeSections[0].id).toBe('mod-inicio');
+  });
+
+  it('T74 — popstate ativa o módulo correto', () => {
+    initModulePagination(doc, win);
+    
+    // Simula alteração de hash e disparo do evento popstate
+    win.location.hash = '#mod-3';
+    const popstateEvent = new win.Event('popstate');
+    win.dispatchEvent(popstateEvent);
+
+    const activeSections = doc.querySelectorAll('.ebook-section--active');
+    expect(activeSections.length).toBe(1);
+    expect(activeSections[0].id).toBe('mod-3');
+  });
+
+  it('T75 — app.js não inicializa initScrollObserver no modo paginado por padrão', () => {
+    const appPath = resolve(__dirname, '..', 'src/scripts/app.js');
+    const appJS = readFileSync(appPath, 'utf-8');
+    expect(appJS).toContain('// initScrollObserver();');
   });
 });

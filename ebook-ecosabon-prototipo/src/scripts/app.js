@@ -17,6 +17,8 @@ import {
   scrollToTop,
   initStationMap,
   initSaponificationHotspots,
+  activateModule,
+  initModulePagination,
 } from './interactions.js';
 
 // ─── Botão toggle da sidebar (mobile) ───────────────────────────────────────
@@ -32,8 +34,13 @@ document.querySelectorAll('.sidebar__link').forEach((link) => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
     const targetId = link.getAttribute('href').substring(1);
-    scrollToSection(targetId);
-    setActiveNavItem(targetId);
+    
+    // Tenta ativar a navegação por módulo paginado, senão rola até a seção (fallback)
+    const activated = activateModule(targetId);
+    if (!activated) {
+      scrollToSection(targetId);
+      setActiveNavItem(targetId);
+    }
 
     // Fecha a sidebar no mobile se estiver aberta
     const sidebar = document.querySelector('.sidebar');
@@ -47,13 +54,18 @@ document.querySelectorAll('.sidebar__link').forEach((link) => {
 document.querySelectorAll('[data-nav]').forEach((btn) => {
   btn.addEventListener('click', () => {
     const targetId = btn.getAttribute('data-nav');
-    scrollToSection(targetId);
-    setActiveNavItem(targetId);
+    const activated = activateModule(targetId);
+    if (!activated) {
+      scrollToSection(targetId);
+      setActiveNavItem(targetId);
+    }
   });
 });
 
-// ─── Inicialização do IntersectionObserver (Progressive Enhancement) ────────
-initScrollObserver();
+// ─── Inicialização do IntersectionObserver (Fallback / Modo Contínuo Legado) ──
+// No modo oficial paginado por módulo, desabilitamos o IntersectionObserver para
+// evitar conflitos na sidebar. A função permanece exportada para compatibilidade.
+// initScrollObserver();
 
 // ─── Inicialização do Mapa de Estações (Execução 3 — C3) ───────────────────
 initStationMap();
@@ -89,5 +101,5 @@ if (topBtn) {
   topBtn.addEventListener('click', scrollToTop);
 }
 
-// ─── Inicialização: definir item ativo inicial no sumário ───────────────────
-setActiveNavItem('mod-inicio');
+// ─── Inicialização: definir paginação por módulo ativo ──────────────────────
+initModulePagination();

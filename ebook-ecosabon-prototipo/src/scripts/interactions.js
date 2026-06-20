@@ -333,3 +333,114 @@ export function initSaponificationHotspots(doc) {
 
   return hotspots.length;
 }
+
+// ─── Paginação por Módulo (UX Fix) ──────────────────────────────────────────
+
+/**
+ * Ativa uma seção/módulo e oculta as demais.
+ * Atualiza classes, aria-hidden/hidden, aria-current na sidebar, rola para o topo e altera o hash de forma segura.
+ * Retorna true se a ativação foi bem sucedida, false caso o ID não exista ou ocorra um erro.
+ */
+export function activateModule(moduleId, doc, win) {
+  const safeDoc = doc ?? (typeof document !== 'undefined' ? document : null);
+  const safeWin = win ?? (typeof window !== 'undefined' ? window : null);
+  if (!safeDoc) return false;
+  
+  const targetSection = safeDoc.getElementById(moduleId);
+  if (!targetSection || !targetSection.classList.contains('ebook-section')) {
+    return false;
+  }
+
+  const sections = safeDoc.querySelectorAll('.ebook-section');
+  sections.forEach((sec) => {
+    if (sec.id === moduleId) {
+      sec.classList.add('ebook-section--active');
+      sec.setAttribute('aria-hidden', 'false');
+    } else {
+      sec.classList.remove('ebook-section--active');
+      sec.setAttribute('aria-hidden', 'true');
+    }
+  });
+
+  // Atualizar a sidebar
+  const sidebarLinks = safeDoc.querySelectorAll('.sidebar__link');
+  sidebarLinks.forEach((link) => {
+    const href = link.getAttribute('href');
+    if (href === `#${moduleId}`) {
+      link.classList.add('sidebar__link--active');
+      link.setAttribute('aria-current', 'true');
+    } else {
+      link.classList.remove('sidebar__link--active');
+      link.removeAttribute('aria-current');
+    }
+  });
+
+  // Atualizar o hash na URL de forma segura (sem disparar rolagem default do navegador)
+  try {
+    if (safeWin && safeWin.history && safeWin.history.pushState) {
+      safeWin.history.pushState(null, '', `#${moduleId}`);
+    } else if (safeWin && safeWin.location) {
+      safeWin.location.hash = `#${moduleId}`;
+    }
+  } catch (e) {
+    if (safeWin && safeWin.location) {
+      safeWin.location.hash = `#${moduleId}`;
+    }
+  }
+
+  // Rolar para o topo
+  if (safeWin) {
+    safeWin.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  return true;
+}
+
+/**
+ * Ativa o módulo correspondente ao hash atual da URL.
+ * Se o hash for vazio ou inválido, ativa o módulo padrão ("mod-inicio").
+ */
+export function activateModuleFromHash(doc, win) {
+  const safeDoc = doc ?? (typeof document !== 'undefined' ? document : null);
+  const safeWin = win ?? (typeof window !== 'undefined' ? window : null);
+  if (!safeDoc) return false;
+
+  let moduleId = 'mod-inicio';
+  if (safeWin && safeWin.location && safeWin.location.hash) {
+    const hashId = safeWin.location.hash.substring(1);
+    const targetSec = safeDoc.getElementById(hashId);
+    if (targetSec && targetSec.classList.contains('ebook-section')) {
+      moduleId = hashId;
+    }
+  }
+
+  return activateModule(moduleId, safeDoc, safeWin);
+}
+
+/**
+ * Inicializa a paginação por módulos.
+ * Adiciona a classe js-enabled no body, ativa o módulo padrão ("mod-inicio" ou o hash atual)
+ * e retorna true se inicializou com sucesso.
+ */
+export function initModulePagination(doc, win) {
+  const safeDoc = doc ?? (typeof document !== 'undefined' ? document : null);
+  const safeWin = win ?? (typeof window !== 'undefined' ? window : null);
+  if (!safeDoc || !safeDoc.body) return false;
+
+  safeDoc.body.classList.add('js-enabled');
+
+  // Ativar o módulo inicial
+  activateModuleFromHash(safeDoc, safeWin);
+
+  // Escutar eventos de hashchange e popstate para suportar navegação pelo histórico/hash
+  if (safeWin) {
+    const handler = () => {
+      activateModuleFromHash(safeDoc, safeWin);
+    };
+    safeWin.addEventListener('hashchange', handler);
+    safeWin.addEventListener('popstate', handler);
+  }
+
+  return true;
+}
+

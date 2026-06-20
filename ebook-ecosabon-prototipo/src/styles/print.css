@@ -27,7 +27,8 @@
 
   /* Mostrar todos os módulos para impressão */
   .module-section,
-  .ebook-section {
+  .ebook-section,
+  .ebook-section[hidden] {
     display: block !important;
     page-break-before: always;
   }
