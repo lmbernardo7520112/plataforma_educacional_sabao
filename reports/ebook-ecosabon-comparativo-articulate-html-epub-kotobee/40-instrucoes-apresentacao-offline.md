@@ -63,3 +63,8 @@ google-chrome --headless --disable-gpu --print-to-pdf=release/ecosabon-webbook-p
 * **CORS Local:** O protocolo `file://` impede o funcionamento da navegação paginada por módulo na tela. Utilize preferencialmente a Opção 1 (Vite local ou servidores simples de terminal).
 * **Dados Fictícios:** O material é uma versão prototípica de homologação e de caráter técnico. Portanto, as strings marcadas como `"DADOS FICTÍCIOS"` e referências a habilidades `"habilidade BNCC"` são mantidas de propósito no e-book para fins de auditoria de gates pedagógicos.
 * **Governança de Interatividades Complexas:** As simulações experimentais avançadas (C4/3E) e visualizações moleculares 3D dinâmicas com dependência de bibliotecas de terceiros (Unity/WebGL/Three.js) estão **desativadas** nesta versão, com governança mantida sob as diretrizes SDD/TDD do projeto.
+* **Armazenamento e Exclusão do Git:** Os arquivos `ecosabon-webbook-demo-local.zip` e `ecosabon-webbook-pdf-conferencia.pdf` gerados localmente residem na pasta `release/`. Eles foram retirados do índice Git e estão configurados no `.gitignore` para não serem versionados na `main`.
+* **Como Regenerar os Artefatos:**
+  * **ZIP:** Recrie uma pasta contendo apenas o `index.html`, o manual de instruções e a pasta `src/` (com scripts e estilos) e compacte-a como `ecosabon-webbook-demo-local.zip`.
+  * **PDF:** Use o comando headless Chrome ou a função "Imprimir" do navegador de acordo com a Seção 3.
+

@@ -80,3 +80,7 @@ __pycache__/
 *.mov
 *.mkv
 *.epub
+
+# Generated release artifacts — not versioned in main
+release/
+

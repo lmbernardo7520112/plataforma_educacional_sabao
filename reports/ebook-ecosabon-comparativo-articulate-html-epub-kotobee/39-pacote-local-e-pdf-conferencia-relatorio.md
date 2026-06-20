@@ -23,11 +23,12 @@ Este relatório detalha a preparação do pacote local autônomo (ZIP) e do PDF 
 
 ---
 
-### 3. Arquivos Gerados de Distribuição
-Todos os arquivos de liberação foram armazenados no diretório de lançamentos `release/`:
+### 3. Arquivos Gerados de Distribuição (Locais / Não-Versionados)
+Todos os arquivos de liberação foram armazenados no diretório de lançamentos `release/` (e configurados no `.gitignore` para não serem submetidos à branch `main`):
 
-1. **[ecosabon-webbook-demo-local.zip](file:///home/leonardomaximinobernardo/My_projects/plataforma_educacional_sabao/release/ecosabon-webbook-demo-local.zip):** Pacote ZIP compacto contendo apenas os ativos estáticos fundamentais para a execução local do web-book.
-2. **[ecosabon-webbook-pdf-conferencia.pdf](file:///home/leonardomaximinobernardo/My_projects/plataforma_educacional_sabao/release/ecosabon-webbook-pdf-conferencia.pdf):** Documento PDF de 315 KB gerado de forma síncrona sob as regras estritas da folha de estilos de impressão.
+1. **`release/ecosabon-webbook-demo-local.zip`:** Pacote ZIP compacto contendo apenas os ativos estáticos fundamentais para a execução local do web-book.
+2. **`release/ecosabon-webbook-pdf-conferencia.pdf`:** Documento PDF de 315 KB gerado de forma síncrona sob as regras estritas da folha de estilos de impressão.
+
 
 ---
 
@@ -78,4 +79,5 @@ Não há riscos residuais de segurança. O único detalhe técnico consiste no b
 ---
 
 ### 9. Recomendação de Liberação
-Recomenda-se aprovar esta entrega documental e de pacotes. O pacote local e o PDF de conferência atendem plenamente às especificações pedagógicas e técnicas, servindo como uma versão candidata estável de demonstração.
+Recomenda-se aprovar esta entrega documental. O ZIP e o PDF de conferência são artefatos de release gerados localmente e não devem ser versionados diretamente na `main`. Recomenda-se anexá-los a uma GitHub Release, entrega externa ou pasta local de distribuição.
+
