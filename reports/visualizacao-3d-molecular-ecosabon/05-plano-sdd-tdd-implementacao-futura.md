@@ -49,15 +49,23 @@ Qualquer implementação de código subsequente deve seguir estritamente o crono
     *   *Arquivos:* `tests/interactions.test.js`.
 
 ---
-
 ### 4. Portões de Aceite (Gates) para PRs Futuras
 *   **npm test:** 100% de aprovação (todos os 63 testes atuais + testes novos passing).
 *   **Sem Dependências:** Zero bibliotecas novas (não instalar Three.js, React, etc.).
-*   **Bloqueio C4/3E:** Nenhuma lógica de simulação física quantitativa ou inputs interativos como sliders.
-*   **Preservação de Hotspots:** Os hotspots atuais do infográfico principal não podem ser modificados.
+*   **Bloqueio C4/3E:** Nenhuma lógica de simulação física quantitativa ou inputs interativos como sliders. O C4/3E permanece permanentemente bloqueado.
+*   **Preservação de Hotspots:** Os hotspots acessíveis já versionados são o baseline premium e pedagógico do EcoSabon e não devem ser removidos ou modificados.
 
 ---
 
-### 5. Declaração Obrigatória de Não-Cópia
+### 5. Saneamento de Governança da Análise 3D
+*   **Apenas Conteúdo Autoral:** Esta pasta `reports/visualizacao-3d-molecular-ecosabon/` contém exclusivamente planejamento documental e diretrizes de design autoral para o EcoSabon. É totalmente isenta de screenshots, imagens, modelos 3D, assets, dumps HTML, scripts externos, arquivos Sketchfab/Kotobee ou qualquer material copiado do *Plant Anatomy*.
+*   **Commit Documental na Main:** O commit anterior realizado diretamente na branch `main` foi estritamente documental e não causou qualquer impacto ou alteração no código de produto do web-book.
+*   **Restrição de Implementação:** Qualquer implementação futura da camada do Molecular Stage 2.5D exige a criação de uma branch de trabalho própria, documentos SDD/TDD específicos, submissão de Pull Request e autorização explícita do orientador/usuário.
+*   **Correção de Referências:** Qualquer menção ao planejamento de SDD/TDD de visualização molecular deve referenciar diretamente o arquivo [05-plano-sdd-tdd-implementacao-futura.md](file:///home/leonardomaximinobernardo/My_projects/plataforma_educacional_sabao/reports/visualizacao-3d-molecular-ecosabon/05-plano-sdd-tdd-implementacao-futura.md) (anteriormente referenciado de forma genérica como "documento 35").
+
+---
+
+### 6. Declaração Obrigatória de Não-Cópia
 > [!IMPORTANT]
 > Nenhum conteúdo textual, imagem, screenshot, vídeo, modelo 3D, textura, ícone, asset, script, identidade visual ou arquivo multimídia do Plant Anatomy/Kotobee foi copiado, extraído ou incorporado ao EcoSabon. A análise usa o exemplo exclusivamente como benchmark de padrões abstratos de UX, visualização científica e interação.
+
