@@ -61,6 +61,7 @@ tools/
 # Reports — governance docs are tracked; only temp logs ignored
 # ============================================================
 # reports/  (tracked — governance and SDD artifacts)
+reports/kotobee-plantanatomy-benchmark-ecosabon/
 
 # ============================================================
 # Python cache
