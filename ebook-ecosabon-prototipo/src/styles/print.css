@@ -135,4 +135,32 @@
   .infographic__operator {
     color: #555 !important;
   }
+
+  /* Hotspots do Infográfico (Mídia Impressa) */
+  .infographic-hotspot {
+    display: none !important;
+  }
+
+  .infographic-panel,
+  .infographic-panel[hidden] {
+    display: block !important;
+    background: #f5f5f5 !important;
+    border-left: 3px solid #333 !important;
+    color: #222 !important;
+    margin-bottom: 0.5rem !important;
+    padding: 0.5rem 0.75rem !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+
+  .infographic-panel__title {
+    color: #111 !important;
+    font-size: 10pt !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .infographic-panel__content {
+    color: #333 !important;
+    font-size: 9pt !important;
+  }
 }

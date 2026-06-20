@@ -742,6 +742,189 @@ a:focus-visible { outline: 2px solid var(--color-success); outline-offset: 2px; 
   color: var(--color-primary);
 }
 
+/* ─── Hotspots do Infográfico (Execução 3B) ─────────────────────── */
+.infographic-hotspot {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary);
+  background: var(--color-surface-2);
+  color: var(--color-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+  z-index: 10;
+  padding: 0;
+}
+
+.infographic-hotspot::after {
+  content: "+";
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.infographic-hotspot:hover,
+.infographic-hotspot[aria-expanded="true"] {
+  background: var(--color-primary);
+  color: var(--color-bg);
+  box-shadow: 0 0 12px var(--color-primary);
+  transform: scale(1.15);
+}
+
+.infographic-hotspot:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Posicionamentos dos Pins */
+.infographic-hotspot--top-right {
+  right: -8px;
+  top: -8px;
+}
+
+/* Por padrão, os pins normais ficam no top-right */
+.infographic__molecule-icon-wrapper .infographic-hotspot:not(.infographic-hotspot--top-left):not(.infographic-hotspot--badge) {
+  right: -8px;
+  top: -8px;
+}
+
+.infographic-hotspot--top-left {
+  left: -8px;
+  top: -8px;
+  border-color: var(--color-warning);
+  color: var(--color-warning);
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+}
+
+.infographic-hotspot--top-left:hover,
+.infographic-hotspot--top-left[aria-expanded="true"] {
+  background: var(--color-warning);
+  color: var(--color-bg);
+  box-shadow: 0 0 12px var(--color-warning);
+}
+
+.infographic-hotspot--top-left::after {
+  content: "3×";
+  font-size: 10px;
+}
+
+.infographic-hotspot--arrow {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  box-shadow: 0 0 8px rgba(6, 182, 212, 0.4);
+}
+
+.infographic-hotspot--arrow:hover,
+.infographic-hotspot--arrow[aria-expanded="true"] {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  box-shadow: 0 0 12px var(--color-accent);
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.infographic-hotspot--arrow::after {
+  content: "→";
+}
+
+/* Badges interativos do Infográfico */
+.infographic-hotspot--badge {
+  position: relative;
+  width: auto;
+  height: auto;
+  border-radius: 20px;
+  padding: 0.4rem 0.8rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: none;
+}
+
+.infographic-hotspot--badge::after {
+  display: none !important;
+}
+
+.infographic-hotspot--green {
+  border-color: var(--color-primary);
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--color-primary);
+}
+
+.infographic-hotspot--green:hover,
+.infographic-hotspot--green[aria-expanded="true"] {
+  background: var(--color-primary);
+  color: var(--color-bg);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+}
+
+.infographic-hotspot--alert {
+  border-color: var(--color-danger);
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--color-danger);
+}
+
+.infographic-hotspot--alert:hover,
+.infographic-hotspot--alert[aria-expanded="true"] {
+  background: var(--color-danger);
+  color: var(--color-bg);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Painéis Explicativos */
+.infographic-panels {
+  margin-top: 1rem;
+}
+
+.infographic-panel {
+  background: var(--color-surface-2);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-card);
+  animation: slideIn 250ms ease-out;
+}
+
+.infographic-panel--alert {
+  border-left-color: var(--color-danger);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.infographic-panel__title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.infographic-panel__content {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ─── Rubric Table ───────────────────────────────────────────────── */
 .rubric-table {
   width: 100%;
