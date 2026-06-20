@@ -26,17 +26,17 @@ A suíte será ampliada com testes específicos que cobrem acessibilidade por te
 
 #### **Grupo B: Testes de Comportamento e Interatividade (JS)**
 * **T54: Interação de Clique (Abertura/Fechamento):**
-  * *Verifica:* Se clicar em um botão de hotspot altera `aria-expanded` para `"true"` e exibe o contêiner de descrição correspondente (removendo a propriedade `hidden` / classe de ocultação). Clicar novamente deve inverter os atributos.
+  * *Verifica:* Se clicar em um botão de hotspot altera `aria-expanded` para `"true"` e exibe o painel explicativo inline correspondente (removendo a propriedade `hidden` ou classe de ocultação). Clicar novamente deve reverter os atributos.
 * **T55: Foco Único e Exclusividade:**
-  * *Verifica:* Se ao abrir o hotspot 2 (ex: NaOH), o hotspot 1 (Triglicerídeo) previamente aberto é fechado automaticamente, garantindo apenas um balão descritivo ativo por vez.
+  * *Verifica:* Se ao abrir o hotspot 2 (ex: NaOH), o hotspot 1 (Triglicerídeo) previamente aberto é fechado automaticamente, garantindo apenas um painel de conteúdo explicativo não bloqueante ativo por vez.
 * **T56: Suporte a Teclado (Enter / Space):**
   * *Verifica:* Se disparar eventos `keydown` com a tecla `"Enter"` ou `" "` (Espaço) nos botões de hotspot aciona a função de alternância com o mesmo efeito do clique.
 * **T57: Fechamento por Tecla Escape:**
-  * *Verifica:* Se disparar um evento `keydown` com a tecla `"Escape"` no balão aberto ou no botão associado fecha a descrição e devolve o foco para o botão de gatilho correspondente.
+  * *Verifica:* Se disparar um evento `keydown` com a tecla `"Escape"` no painel explicativo aberto ou no botão associado fecha a descrição e devolve o foco para o botão de gatilho correspondente.
 
 #### **Grupo C: Garantias de Acessibilidade e Fallback**
-* **T58: Fallback sem JavaScript:**
-  * *Verifica:* Se as explicações conceituais dos hotspots possuem marcações semânticas que as deixam acessíveis (mesmo que estáticas) caso o JavaScript falhe ou esteja desativado.
+* **T58: Fallback de Impressão e Sem JavaScript:**
+  * *Verifica:* Se o `print.css` força as caixas explicativas a aparecerem abertas ou linearizadas e se a estrutura HTML funciona estaticamente sem JavaScript carregado.
 * **T59: Preservação de Foco Visível:**
   * *Verifica:* Se a folha de estilo contém regras CSS para `:focus-visible` aplicadas aos botões dos hotspots, garantindo outline visível de foco de teclado.
 
@@ -54,24 +54,24 @@ A suíte será ampliada com testes específicos que cobrem acessibilidade por te
 
 ### 3. Estrutura do Teste de Comportamento Sugerida (Esboço TDD)
 ```javascript
-test('T54 — Clicar em um hotspot do infográfico deve abrir e fechar a descrição correspondente', () => {
+test('T54 — Clicar em um hotspot deve abrir e fechar a caixa explicativa inline correspondente', () => {
   const dom = createStationTestDOM(); // Helper do JSDOM
   const doc = dom.window.document;
   
   const hotspotBtn = doc.querySelector('.infographic-hotspot[data-target="triglicerideo"]');
-  const bubble = doc.querySelector('#hotspot-desc-triglicerideo');
+  const panel = doc.querySelector('#hotspot-desc-triglicerideo');
   
   expect(hotspotBtn.getAttribute('aria-expanded')).toBe('false');
-  expect(bubble.hasAttribute('hidden')).toBe(true);
+  expect(panel.hasAttribute('hidden')).toBe(true);
   
   // Simular clique
   hotspotBtn.click();
   expect(hotspotBtn.getAttribute('aria-expanded')).toBe('true');
-  expect(bubble.hasAttribute('hidden')).toBe(false);
+  expect(panel.hasAttribute('hidden')).toBe(false);
   
   // Simular segundo clique (fechamento)
   hotspotBtn.click();
   expect(hotspotBtn.getAttribute('aria-expanded')).toBe('false');
-  expect(bubble.hasAttribute('hidden')).toBe(true);
+  expect(panel.hasAttribute('hidden')).toBe(true);
 });
 ```

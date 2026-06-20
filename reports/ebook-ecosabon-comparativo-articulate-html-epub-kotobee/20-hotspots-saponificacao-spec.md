@@ -8,19 +8,27 @@
 ---
 
 ### 1. Objetivo da Evolução
-Evoluir a experiência pedagógica e visual do infográfico da reação de saponificação (`#infografico-saponificacao`) no web-book EcoSabon. O infográfico, atualmente estático, será dotado de pontos de interação locais (hotspots) baseados em padrões de acessibilidade ARIA, fornecendo descrições conceituais detalhadas sobre os reagentes, produtos e aspectos químicos/ambientais da saponificação ao clique ou foco de teclado do usuário.
+Evoluir a experiência pedagógica e visual do infográfico da reação de saponificação (`#infografico-saponificacao`) no web-book EcoSabon. O infográfico, atualmente estático, será dotado de pontos de interação locais (hotspots) baseados em padrões de acessibilidade ARIA, revelando painéis explicativos inline e acessíveis que detalham os aspectos químicos, ecológicos e de segurança para os reagentes, produtos e dinâmica da reação.
 
 ---
 
-### 2. Escopo e Não-Escopo
+### 2. Diretriz de Acessibilidade e Não-Bloqueio
+
+> [!IMPORTANT]
+> **Arquitetura de Apresentação:**  
+> Os hotspots não devem abrir modais, overlays bloqueantes ou popups que escondam conteúdo essencial. A interação deve revelar painéis explicativos inline, acessíveis, navegáveis por teclado e compatíveis com impressão.
+
+---
+
+### 3. Escopo e Não-Escopo
 
 #### **Em Escopo:**
-* **Pontos de Interação (Hotspots):** Inclusão de botões de gatilho (`<button>`) no HTML em posições relativas a cada componente do infográfico.
-* **Detalhamento Conceitual:** Caixas de informação descritivas (bubbles/popups explicativos) que abrem e fecham localmente na interface.
-* **Acessibilidade por Teclado:** Controle de foco, suporte a teclas `Tab`, `Enter`, `Space` e `Escape`.
-* **Acessibilidade para Leitores de Tela:** Uso apropriado de `aria-expanded`, `aria-controls`, `aria-haspopup` e anúncios de mudança de estado.
-* **Adaptação para Mobile:** Redesenho responsivo para evitar sobreposição ou estouro de balões explicativos na visualização vertical do celular.
-* **Adaptação de Impressão:** Linearização completa das explicações dos hotspots no arquivo PDF gerado (`print.css`), exibindo todo o conteúdo de forma estática e contínua.
+* **Pontos de Interação (Hotspots):** Inclusão de botões de gatilho (`<button>`) no HTML em posições relativas aos componentes do infográfico.
+* **Painéis Explicativos Inline e Acessíveis:** Caixas explicativas associadas aos hotspots que aparecem de forma integrada ao fluxo da página.
+* **Navegação por Teclado:** Controle de foco, suporte a teclas `Tab`, `Enter` e `Space`.
+* **Acessibilidade para Leitores de Tela:** Uso qualificado de `aria-expanded` (no botão de controle) e `aria-controls` (referenciando o painel de conteúdo).
+* **Adaptação para Mobile:** Redesenho responsivo para evitar quebras de visualização ou textos truncados.
+* **Ajustes de Impressão:** Linearização completa das caixas explicativas no `print.css`, exibindo-as de forma aberta e estática na versão impressa do PDF.
 
 #### **Não-Escopo (Proibições Absolutas):**
 * ❌ **Nenhuma** simulação de parâmetros reacionais, sliders ou controle do tipo range.
@@ -32,12 +40,12 @@ Evoluir a experiência pedagógica e visual do infográfico da reação de sapon
 
 ---
 
-### 3. Elementos do Infográfico que Receberão Hotspots
-Os seguintes 8 pontos do infográfico receberão hotspots identificadores:
+### 4. Elementos do Infográfico que Receberão Hotspots
+Os seguintes 8 pontos do infográfico receberão caixas explicativas associadas aos hotspots:
 
-1. **Triglicerídeo:** Descrição da molécula de triéster derivada dos óleos residuais.
+1. **Triglicerídeo:** Descrição da molécula de triéster proveniente do óleo de fritura usado.
 2. **NaOH (Hidróxido de Sódio):** Conceituação da base forte necessária para a hidrólise alcalina.
-3. **Coeficiente Estequiométrico 3× (Reagente):** Explicação sobre a proporção molar necessária (3 mols de base para 1 mol de triglicerídeo).
+3. **Coeficiente Estequiométrico 3× (Reagente):** Explicação da proporção molar necessária (3 mols de base para 1 mol de triglicerídeo).
 4. **Seta de Reação:** Representação visual do sentido da transformação química direta de saponificação.
 5. **Sabão:** Descrição do produto principal (sais de ácidos graxos) com suas propriedades tensoativas.
 6. **Glicerol:** Explicação do subproduto valioso (propriedades umectantes) e sua separação.
@@ -46,14 +54,22 @@ Os seguintes 8 pontos do infográfico receberão hotspots identificadores:
 
 ---
 
-### 4. Comportamento Esperado e Regras de Interação
-1. **Comportamento Toggle:** Clicar em um hotspot ativo abre a explicação. Clicar novamente ou pressionar `Escape` fecha a explicação.
-2. **Foco Único:** Apenas uma explicação de hotspot pode estar visível por vez. Ao abrir um hotspot, qualquer outro anteriormente aberto deve ser fechado automaticamente.
-3. **Navegação por Teclado:** O foco do cursor deve ser deslocado de forma lógica. A ativação ocorre via `Enter` ou `Space`. Pressionar `Escape` retorna o foco para o botão ativador.
+### 5. Comportamento Esperado e Regras de Interação
+1. **Acionamento:** As caixas explicativas devem ser acionáveis por clique/toque ou navegação por teclado.
+2. **Uso de Semântica Nativa:** Utilizar `<button>` nativo sempre que possível para controle do estado dos blocos explicativos alternáveis.
+3. **Comportamento Toggle:** Clicar em um hotspot ativo abre a explicação. Clicar novamente fecha a explicação.
+4. **Foco Único:** Apenas um bloco explicativo alternável pode estar visível por vez. Ao abrir um hotspot, qualquer outro anteriormente aberto deve ser fechado automaticamente.
+5. **Controle de Visual:** Manter foco visível e garantir que a percepção do conteúdo explicativo não bloqueante não dependa apenas de cor. Não bloquear a leitura e não esconder conteúdo essencial.
 
 ---
 
-### 5. Requisitos de Governança Acadêmica e Aceite
+### 6. Requisitos de Impressão e Fallback
+* ** print.css:** Na impressão, os marcadores visuais interativos (hotspots) podem ser ocultados, e os textos explicativos associados devem aparecer linearizados ou em blocos abertos. Nenhum conteúdo pedagógico pode depender exclusivamente da interação eletrônica.
+* **Fallback sem JavaScript:** As caixas explicativas devem ser exibidas abertas em layout linear caso o JavaScript não seja carregado no navegador.
+
+---
+
+### 7. Requisitos de Governança Acadêmica e Aceite
 
 #### **Critérios de Aceite:**
 * [ ] O código deve ser 100% autoral em HTML/CSS/JS próprio.
@@ -69,8 +85,8 @@ Os seguintes 8 pontos do infográfico receberão hotspots identificadores:
 
 ---
 
-### 6. Arquivos Afetados em Futura Implementação
-* `ebook-ecosabon-prototipo/index.html` (estrutura HTML dos hotspots e popups)
+### 8. Arquivos Afetados em Futura Implementação
+* `ebook-ecosabon-prototipo/index.html` (estrutura HTML dos hotspots e painéis)
 * `ebook-ecosabon-prototipo/src/styles/main.css` (estilos e posicionamentos CSS)
 * `ebook-ecosabon-prototipo/src/styles/print.css` (regras de impressão estática)
 * `ebook-ecosabon-prototipo/src/scripts/interactions.js` (funções JS acessíveis)
