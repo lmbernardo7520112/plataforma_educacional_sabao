@@ -349,6 +349,17 @@ a:focus-visible { outline: 2px solid var(--color-success); outline-offset: 2px; 
   border-bottom: none;
 }
 
+@media screen {
+  body.js-enabled .ebook-section {
+    display: none !important;
+  }
+
+  body.js-enabled .ebook-section.ebook-section--active {
+    display: block !important;
+  }
+}
+
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
