@@ -54,4 +54,12 @@ Não há riscos residuais de segurança ou privacidade ativos. Os riscos técnic
 ---
 
 ### 6. Recomendação sobre Próxima Etapa
-Com a estabilização da navegação por módulo e a linearização de impressão em `main`, o protótipo EcoSabon atingiu sua maturidade de navegação estrutural. A próxima etapa recomendada (Fase 2.5D/3D) deve focar na criação de mockups visuais ou renderização controlada e estática da saponificação molecular (como SVG ou imagens pré-renderizadas de alta fidelidade), em estrito alinhamento com os relatórios 31 e 05 já aprovados, sem introduzir dependências pesadas de runtime 3D ou quebra de restrições de governança pedagógica.
+A próxima etapa recomendada NÃO é implementar diretamente a visualização molecular 2.5D/3D/4D. Antes disso, recomenda-se uma modularização leve do JavaScript em PR próprio, sem mudança funcional, preservando os 75 testes atuais e reduzindo risco ciclomático antes de novas camadas visuais premium.
+
+* **Produto demonstrável:** sim.
+* **Pronto para empacotamento/local/PDF de conferência:** sim.
+* **Pronto para 2.5D/3D/4D direto:** não.
+* **Próxima etapa recomendada:** modularização leve do JavaScript.
+* **C4/3E permanece bloqueado:** sim.
+* **Hotspots acessíveis permanecem baseline premium versionado:** sim.
+
