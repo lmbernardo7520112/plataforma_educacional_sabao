@@ -16,6 +16,7 @@ import {
   evaluateChecklist,
   scrollToTop,
   initStationMap,
+  initSaponificationHotspots,
 } from './interactions.js';
 
 // ─── Botão toggle da sidebar (mobile) ───────────────────────────────────────
@@ -56,6 +57,9 @@ initScrollObserver();
 
 // ─── Inicialização do Mapa de Estações (Execução 3 — C3) ───────────────────
 initStationMap();
+
+// ─── Inicialização dos Hotspots do Infográfico (Execução 3B) ───────────────
+initSaponificationHotspots();
 
 // ─── Botões de reveal (Plano B, Dica de Mediação, etc.) ─────────────────────
 document.querySelectorAll('[data-reveal]').forEach((btn) => {
