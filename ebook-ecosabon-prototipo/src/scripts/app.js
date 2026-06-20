@@ -14,7 +14,8 @@ import {
   toggleSidebar,
   toggleRevealBlock,
   evaluateChecklist,
-  scrollToTop
+  scrollToTop,
+  initStationMap,
 } from './interactions.js';
 
 // ─── Botão toggle da sidebar (mobile) ───────────────────────────────────────
@@ -52,6 +53,9 @@ document.querySelectorAll('[data-nav]').forEach((btn) => {
 
 // ─── Inicialização do IntersectionObserver (Progressive Enhancement) ────────
 initScrollObserver();
+
+// ─── Inicialização do Mapa de Estações (Execução 3 — C3) ───────────────────
+initStationMap();
 
 // ─── Botões de reveal (Plano B, Dica de Mediação, etc.) ─────────────────────
 document.querySelectorAll('[data-reveal]').forEach((btn) => {

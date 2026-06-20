@@ -121,6 +121,52 @@ export function toggleSidebar(doc) {
   return isOpen;
 }
 
+// ─── Mapa Interativo de Estações (Execução 3 — C3) ─────────────────────────
+
+/**
+ * Rola suavemente até a estação correspondente ao ID informado.
+ * Delega para scrollToSection para manter consistência.
+ * @param {string} stationId - O ID da estação (ex: 'estacao-1').
+ * @param {Document} doc - O documento DOM.
+ * @returns {boolean} true se a estação foi encontrada e o scroll iniciado.
+ */
+export function scrollToStation(stationId, doc) {
+  return scrollToSection(stationId, doc);
+}
+
+/**
+ * Inicializa o mapa interativo de estações.
+ * Registra event listeners de click e keydown nos nós `.classroom-diagram__station`
+ * que possuem `data-station`, rolando até a estação detalhada correspondente.
+ * @param {Document} doc - O documento DOM.
+ * @returns {number} Quantidade de estações mapeadas (0 se nenhuma encontrada).
+ */
+export function initStationMap(doc) {
+  const safeDoc = doc ?? (typeof document !== 'undefined' ? document : null);
+  if (!safeDoc) return 0;
+
+  const stations = safeDoc.querySelectorAll('.classroom-diagram__station[data-station]');
+  if (stations.length === 0) return 0;
+
+  stations.forEach((node) => {
+    const targetId = node.getAttribute('data-station');
+    if (!targetId) return;
+
+    node.addEventListener('click', () => {
+      scrollToStation(targetId, safeDoc);
+    });
+
+    node.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        scrollToStation(targetId, safeDoc);
+      }
+    });
+  });
+
+  return stations.length;
+}
+
 // ─── Funções preservadas da Execução 1 ──────────────────────────────────────
 
 /**
