@@ -355,11 +355,9 @@ export function activateModule(moduleId, doc, win) {
   sections.forEach((sec) => {
     if (sec.id === moduleId) {
       sec.classList.add('ebook-section--active');
-      sec.removeAttribute('hidden');
       sec.setAttribute('aria-hidden', 'false');
     } else {
       sec.classList.remove('ebook-section--active');
-      sec.setAttribute('hidden', 'true');
       sec.setAttribute('aria-hidden', 'true');
     }
   });
@@ -399,6 +397,27 @@ export function activateModule(moduleId, doc, win) {
 }
 
 /**
+ * Ativa o módulo correspondente ao hash atual da URL.
+ * Se o hash for vazio ou inválido, ativa o módulo padrão ("mod-inicio").
+ */
+export function activateModuleFromHash(doc, win) {
+  const safeDoc = doc ?? (typeof document !== 'undefined' ? document : null);
+  const safeWin = win ?? (typeof window !== 'undefined' ? window : null);
+  if (!safeDoc) return false;
+
+  let moduleId = 'mod-inicio';
+  if (safeWin && safeWin.location && safeWin.location.hash) {
+    const hashId = safeWin.location.hash.substring(1);
+    const targetSec = safeDoc.getElementById(hashId);
+    if (targetSec && targetSec.classList.contains('ebook-section')) {
+      moduleId = hashId;
+    }
+  }
+
+  return activateModule(moduleId, safeDoc, safeWin);
+}
+
+/**
  * Inicializa a paginação por módulos.
  * Adiciona a classe js-enabled no body, ativa o módulo padrão ("mod-inicio" ou o hash atual)
  * e retorna true se inicializou com sucesso.
@@ -410,28 +429,16 @@ export function initModulePagination(doc, win) {
 
   safeDoc.body.classList.add('js-enabled');
 
-  // Determinar o módulo inicial: baseado no hash da URL ou padrão "mod-inicio"
-  let initialModule = 'mod-inicio';
-  if (safeWin && safeWin.location && safeWin.location.hash) {
-    const hashId = safeWin.location.hash.substring(1);
-    const targetSec = safeDoc.getElementById(hashId);
-    if (targetSec && targetSec.classList.contains('ebook-section')) {
-      initialModule = hashId;
-    }
-  }
-
   // Ativar o módulo inicial
-  activateModule(initialModule, safeDoc, safeWin);
+  activateModuleFromHash(safeDoc, safeWin);
 
-  // Escutar eventos de hashchange para suportar navegação pelo histórico/hash
+  // Escutar eventos de hashchange e popstate para suportar navegação pelo histórico/hash
   if (safeWin) {
-    safeWin.addEventListener('hashchange', () => {
-      const hashId = safeWin.location.hash.substring(1);
-      const targetSec = safeDoc.getElementById(hashId);
-      if (targetSec && targetSec.classList.contains('ebook-section')) {
-        activateModule(hashId, safeDoc, safeWin);
-      }
-    });
+    const handler = () => {
+      activateModuleFromHash(safeDoc, safeWin);
+    };
+    safeWin.addEventListener('hashchange', handler);
+    safeWin.addEventListener('popstate', handler);
   }
 
   return true;

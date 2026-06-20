@@ -62,8 +62,10 @@ document.querySelectorAll('[data-nav]').forEach((btn) => {
   });
 });
 
-// ─── Inicialização do IntersectionObserver (Progressive Enhancement) ────────
-initScrollObserver();
+// ─── Inicialização do IntersectionObserver (Fallback / Modo Contínuo Legado) ──
+// No modo oficial paginado por módulo, desabilitamos o IntersectionObserver para
+// evitar conflitos na sidebar. A função permanece exportada para compatibilidade.
+// initScrollObserver();
 
 // ─── Inicialização do Mapa de Estações (Execução 3 — C3) ───────────────────
 initStationMap();

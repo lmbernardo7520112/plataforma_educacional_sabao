@@ -817,15 +817,19 @@ describe('Paginação por Módulo (UX Fix)', () => {
     expect(activeSections.length).toBe(1);
     expect(activeSections[0].id).toBe('mod-2');
 
-    // Módulos inativos devem ter hidden="true" ou aria-hidden="true"
+    // Módulos principais NÃO devem usar o atributo hidden
+    const sections = doc.querySelectorAll('.ebook-section');
+    sections.forEach((sec) => {
+      expect(sec.hasAttribute('hidden')).toBe(false);
+    });
+
+    // Módulos inativos devem ter aria-hidden="true" e o ativo aria-hidden="false"
     const modInicio = doc.getElementById('mod-inicio');
     const mod1 = doc.getElementById('mod-1');
     const mod2 = doc.getElementById('mod-2');
 
-    expect(modInicio.getAttribute('hidden')).toBe('true');
     expect(modInicio.getAttribute('aria-hidden')).toBe('true');
-    expect(mod1.getAttribute('hidden')).toBe('true');
-    expect(mod2.hasAttribute('hidden')).toBe(false);
+    expect(mod1.getAttribute('aria-hidden')).toBe('true');
     expect(mod2.getAttribute('aria-hidden')).toBe('false');
   });
 
@@ -861,7 +865,7 @@ describe('Paginação por Módulo (UX Fix)', () => {
     // Leitura das regras do arquivo print.css para garantir a presença das regras display: block !important
     const cssPath = resolve(__dirname, '..', 'src/styles/print.css');
     const printCSS = readFileSync(cssPath, 'utf-8');
-    expect(printCSS).toContain('.ebook-section[hidden]');
+    expect(printCSS).toContain('.ebook-section,');
     expect(printCSS).toContain('display: block !important');
   });
 
@@ -924,5 +928,40 @@ describe('Paginação por Módulo (UX Fix)', () => {
     // Avalia o checklist e garante que responde normalmente
     const { allChecked } = evaluateChecklist('checklist-go', listDoc);
     expect(allChecked).toBe(false);
+  });
+
+  it('T72 — hash inicial válido ativa o módulo correto', () => {
+    win.location.hash = '#mod-2';
+    initModulePagination(doc, win);
+    const activeSections = doc.querySelectorAll('.ebook-section--active');
+    expect(activeSections.length).toBe(1);
+    expect(activeSections[0].id).toBe('mod-2');
+  });
+
+  it('T73 — hash inicial inválido ativa mod-inicio por padrão e não quebra a página', () => {
+    win.location.hash = '#mod-invalido';
+    initModulePagination(doc, win);
+    const activeSections = doc.querySelectorAll('.ebook-section--active');
+    expect(activeSections.length).toBe(1);
+    expect(activeSections[0].id).toBe('mod-inicio');
+  });
+
+  it('T74 — popstate ativa o módulo correto', () => {
+    initModulePagination(doc, win);
+    
+    // Simula alteração de hash e disparo do evento popstate
+    win.location.hash = '#mod-3';
+    const popstateEvent = new win.Event('popstate');
+    win.dispatchEvent(popstateEvent);
+
+    const activeSections = doc.querySelectorAll('.ebook-section--active');
+    expect(activeSections.length).toBe(1);
+    expect(activeSections[0].id).toBe('mod-3');
+  });
+
+  it('T75 — app.js não inicializa initScrollObserver no modo paginado por padrão', () => {
+    const appPath = resolve(__dirname, '..', 'src/scripts/app.js');
+    const appJS = readFileSync(appPath, 'utf-8');
+    expect(appJS).toContain('// initScrollObserver();');
   });
 });
