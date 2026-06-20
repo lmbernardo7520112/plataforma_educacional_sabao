@@ -138,49 +138,111 @@
       <!-- Infográfico da Reação de Saponificação -->
       <div class="card" id="infografico-saponificacao">
         <h3 class="card__title">🔬 Reação de Saponificação (Visão Geral)</h3>
+        <p class="card__content" style="margin-bottom: 1rem;">Selecione os pontos interativos (pins circulares ou botões) para explorar os detalhes químicos, ambientais e de segurança.</p>
         <div class="infographic">
           <div class="infographic__side infographic__side--reagents">
             <div class="infographic__molecule infographic__reagent">
-              <div class="infographic__molecule-icon">
-                <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><circle cx="24" cy="18" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="14" cy="34" r="6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="34" r="6" fill="none" stroke="currentColor" stroke-width="2"/><line x1="20" y1="24" x2="16" y2="29" stroke="currentColor" stroke-width="2"/><line x1="28" y1="24" x2="32" y2="29" stroke="currentColor" stroke-width="2"/></svg>
+              <div class="infographic__molecule-icon-wrapper" style="position: relative; display: inline-block;">
+                <div class="infographic__molecule-icon">
+                  <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><circle cx="24" cy="18" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="14" cy="34" r="6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="34" r="6" fill="none" stroke="currentColor" stroke-width="2"/><line x1="20" y1="24" x2="16" y2="29" stroke="currentColor" stroke-width="2"/><line x1="28" y1="24" x2="32" y2="29" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+                <button class="infographic-hotspot" data-target="triglicerideo" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-triglicerideo" aria-label="Detalhar Triglicerídeo" title="Detalhar Triglicerídeo"></button>
               </div>
               <span class="infographic__label">Triglicerídeo</span>
               <span class="infographic__sublabel">(óleo/gordura)</span>
             </div>
             <span class="infographic__operator">+</span>
             <div class="infographic__molecule infographic__reagent">
-              <div class="infographic__molecule-icon">
-                <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><text x="24" y="30" text-anchor="middle" font-size="16" fill="currentColor" font-weight="bold">3×</text></svg>
+              <div class="infographic__molecule-icon-wrapper" style="position: relative; display: inline-block;">
+                <div class="infographic__molecule-icon">
+                  <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><text x="24" y="30" text-anchor="middle" font-size="16" fill="currentColor" font-weight="bold">3×</text></svg>
+                </div>
+                <button class="infographic-hotspot infographic-hotspot--top-right" data-target="naoh" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-naoh" aria-label="Detalhar NaOH" title="Detalhar NaOH"></button>
+                <button class="infographic-hotspot infographic-hotspot--top-left" data-target="coeficiente-reagente" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-coeficiente-reagente" aria-label="Detalhar Coeficiente 3×" title="Detalhar Coeficiente 3×"></button>
               </div>
               <span class="infographic__label">3 NaOH</span>
               <span class="infographic__sublabel">(base forte)</span>
             </div>
           </div>
-          <div class="infographic__arrow" aria-hidden="true">
-            <svg class="infographic__arrow-svg" viewBox="0 0 60 30" aria-hidden="true">
-              <line x1="5" y1="15" x2="45" y2="15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-              <polygon points="45,8 55,15 45,22" fill="currentColor"/>
-            </svg>
+          <div class="infographic__arrow-wrapper" style="position: relative; display: inline-block; padding: 0.5rem;">
+            <div class="infographic__arrow" aria-hidden="true">
+              <svg class="infographic__arrow-svg" viewBox="0 0 60 30" aria-hidden="true">
+                <line x1="5" y1="15" x2="45" y2="15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <polygon points="45,8 55,15 45,22" fill="currentColor"/>
+              </svg>
+            </div>
+            <button class="infographic-hotspot infographic-hotspot--arrow" data-target="seta-reacao" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-seta-reacao" aria-label="Detalhar Seta da Reação" title="Detalhar Seta da Reação"></button>
           </div>
           <div class="infographic__side infographic__side--products">
             <div class="infographic__molecule infographic__product">
-              <div class="infographic__molecule-icon">
-                <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="6" fill="none" stroke="currentColor" stroke-width="2"/><line x1="18" y1="20" x2="30" y2="20" stroke="currentColor" stroke-width="1.5" opacity="0.5"/><line x1="18" y1="26" x2="30" y2="26" stroke="currentColor" stroke-width="1.5" opacity="0.5"/></svg>
+              <div class="infographic__molecule-icon-wrapper" style="position: relative; display: inline-block;">
+                <div class="infographic__molecule-icon">
+                  <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="6" fill="none" stroke="currentColor" stroke-width="2"/><line x1="18" y1="20" x2="30" y2="20" stroke="currentColor" stroke-width="1.5" opacity="0.5"/><line x1="18" y1="26" x2="30" y2="26" stroke="currentColor" stroke-width="1.5" opacity="0.5"/></svg>
+                </div>
+                <button class="infographic-hotspot" data-target="sabao" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-sabao" aria-label="Detalhar Sabão" title="Detalhar Sabão"></button>
               </div>
               <span class="infographic__label">3 Sabão</span>
               <span class="infographic__sublabel">(sal de ác. graxo)</span>
             </div>
             <span class="infographic__operator">+</span>
             <div class="infographic__molecule infographic__product">
-              <div class="infographic__molecule-icon">
-                <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><circle cx="24" cy="24" r="10" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="4" fill="currentColor" opacity="0.3"/></svg>
+              <div class="infographic__molecule-icon-wrapper" style="position: relative; display: inline-block;">
+                <div class="infographic__molecule-icon">
+                  <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><circle cx="24" cy="24" r="10" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="4" fill="currentColor" opacity="0.3"/></svg>
+                </div>
+                <button class="infographic-hotspot" data-target="glicerol" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-glicerol" aria-label="Detalhar Glicerol" title="Detalhar Glicerol"></button>
               </div>
               <span class="infographic__label">Glicerol</span>
               <span class="infographic__sublabel">(subproduto)</span>
             </div>
           </div>
         </div>
-      </div>
+
+        <!-- Badges para Química Verde e Segurança Laboratorial -->
+        <div class="infographic__badges" style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+          <button class="infographic-hotspot infographic-hotspot--badge infographic-hotspot--green" data-target="quimica-verde" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-quimica-verde" aria-label="Detalhar Relação com Química Verde">
+            🍃 Química Verde
+          </button>
+          <button class="infographic-hotspot infographic-hotspot--badge infographic-hotspot--alert" data-target="alerta-seguranca" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-alerta-seguranca" aria-label="Detalhar Alerta de Segurança (NaOH)">
+            ⚠️ Segurança
+          </button>
+        </div>
+
+        <!-- Painéis Explicativos Inline (Acessibilidade) -->
+        <div class="infographic-panels">
+          <div id="desc-triglicerideo" class="infographic-panel" hidden>
+            <h4 class="infographic-panel__title">Triglicerídeo (Óleo Residual)</h4>
+            <p class="infographic-panel__content">O óleo de fritura usado é composto predominantemente por triglicerídeos (triésteres derivados de glicerol e ácidos graxos). Na reação, as ligações éster são clivadas pela base forte.</p>
+          </div>
+          <div id="desc-naoh" class="infographic-panel" hidden>
+            <h4 class="infographic-panel__title">NaOH (Hidróxido de Sódio)</h4>
+            <p class="infographic-panel__content">A base forte atua como agente de hidrólise. Em solução aquosa, dissocia-se em íons Na⁺ e OH⁻, sendo o hidróxido o agente nucleofílico que ataca as carbonilas do triglicerídeo.</p>
+          </div>
+          <div id="desc-coeficiente-reagente" class="infographic-panel" hidden>
+            <h4 class="infographic-panel__title">Proporção Estequiométrica (3×)</h4>
+            <p class="infographic-panel__content">Indica a relação molar estequiométrica: são necessários exatamente 3 mols de NaOH para clivar as 3 ligações éster presentes em 1 mol de triglicerídeo, produzindo sabão e glicerina.</p>
+          </div>
+          <div id="desc-seta-reacao" class="infographic-panel" hidden>
+            <h4 class="infographic-panel__title">Dinâmica da Reação</h4>
+            <p class="infographic-panel__content">Representa a conversão irreversível dos reagentes em produtos. Ocorre sob aquecimento moderado e agitação vigorosa, acelerando o contato entre as fases imiscíveis.</p>
+          </div>
+          <div id="desc-sabao" class="infographic-panel" hidden>
+            <h4 class="infographic-panel__title">Sabão (Sais de Ácidos Graxos)</h4>
+            <p class="infographic-panel__content">Produto principal da reação. As moléculas possuem caráter anfifílico (cauda apolar hidrofóbica e cabeça polar hidrofílica), permitindo a formação de micelas e ação tensoativa de limpeza.</p>
+          </div>
+          <div id="desc-glicerol" class="infographic-panel" hidden>
+            <h4 class="infographic-panel__title">Glicerol (Glicerina)</h4>
+            <p class="infographic-panel__content">O subproduto valioso da hidrólise. Com propriedades altamente umectantes e hidratantes, o glicerol agrega valor ao produto final, deixando a barra de sabão mais suave para a pele.</p>
+          </div>
+          <div id="desc-quimica-verde" class="infographic-panel" hidden>
+            <h4 class="infographic-panel__title">🍃 Princípios da Química Verde</h4>
+            <p class="infographic-panel__content">Esta rota pedagógica exemplifica a valorização de resíduos. Ao utilizar óleo de cozinha usado como matéria-prima, evita-se o descarte incorreto que polui milhares de litros de água, promovendo economia circular e sustentabilidade.</p>
+          </div>
+          <div id="desc-alerta-seguranca" class="infographic-panel infographic-panel--alert" hidden>
+            <h4 class="infographic-panel__title">⚠️ Alerta de Segurança e Causticidade</h4>
+            <p class="infographic-panel__content"><strong>Atenção:</strong> O hidróxido de sódio (soda cáustica) é uma base forte altamente corrosiva. O manuseio exige obrigatoriamente equipamentos de proteção individual (óculos de segurança e luvas) e ambiente ventilado, pois a reação é exotérmica.</p>
+          </div>
+        </div>
 
       <!-- Checklist Pré-Aula -->
       <div class="card">
