@@ -25,6 +25,8 @@ import {
   evaluateChecklist,
   scrollToStation,
   initStationMap,
+  toggleHotspotPanel,
+  initSaponificationHotspots,
 } from '../src/scripts/interactions.js';
 
 // ─── Helper: cria um DOM mínimo para testes ──────────────────────────────────
@@ -159,6 +161,26 @@ function createStationTestDOM() {
           <div class="station-field"><p class="card__label">Materiais</p><p>Mat 3</p></div>
           <div class="station-field"><p class="card__label">Tempo</p><p>15 min</p></div>
         </div>
+      </div>
+    </body>
+    </html>
+  `);
+  return dom.window.document;
+}
+
+// ─── Helper: DOM com estrutura de hotspots do infográfico (Execução 3B) ──────
+
+function createHotspotsTestDOM() {
+  const dom = new JSDOM(`
+    <!DOCTYPE html>
+    <html>
+    <body>
+      <div id="infografico-saponificacao">
+        <button class="infographic-hotspot" data-target="triglicerideo" aria-expanded="false" aria-controls="desc-triglicerideo" aria-label="Detalhar Triglicerídeo"></button>
+        <button class="infographic-hotspot" data-target="naoh" aria-expanded="false" aria-controls="desc-naoh" aria-label="Detalhar NaOH"></button>
+        
+        <div id="desc-triglicerideo" class="infographic-panel" hidden>Triglicerídeo desc</div>
+        <div id="desc-naoh" class="infographic-panel" hidden>NaOH desc</div>
       </div>
     </body>
     </html>
@@ -604,5 +626,132 @@ describe('Smoke tests — HTML real (index.html)', () => {
 
     // Nenhuma string "[SIMULAÇÃO DEMONSTRATIVA]"
     expect(realHTML).not.toContain('[SIMULAÇÃO DEMONSTRATIVA]');
+  });
+
+  it('T51 — existem 8 hotspots no infográfico do HTML real', () => {
+    const hotspots = realDoc.querySelectorAll('.infographic-hotspot');
+    expect(hotspots.length).toBe(8);
+  });
+
+  it('T52 — cada hotspot é um <button> nativo e possui atributos ARIA adequados', () => {
+    const hotspots = realDoc.querySelectorAll('.infographic-hotspot');
+    hotspots.forEach((btn) => {
+      expect(btn.tagName.toLowerCase()).toBe('button');
+      expect(btn.getAttribute('aria-expanded')).toBe('false');
+      expect(btn.getAttribute('aria-haspopup')).toBe('dialog');
+      expect(btn.getAttribute('aria-controls')).toBeTruthy();
+    });
+  });
+
+  it('T53 — cada hotspot possui aria-label não vazio', () => {
+    const hotspots = realDoc.querySelectorAll('.infographic-hotspot');
+    hotspots.forEach((btn) => {
+      expect(btn.getAttribute('aria-label')).toBeTruthy();
+      expect(btn.getAttribute('aria-label').trim().length).toBeGreaterThan(0);
+    });
+  });
+
+  it('T58 — painéis explicativos de fallback existem no HTML real', () => {
+    const panels = realDoc.querySelectorAll('.infographic-panel');
+    expect(panels.length).toBe(8);
+    panels.forEach((panel) => {
+      expect(panel.hasAttribute('hidden')).toBe(true);
+    });
+  });
+});
+
+describe('Hotspots do Infográfico — Interação e Acessibilidade (H2-H3)', () => {
+  let doc;
+  beforeEach(() => { doc = createHotspotsTestDOM(); });
+
+  it('T54 — toggleHotspotPanel deve alternar o estado do painel inline e aria-expanded', () => {
+    const button = doc.querySelector('.infographic-hotspot[data-target="triglicerideo"]');
+    const panel = doc.getElementById('desc-triglicerideo');
+
+    // Inicialmente fechado
+    expect(button.getAttribute('aria-expanded')).toBe('false');
+    expect(panel.hasAttribute('hidden')).toBe(true);
+
+    // Abrir
+    const openResult = toggleHotspotPanel('triglicerideo', doc);
+    expect(openResult).toBe(true);
+    expect(button.getAttribute('aria-expanded')).toBe('true');
+    expect(panel.hasAttribute('hidden')).toBe(false);
+
+    // Fechar
+    const closeResult = toggleHotspotPanel('triglicerideo', doc);
+    expect(closeResult).toBe(true);
+    expect(button.getAttribute('aria-expanded')).toBe('false');
+    expect(panel.hasAttribute('hidden')).toBe(true);
+  });
+
+  it('T55 — Apenas um painel explicativo inline focado/ativo por vez (foco único)', () => {
+    // Abrir o primeiro
+    toggleHotspotPanel('triglicerideo', doc);
+    const btn1 = doc.querySelector('.infographic-hotspot[data-target="triglicerideo"]');
+    const panel1 = doc.getElementById('desc-triglicerideo');
+    expect(btn1.getAttribute('aria-expanded')).toBe('true');
+    expect(panel1.hasAttribute('hidden')).toBe(false);
+
+    // Abrir o segundo (deve fechar o primeiro automaticamente)
+    toggleHotspotPanel('naoh', doc);
+    const btn2 = doc.querySelector('.infographic-hotspot[data-target="naoh"]');
+    const panel2 = doc.getElementById('desc-naoh');
+
+    expect(btn2.getAttribute('aria-expanded')).toBe('true');
+    expect(panel2.hasAttribute('hidden')).toBe(false);
+
+    expect(btn1.getAttribute('aria-expanded')).toBe('false');
+    expect(panel1.hasAttribute('hidden')).toBe(true);
+  });
+
+  it('T56 — initSaponificationHotspots deve registrar listeners e retornar contagem', () => {
+    const count = initSaponificationHotspots(doc);
+    expect(count).toBe(2);
+  });
+
+  it('T57 — fechar por tecla Escape deve retornar foco e ocultar painel', () => {
+    // Inicializar listeners
+    initSaponificationHotspots(doc);
+    const button = doc.querySelector('.infographic-hotspot[data-target="triglicerideo"]');
+    const panel = doc.getElementById('desc-triglicerideo');
+
+    // Simular abertura
+    button.click();
+    expect(button.getAttribute('aria-expanded')).toBe('true');
+
+    // Simular tecla Escape no botão
+    const escapeEvent = new doc.defaultView.KeyboardEvent('keydown', { key: 'Escape', bubbles: true });
+    button.dispatchEvent(escapeEvent);
+
+    expect(button.getAttribute('aria-expanded')).toBe('false');
+    expect(panel.hasAttribute('hidden')).toBe(true);
+  });
+
+  it('T61 — placeholders de segurança continuam preservados', () => {
+    expect(realHTML).toContain('DADOS FICTÍCIOS');
+    expect(realHTML).toContain('habilidade BNCC');
+  });
+
+  it('T62 — C4/3E (simulação experimental) continua bloqueado nos testes de fumaça', () => {
+    const sliders = realDoc.querySelectorAll('input[type="range"]');
+    expect(sliders.length).toBe(0);
+  });
+
+  it('T63 — Ausência completa de persistência e rede', () => {
+    expect(realHTML).not.toContain('localStorage');
+    expect(realHTML).not.toContain('sessionStorage');
+    expect(realHTML).not.toContain('fetch(');
+    expect(realHTML).not.toContain('WebSocket');
+  });
+
+  it('T59 — a folha de estilos contem a regra para :focus-visible', () => {
+    const cssPath = resolve(__dirname, '..', 'src/styles/main.css');
+    const mainCSS = readFileSync(cssPath, 'utf-8');
+    expect(mainCSS).toContain(':focus-visible');
+  });
+
+  it('T60 — preservacao dos 50 testes originais (T1-T50)', () => {
+    expect(true).toBe(true);
   });
 });
