@@ -257,7 +257,21 @@
           <p class="warning-block__text"><strong>Aviso de Isenção Científica:</strong> Visualização qualitativa e didática. Não representa simulação molecular, cálculo quantitativo ou modelo científico validado.</p>
         </div>
 
-        <div class="molecular-stage">
+        <div class="molecular-stage" tabindex="0" aria-label="Sequenciador de etapas do Palco Molecular">
+          <!-- Controle do Sequenciador (Fase B2) -->
+          <div class="molecular-stage__stepper-container">
+            <div class="molecular-stage__controls" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 1rem;">
+              <button id="molecular-stage-prev" class="btn btn--secondary" aria-label="Etapa anterior" style="margin: 0;">&larr; Anterior</button>
+              <span id="molecular-stage-step-indicator" class="molecular-stage__step-indicator" aria-live="polite" style="font-family: var(--font-display); font-weight: 700; color: var(--color-text);">Etapa 0 de 8</span>
+              <button id="molecular-stage-next" class="btn btn--primary" aria-label="Próxima etapa" style="margin: 0;">Avançar &rarr;</button>
+            </div>
+            
+            <div id="molecular-stage-live-panel" class="molecular-stage__live-panel" aria-live="polite" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;">
+              <h4 id="molecular-stage-step-title" class="molecular-stage__step-title" style="margin-top: 0; color: var(--color-accent); font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Etapa 0: Contexto e Segurança</h4>
+              <p id="molecular-stage-step-content" class="molecular-stage__step-content" style="margin: 0; color: var(--color-text-secondary); line-height: 1.6; font-size: 0.95rem;">Bem-vindo à visualização molecular qualitativa. Aqui, observamos uma representação esquemática dos átomos e ligações durante a fabricação do sabão. Lembre-se: esta é uma ilustração didática e não uma simulação em tempo real.</p>
+            </div>
+          </div>
+
           <div class="molecular-stage__visual" aria-hidden="true">
             <!-- Inline SVG showing molecular schemas -->
             <svg viewBox="0 0 800 320" class="molecular-stage__svg">
@@ -289,7 +303,7 @@
               <text x="20" y="25" fill="rgba(255,255,255,0.4)" font-size="11" font-weight="bold" letter-spacing="1">REAGENTES</text>
 
               <!-- Triglyceride schema (left) -->
-              <g transform="translate(20, 45)" filter="url(#shadow)">
+              <g id="svg-triglyceride" transform="translate(20, 45)" filter="url(#shadow)">
                 <!-- Backbone (Glycerol C-C-C) -->
                 <circle cx="20" cy="50" r="14" fill="url(#grad-carbon)" />
                 <text x="20" y="54" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
@@ -366,7 +380,7 @@
               </g>
 
               <!-- NaOH (3x) -->
-              <g transform="translate(290, 60)" filter="url(#shadow)">
+              <g id="svg-naoh" transform="translate(290, 60)" filter="url(#shadow)">
                 <!-- NaOH 1 -->
                 <circle cx="20" cy="20" r="12" fill="url(#grad-sodium)" />
                 <text x="20" y="23" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">Na+</text>
@@ -391,7 +405,7 @@
               </g>
 
               <!-- REACTION ARROW (Middle) -->
-              <g transform="translate(390, 140)">
+              <g id="svg-arrow" transform="translate(390, 140)">
                 <line x1="0" y1="15" x2="30" y2="15" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
                 <polygon points="28,8 38,15 28,22" fill="currentColor"/>
                 <text x="15" y="-5" fill="rgba(255,255,255,0.5)" font-size="9" text-anchor="middle">Reação</text>
@@ -402,7 +416,7 @@
               <text x="450" y="25" fill="rgba(255,255,255,0.4)" font-size="11" font-weight="bold" letter-spacing="1">PRODUTOS</text>
 
               <!-- Glicerol (right, left-side of products area) -->
-              <g transform="translate(450, 70)" filter="url(#shadow)">
+              <g id="svg-glycerol" transform="translate(450, 70)" filter="url(#shadow)">
                 <text x="35" y="-12" fill="#4FD1C5" font-size="11" font-weight="bold" text-anchor="middle">1× Glicerol</text>
                 
                 <!-- Glycerol backbone C-C-C -->
@@ -432,7 +446,7 @@
               </g>
 
               <!-- Sabão (right, right-side of products area) -->
-              <g transform="translate(565, 60)" filter="url(#shadow)">
+              <g id="svg-soap" transform="translate(565, 60)" filter="url(#shadow)">
                 <text x="90" y="-2" fill="#4FD1C5" font-size="11" font-weight="bold" text-anchor="middle">3× Sabão (Tensoativo)</text>
                 
                 <!-- Soap Molecule 1 -->
@@ -470,7 +484,7 @@
               </g>
 
               <!-- GREEN CHEMISTRY INDICATOR (bottom right badge) -->
-              <g transform="translate(450, 275)">
+              <g id="svg-green-chem" transform="translate(450, 275)">
                 <rect x="0" y="0" width="300" height="26" rx="5" fill="rgba(72, 187, 120, 0.1)" stroke="#48BB78" stroke-width="1" />
                 <text x="15" y="17" fill="#48BB78" font-size="10" font-weight="bold">🍃 Economia Atômica: Conservação de Massa de 100%</text>
               </g>
@@ -490,22 +504,47 @@
             </div>
           </div>
 
-          <!-- Texto equivalente acessível -->
-          <div class="molecular-stage__description">
-            <h4 class="sr-only">Descrição Equivalente Detalhada (Acessibilidade)</h4>
-            <p class="molecular-stage__desc-text">
-              <strong>Mecanismo da Reação de Saponificação (Nível Submicroscópico):</strong> A ilustração mostra que um mol de triglicerídeo (gordura), que possui três ligações éster conectadas a cadeias de radicais de ácidos graxos (representadas pelas caudas R1, R2 e R3), reage estequiometricamente com três mols de hidróxido de sódio (NaOH/base forte). 
-            </p>
-            <p class="molecular-stage__desc-text">
-              As linhas tracejadas amarelas indicam a zona de ruptura qualitativa de cada uma das três ligações éster, que ocorre por ataque do agente hidróxido (OH⁻). Após a quebra, formam-se dois produtos principais de valor didático:
-            </p>
-            <ul class="molecular-stage__desc-list">
-              <li><strong>Três moléculas de Sabão (Tensoativo):</strong> Formadas pela atração eletrostática entre os grupos carboxilato negativos (R-COO⁻) e os cátions sódio (Na⁺). Cada molécula de sabão possui uma longa cauda apolar hidrofóbica (compatível com óleos) e uma cabeça polar hidrofílica (compatível com água), conferindo a ação tensoativa.</li>
-              <li><strong>Uma molécula de Glicerol (Glicerina):</strong> Formada pela estabilização da estrutura vertical de carbono do triglicerídeo original por recombinação química com três grupos hidroxila (OH). O glicerol atua como agente umectante no sabão final.</li>
-            </ul>
-            <p class="molecular-stage__desc-text">
-              Conforme as diretrizes de sustentabilidade da <strong>Química Verde</strong>, destaca-se que todos os átomos presentes nos reagentes se conservam e se reorganizam nos produtos úteis finais (sabão biodegradável e glicerina purificada), atingindo um patamar de alta eficiência de economia atômica.
-            </p>
+          <!-- Texto equivalente acessível / Fallback Linear (JS desabilitado e Impressão) -->
+          <div class="molecular-stage__fallback">
+            <h4 class="sr-only">Sequência Didática das Etapas da Saponificação</h4>
+            <div class="molecular-stage__fallback-steps" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 0: Segurança e caráter qualitativo:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">Bem-vindo à visualização molecular qualitativa. Aqui, observamos uma representação esquemática dos átomos e ligações durante a fabricação do sabão. Lembre-se: esta é uma ilustração didática e não uma simulação em tempo real.</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 1: Triglicerídeo como reagente:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">O óleo vegetal ou gordura animal é formado por triglicerídeos. Cada molécula possui uma estrutura de glicerol conectada a três cadeias de ácidos graxos.</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 2: Presença de NaOH:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">Para que a reação ocorra, adicionamos hidróxido de sódio (NaOH) dissolvido em água, gerando os íons sódio (Na⁺) e hidróxido (OH⁻).</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 3: Proporção didática 1:3:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">Estequiometria: Note que 1 molécula de triglicerídeo necessita de exatamente 3 íons hidróxido (OH⁻) para clivar todas as suas três ligações éster.</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 4: Clivagem qualitativa das ligações éster:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">O íon hidróxido ataca a carbonila do éster. As ligações entre o oxigênio do glicerol e o carbono da carbonila são clivadas (quebradas).</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 5: Formação de sabão:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">Os grupos carboxilatos liberados unem-se aos íons sódio (Na⁺), formando os sais de ácidos graxos: as moléculas de sabão.</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 6: Formação de glicerol:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">O backbone do glicerol liga-se aos hidrogênios remanescentes, formando a molécula de glicerol (glicerina), um subproduto umectante valioso.</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 7: Química Verde e reaproveitamento:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">Química Verde: Esta transformação aproveita todos os átomos dos reagentes originais, transformando o óleo residual em sabão biodegradável e glicerina purificada.</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 8: Síntese conceitual:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">Revisão Final da Reação: 1 Triglicerídeo (Óleo) + 3 NaOH (Base) → 3 Sais de Ácidos Graxos (Sabão) + 1 Glicerol (Glicerina). A matéria se conserva e se transforma.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

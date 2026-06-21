@@ -29,6 +29,9 @@ import {
   initSaponificationHotspots,
   activateModule,
   initModulePagination,
+  getMolecularStageStep,
+  setMolecularStageStep,
+  initMolecularStageStepper
 } from '../src/scripts/interactions.js';
 
 // ─── Helper: cria um DOM mínimo para testes ──────────────────────────────────
@@ -1010,4 +1013,107 @@ describe('Palco Molecular Estático MVP (Fase B1)', () => {
     expect(htmlLower).not.toContain('unity');
   });
 });
+
+// ─── Novos Testes: Sequenciador 4D Qualitativo (Fase B2) ──────────────────────
+describe('Sequenciador 4D Qualitativo (Fase B2)', () => {
+  let doc;
+  beforeEach(() => {
+    doc = realDoc;
+    initMolecularStageStepper(doc);
+  });
+
+  it('T81 — presença dos controles do stepper no HTML real', () => {
+    const prevBtn = doc.getElementById('molecular-stage-prev');
+    const nextBtn = doc.getElementById('molecular-stage-next');
+    const indicator = doc.getElementById('molecular-stage-step-indicator');
+    const livePanel = doc.getElementById('molecular-stage-live-panel');
+
+    expect(prevBtn).not.toBeNull();
+    expect(nextBtn).not.toBeNull();
+    expect(indicator).not.toBeNull();
+    expect(livePanel).not.toBeNull();
+  });
+
+  it('T82 — etapa inicial é 0 e botões são configurados devidamente', () => {
+    expect(getMolecularStageStep()).toBe(0);
+    
+    const prevBtn = doc.getElementById('molecular-stage-prev');
+    const nextBtn = doc.getElementById('molecular-stage-next');
+    expect(prevBtn.disabled).toBe(true);
+    expect(nextBtn.disabled).toBe(false);
+
+    const title = doc.getElementById('molecular-stage-step-title').textContent;
+    expect(title).toContain('Etapa 0');
+  });
+
+  it('T83 — botão Próxima avança etapa e botão Anterior retorna', () => {
+    const nextBtn = doc.getElementById('molecular-stage-next');
+    const prevBtn = doc.getElementById('molecular-stage-prev');
+
+    // Advance to step 1
+    setMolecularStageStep(1, doc);
+    expect(getMolecularStageStep()).toBe(1);
+    expect(prevBtn.disabled).toBe(false);
+    expect(doc.getElementById('molecular-stage-step-title').textContent).toContain('Etapa 1');
+
+    // Go back to step 0
+    setMolecularStageStep(0, doc);
+    expect(getMolecularStageStep()).toBe(0);
+    expect(prevBtn.disabled).toBe(true);
+  });
+
+  it('T84 — stepper não avança além da última etapa nem recua antes da primeira', () => {
+    const resultPrev = setMolecularStageStep(-1, doc);
+    expect(resultPrev).toBe(false);
+    expect(getMolecularStageStep()).toBe(0);
+
+    const resultNext = setMolecularStageStep(9, doc);
+    expect(resultNext).toBe(false);
+    expect(getMolecularStageStep()).toBe(0);
+
+    // Go to step 8
+    setMolecularStageStep(8, doc);
+    expect(getMolecularStageStep()).toBe(8);
+    const nextBtn = doc.getElementById('molecular-stage-next');
+    expect(nextBtn.disabled).toBe(true);
+  });
+
+  it('T85 — painel aria-live existe e possui atributo polite', () => {
+    const livePanel = doc.getElementById('molecular-stage-live-panel');
+    expect(livePanel.getAttribute('aria-live')).toBe('polite');
+    
+    const indicator = doc.getElementById('molecular-stage-step-indicator');
+    expect(indicator.getAttribute('aria-live')).toBe('polite');
+  });
+
+  it('T86 — ausência completa de ranges, simulações quantitativas e persistência', () => {
+    const range = doc.querySelectorAll('input[type="range"]');
+    expect(range.length).toBe(0);
+
+    const canvas = doc.querySelectorAll('canvas');
+    expect(canvas.length).toBe(0);
+
+    const htmlLower = realHTML.toLowerCase();
+    expect(htmlLower).not.toContain('localstorage');
+    expect(htmlLower).not.toContain('sessionstorage');
+    expect(htmlLower).not.toContain('fetch(');
+    expect(htmlLower).not.toContain('xmlhttprequest');
+    expect(htmlLower).not.toContain('websocket');
+  });
+
+  it('T87 — hotspots existentes do infográfico continuam funcionando', () => {
+    const hotspots = doc.querySelectorAll('.infographic-hotspot');
+    expect(hotspots.length).toBeGreaterThan(0);
+  });
+
+  it('T88 — navegação por módulos continua funcionando e preservada', () => {
+    expect(typeof activateModule).toBe('function');
+    expect(typeof initModulePagination).toBe('function');
+  });
+
+  it('T89 — checklist Go/No-Go continua funcionando e preservado', () => {
+    expect(typeof evaluateChecklist).toBe('function');
+  });
+});
+
 

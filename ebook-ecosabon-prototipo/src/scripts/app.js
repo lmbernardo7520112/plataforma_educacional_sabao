@@ -35,6 +35,11 @@ import {
   evaluateChecklist
 } from './checklist.js';
 
+import {
+  initMolecularStageStepper
+} from './molecular-stage.js';
+
+
 // ─── Botão toggle da sidebar (mobile) ───────────────────────────────────────
 const toggleBtn = document.getElementById('btn-sidebar-toggle');
 if (toggleBtn) {
@@ -117,3 +122,7 @@ if (topBtn) {
 
 // ─── Inicialização: definir paginação por módulo ativo ──────────────────────
 initModulePagination();
+
+// ─── Inicialização do Sequenciador Molecular (Fase B2) ──────────────────────
+initMolecularStageStepper();
+
