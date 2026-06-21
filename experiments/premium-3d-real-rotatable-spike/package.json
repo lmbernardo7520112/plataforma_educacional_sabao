@@ -1,0 +1,16 @@
+{
+  "name": "premium-3d-real-rotatable-spike",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EcoSabon — Spike experimental de visualização tridimensional real com Three.js procedural",
+  "scripts": {
+    "dev": "npx -y vite",
+    "build": "npx -y vite build"
+  },
+  "dependencies": {
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.12"
+  }
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spike — Premium 3D Real Rotacionável | EcoSabon</title>
+  <link rel="stylesheet" href="src/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">EcoSabon Experimento 3D Real</div>
+      <h1 class="title">Visualização Didática Premium 3D Real</h1>
+      <p class="subtitle">Interação livre por câmera orbital com Three.js procedural</p>
+    </header>
+
+    <main class="main-content">
+      <div class="card warning-card">
+        <p><strong>Aviso de Isenção Qualitativo:</strong> Prova técnica isolada. Esta visualização didática tridimensional representa qualitativamente os reagentes e produtos da saponificação. Não constitui simulação molecular quantitativa validada, cálculo químico ou previsão de reação.</p>
+      </div>
+
+      <div class="card interactive-card">
+        <h2 class="card-title">Palco Molecular 3D Interativo</h2>
+
+        <!-- Camera Angles / Control Buttons -->
+        <div class="controls-panel">
+          <button id="btn-view-front" class="btn btn--secondary">Visão Frontal</button>
+          <button id="btn-view-side" class="btn btn--secondary">Visão Lateral</button>
+          <button id="btn-view-top" class="btn btn--secondary">Visão Superior</button>
+          <button id="btn-view-persp" class="btn btn--secondary">Perspectiva</button>
+          <button id="btn-reset" class="btn btn--primary">Resetar Câmera</button>
+        </div>
+
+        <div id="canvas-container" class="canvas-container">
+          <!-- WebGL canvas will be injected here. If WebGL fails, this fallback displays. -->
+          <div id="webgl-fallback" class="webgl-fallback" style="display: none;">
+            <p><strong>Aviso:</strong> O WebGL não está disponível ou foi desativado no seu navegador. Consulte a descrição textual equivalente abaixo para compreender o modelo molecular didático.</p>
+          </div>
+        </div>
+
+        <!-- ARIA Live region for camera changes -->
+        <div id="aria-status" class="sr-only" aria-live="polite"></div>
+
+        <!-- Equivalent Textual Fallback (Acessibilidade) -->
+        <div class="description-panel">
+          <h3>Descrição Textual Equivalente (Acessibilidade)</h3>
+          <p id="scene-description">
+            <strong>Cena Tridimensional da Reação:</strong> O modelo exibe, da esquerda para a direita, a molécula de Triglicerídeo (estrutura com backbone de glicerol acoplada a 3 cadeias graxas representadas por esferas e cilindros verdes), cercada didaticamente por 3 moléculas de Hidróxido de Sódio (NaOH, em esferas vermelhas e azuis). Ao girar a câmera, o usuário pode explorar a disposição espacial qualitativa das carbonilas e a zona de clivagem.
+          </p>
+          
+          <div class="legend-box">
+            <h4>Legenda de Átomos e Moléculas (Procedural)</h4>
+            <ul class="legend-list">
+              <li><span class="legend-dot legend-dot--green"></span> <strong>Triglicerídeo (Verde):</strong> Molécula de óleo/gordura.</li>
+              <li><span class="legend-dot legend-dot--red"></span> <strong>NaOH (Vermelho/Cinza):</strong> Hidróxido de Sódio (Soda cáustica).</li>
+              <li><span class="legend-dot legend-dot--blue"></span> <strong>Sabão (Azul):</strong> Tensoativo formado pós-clivagem.</li>
+              <li><span class="legend-dot legend-dot--orange"></span> <strong>Glicerol (Laranja):</strong> Coproduto umectante da reação.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2026 EcoSabon — Spike Real 3D Rotacionável. Prova técnica isolada.</p>
+    </footer>
+  </div>
+
+  <!-- Main script entry -->
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
