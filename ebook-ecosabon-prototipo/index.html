@@ -549,6 +549,75 @@
         </div>
       </div>
 
+      <!-- Experiência Premium 3D — visualização molecular didática -->
+      <div class="card premium-3d-stage">
+        <h3 class="card__title">🔬 Experiência Premium 3D — visualização molecular didática</h3>
+        
+        <div class="warning-card premium-3d-stage__warning" style="border-left: 4px solid var(--color-accent); background: rgba(251, 211, 141, 0.03); padding: 1.25rem 2rem; margin-bottom: 1.5rem; border-radius: var(--radius-md);">
+          <p style="margin: 0; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6;"><strong>Aviso de Isenção:</strong> Esta é uma visualização tridimensional didática e qualitativa. Não representa simulação molecular validada, cálculo químico ou previsão real da reação.</p>
+        </div>
+
+        <div class="premium-3d-stage__controls" style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.5rem; justify-content: center;">
+          <button id="premium-btn-front" class="btn btn--secondary">Frontal</button>
+          <button id="premium-btn-side" class="btn btn--secondary">Lateral</button>
+          <button id="premium-btn-top" class="btn btn--secondary">Superior</button>
+          <button id="premium-btn-persp" class="btn btn--secondary">Perspectiva</button>
+          <button id="premium-btn-reset" class="btn btn--primary">Resetar visão</button>
+        </div>
+
+        <div id="premium-3d-canvas-container" class="premium-3d-stage__viewer" tabindex="0" role="region" aria-label="Visualizador tridimensional interativo do Palco Molecular. Rotacione usando o mouse arrastando ou use as setas do teclado. Teclas de mais e menos controlam o zoom." style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--color-border); border-radius: var(--radius-md); height: 400px; width: 100%; position: relative; overflow: hidden; margin-bottom: 1.5rem;">
+          <!-- WebGL canvas will be injected here. If WebGL fails, this fallback displays. -->
+          <div id="premium-3d-webgl-fallback" class="premium-3d-stage__fallback" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 80%; color: var(--color-accent); font-size: 0.95rem; line-height: 1.6;">
+            <div class="webgl-fallback-card" style="background: rgba(15, 23, 42, 0.95); border: 2px dashed var(--color-accent); border-radius: var(--radius-md); padding: 1.5rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); max-width: 480px; margin: 0 auto;">
+              <span class="fallback-icon" style="font-size: 2rem; display: block; margin-bottom: 0.5rem;">⚠️</span>
+              <h3 style="font-family: var(--font-display); margin-top: 0; margin-bottom: 0.5rem; color: var(--color-accent); font-size: 1.15rem;">WebGL Indisponível</h3>
+              <p style="font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0 0 0.75rem 0;">O acelerador gráfico 3D (WebGL) não está ativo ou não é suportado pelo seu navegador ou dispositivo escolar.</p>
+              <p style="font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0;"><strong>Não se preocupe:</strong> A descrição detalhada e a legenda estática abaixo contêm todas as informações didáticas equivalentes do modelo molecular.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ARIA Live region for camera changes -->
+        <div id="premium-3d-aria-status" class="sr-only" aria-live="polite"></div>
+
+        <!-- Equivalent Textual Fallback (Acessibilidade) -->
+        <div class="description-panel" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.5rem;">
+          <h4 style="font-family: var(--font-display); margin-top: 0; margin-bottom: 0.75rem; font-size: 1.1rem; color: var(--color-success);">Descrição Textual Equivalente (Acessibilidade)</h4>
+          <p id="premium-3d-description" style="color: var(--color-text-secondary); line-height: 1.6; font-size: 0.95rem; margin: 0 0 1.5rem 0;">
+            <strong>Cena Tridimensional da Reação:</strong> O modelo exibe, da esquerda para a direita, a molécula de Triglicerídeo (estrutura com backbone de glicerol acoplada a 3 caudas graxas longas representadas por esferas e cilindros verdes), cercada didaticamente por 3 moléculas de Hidróxido de Sódio (NaOH, em esferas vermelhas e cinzas). À direita, vemos os produtos resultantes: o Glicerol (estrutura com backbone vertical em laranja) e 3 cadeias lineares de Sabão (em azul). Ao girar a câmera ou utilizar o teclado, o usuário pode explorar a disposição espacial qualitativa do ataque químico e clivagem.
+          </p>
+          
+          <div class="legend-box" style="border-top: 1px solid var(--color-border); padding-top: 1rem;">
+            <h5 style="font-family: var(--font-display); margin-top: 0; margin-bottom: 0.75rem; font-size: 0.95rem; color: var(--color-text);">Legenda de Átomos e Moléculas (Procedural)</h5>
+            <ul class="legend-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 1.5rem;">
+              <li style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--color-text-secondary);"><span class="legend-dot" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; background-color: #48bb78;"></span> <strong>Triglicerídeo (Verde):</strong> Molécula de óleo/gordura (esquerda).</li>
+              <li style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--color-text-secondary);"><span class="legend-dot" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; background-color: #e53e3e;"></span> <strong>NaOH (Vermelho/Cinza):</strong> Hidróxido de Sódio (meio).</li>
+              <li style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--color-text-secondary);"><span class="legend-dot" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; background-color: #3182ce;"></span> <strong>Sabão (Azul):</strong> Tensoativo formado pós-clivagem (direita).</li>
+              <li style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--color-text-secondary);"><span class="legend-dot" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; background-color: #dd6b20;"></span> <strong>Glicerol (Laranja):</strong> Coproduto umectante da reação (direita).</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Print-only static representation of views -->
+        <div class="print-only">
+          <h3>Representação Estática das Visões Tridimensionais</h3>
+          <div class="print-view-grid">
+            <div class="print-view-item">
+              <strong>1. Visão Frontal:</strong> Observamos os reagentes à esquerda (Triglicerídeo em verde) e à direita os produtos (Glicerol em laranja e as três cadeias lineares de Sabão em azul). Os três mols de NaOH flutuam na zona intermediária.
+            </div>
+            <div class="print-view-item">
+              <strong>2. Visão Lateral:</strong> Foco no alinhamento das cadeias de carbono e hidrogênio. Notamos a espessura tridimensional das três caudas hidrofóbicas do óleo vegetal e as posições aproximadas dos íons de Sódio.
+            </div>
+            <div class="print-view-item">
+              <strong>3. Visão Superior:</strong> Uma perspectiva de cima para baixo revelando a separação espacial entre os reagentes e o ataque didático das carbonilas pelo hidróxido nas três posições verticais.
+            </div>
+            <div class="print-view-item">
+              <strong>4. Visão de Perspectiva:</strong> Exibe a profundidade espacial completa das cadeias lipídicas de sabão em azul e a estrutura tridimensional complexa do óleo vegetal original à esquerda.
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Checklist Pré-Aula -->
       <div class="card">
         <h3 class="card__title">✅ Checklist Pré-Aula</h3>
