@@ -14,6 +14,7 @@ A Fase C3 realizou com sucesso a integração modular e segura do visualizador t
     *   Controles manuais de câmera com botões nativos focáveis e suporte a navegação/órbita via teclado (setas direcionais e zoom por `+`/`-`).
     *   Painel de acessibilidade com descrição textual equivalente e legenda detalhada.
     *   Região `aria-live="polite"` para anúncios de mudança de visão tridimensional.
+    *   Redimensionamento dinâmico automático com `ResizeObserver` para recalcular aspecto e tamanho do canvas Three.js quando a aba Módulo 2 torna-se visível, evitando renderização invisível ou telas pretas.
     *   Fallback elegante para dispositivos ou navegadores sem suporte gráfico WebGL.
     *   CSS de impressão configurado em `print.css` para ocultar o canvas 3D e imprimir a isenção qualitativa acompanhada da legenda.
 *   **O que NÃO foi integrado:**

@@ -27,6 +27,7 @@ Integrar o protótipo de visualização Premium 3D tridimensional interativo e r
 ## 4. Arquitetura e Integração no Módulo 2
 O visualizador funciona de forma estritamente isolada e modularizada em `premium-3d-stage.js`.
 *   O carregamento é dinâmico e preventivo: a função principal `initPremium3DStage` verifica a existência do container `#premium-3d-canvas-container` antes de inicializar o canvas WebGL.
+*   **Redimensionamento Dinâmico (ResizeObserver):** Foi implementado suporte a `ResizeObserver` para escutar variações de tamanho do contêiner 3D. Isso garante que, se o Módulo 2 for inicializado oculto (`display: none` pela paginação), a renderização do Three.js se adapte e dimensione perfeitamente o canvas no momento em que a seção se torna visível (`display: block`), eliminando o risco de telas pretas e frames esticados.
 *   Nenhuma dependência externa de rede é efetuada (funcionamento offline garantido).
 *   O modelo molecular do óleo (Triglicerídeo), NaOH, Sabão e Glicerina é gerado de forma totalmente procedural (esferas e cilindros nativos do Three.js), sem requisição a arquivos externos.
 

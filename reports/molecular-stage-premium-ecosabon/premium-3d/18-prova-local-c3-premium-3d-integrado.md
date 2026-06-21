@@ -30,5 +30,5 @@ Todos os logs e registros não versionados foram gravados em:
 
 ## 5. Explicação Clara do Estado Local do E-book
 *   **E-book Principal:** Mantém o Palco Molecular Estático (B1) e o Sequenciador 4D Qualitativo (B2) preservados e operacionais.
-*   **Seção Premium 3D:** Integrada como um card complementar no Módulo 2, carregada via bootstrap condicional por `app.js`.
+*   **Seção Premium 3D:** Integrada como um card complementar no Módulo 2, carregada via bootstrap condicional por `app.js`. A lógica de redimensionamento por `ResizeObserver` foi validada com sucesso, garantindo a transição visual entre os módulos e o correto recálculo do aspecto da câmera sem travamentos ou tela preta.
 *   **Fallback e Impressão:** O fallback visual de WebGL foi testado (simulando a ausência do suporte de contexto de renderização) e a impressão foi configurada com sucesso, mantendo apenas informações textuais no papel e PDF.
