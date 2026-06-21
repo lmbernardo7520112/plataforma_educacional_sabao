@@ -965,3 +965,49 @@ describe('Paginação por Módulo (UX Fix)', () => {
     expect(appJS).toContain('// initScrollObserver();');
   });
 });
+
+// ─── Novos Testes: Palco Molecular Estático MVP (Fase B1) ──────────────────────
+describe('Palco Molecular Estático MVP (Fase B1)', () => {
+  it('T76 — seção do palco molecular deve existir no HTML real', () => {
+    const secao = realDoc.getElementById('palco-molecular-secao');
+    expect(secao).not.toBeNull();
+  });
+
+  it('T77 — deve conter o disclaimer / aviso de isenção qualitativo', () => {
+    const secao = realDoc.getElementById('palco-molecular-secao');
+    expect(secao.textContent).toContain('Aviso de Isenção Científica');
+    expect(secao.textContent).toContain('Visualização qualitativa e didática');
+    expect(secao.textContent).toContain('Não representa simulação molecular, cálculo quantitativo ou modelo científico validado');
+  });
+
+  it('T78 — deve conter os termos químicos principais', () => {
+    const secao = realDoc.getElementById('palco-molecular-secao');
+    const text = secao.textContent;
+    expect(text).toContain('Triglicerídeo');
+    expect(text).toContain('NaOH');
+    expect(text).toContain('Sabão');
+    expect(text).toContain('Glicerol');
+  });
+
+  it('T79 — deve conter a contagem de átomos simplificada e legenda', () => {
+    const legend = realDoc.querySelector('#palco-molecular-secao .molecular-stage__legend');
+    expect(legend).not.toBeNull();
+    expect(legend.textContent).toContain('Carbono');
+    expect(legend.textContent).toContain('Oxigênio');
+  });
+
+  it('T80 — ausência de controles interativos proibidos e bibliotecas 3D', () => {
+    const rangeInputs = realDoc.querySelectorAll('input[type="range"]');
+    expect(rangeInputs.length).toBe(0);
+
+    const canvasElements = realDoc.querySelectorAll('canvas');
+    expect(canvasElements.length).toBe(0);
+
+    const htmlLower = realHTML.toLowerCase();
+    expect(htmlLower).not.toContain('three.js');
+    expect(htmlLower).not.toContain('webgl');
+    expect(htmlLower).not.toContain('sketchfab');
+    expect(htmlLower).not.toContain('unity');
+  });
+});
+

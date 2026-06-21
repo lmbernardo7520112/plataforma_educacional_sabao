@@ -164,4 +164,46 @@
     color: #333 !important;
     font-size: 9pt !important;
   }
+
+  /* Palco Molecular (Mídia Impressa) */
+  #palco-molecular-secao {
+    page-break-inside: avoid;
+  }
+
+  .molecular-stage__visual {
+    background: #fff !important;
+    border-color: #ccc !important;
+    box-shadow: none !important;
+  }
+
+  .molecular-stage__svg {
+    color: #111 !important;
+    filter: none !important; /* Desativa sombras/filtros no PDF impresso */
+  }
+
+  .molecular-stage__legend {
+    background: #f5f5f5 !important;
+    border-color: #ccc !important;
+    color: #111 !important;
+  }
+
+  .molecular-stage__legend-title {
+    color: #111 !important;
+  }
+
+  .molecular-stage__legend-item {
+    color: #333 !important;
+  }
+
+  .molecular-stage__description {
+    background: none !important;
+    border-left-color: #333 !important;
+    color: #222 !important;
+  }
+
+  .molecular-stage__desc-text,
+  .molecular-stage__desc-list li {
+    color: #333 !important;
+  }
 }
+
