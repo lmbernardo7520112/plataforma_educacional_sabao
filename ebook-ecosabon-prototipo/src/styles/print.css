@@ -194,16 +194,36 @@
   .molecular-stage__legend-item {
     color: #333 !important;
   }
+  /* Ocultar controles interativos do stepper no PDF */
+  .molecular-stage__stepper-container {
+    display: none !important;
+  }
 
-  .molecular-stage__description {
+  /* Forçar exibição do fallback linear didático no papel/PDF */
+  body.js-enabled .molecular-stage__fallback {
+    display: block !important;
     background: none !important;
     border-left-color: #333 !important;
     color: #222 !important;
+    padding-left: 1rem !important;
   }
 
-  .molecular-stage__desc-text,
-  .molecular-stage__desc-list li {
+  .molecular-stage__fallback-step {
+    border-left-color: #555 !important;
+  }
+
+  .molecular-stage__fallback-step strong {
+    color: #111 !important;
+  }
+
+  .molecular-stage__fallback-step p {
     color: #333 !important;
   }
-}
 
+  /* Garantir que todos os componentes do SVG sejam impressos com opacidade total, ignorando o estado ativo do stepper */
+  .molecular-stage__svg g,
+  .molecular-stage__svg rect,
+  .molecular-stage__svg text {
+    opacity: 1 !important;
+  }
+}

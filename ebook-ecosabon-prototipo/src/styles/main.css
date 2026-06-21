@@ -1273,42 +1273,121 @@ textarea:focus { border-color: var(--color-primary); outline: none; }
   border-radius: 0;
   border-top: 2px dashed #ECC94B;
 }
+/* ─── Sequenciador Molecular B2 ───────────────────────────────────── */
+.molecular-stage__stepper-container {
+  display: none; /* Oculto por padrão quando JS está desativado */
+}
 
-.molecular-stage__description {
+body.js-enabled .molecular-stage__stepper-container {
+  display: block; /* Visível quando JS está ativo */
+}
+
+.molecular-stage__fallback {
+  display: block; /* Fallback linear visível por padrão */
   background: rgba(255, 255, 255, 0.01);
   border-left: 3px solid var(--color-accent);
   padding: 1rem 1.25rem;
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  font-size: 0.9rem;
-  line-height: 1.6;
 }
 
-.molecular-stage__desc-text {
-  color: var(--color-text-secondary);
-  margin-bottom: 0.75rem;
-}
-.molecular-stage__desc-text:last-of-type {
-  margin-bottom: 0;
+body.js-enabled .molecular-stage__fallback {
+  display: none; /* Oculta fallback linear quando JS está ativo */
 }
 
-.molecular-stage__desc-list {
-  list-style: none;
-  padding-left: 0;
-  margin: 0.75rem 0;
+/* Transições suaves e suporte a redução de movimentos */
+.molecular-stage__svg g,
+.molecular-stage__svg rect,
+.molecular-stage__svg text {
+  transition: opacity 0.3s ease;
 }
 
-.molecular-stage__desc-list li {
-  position: relative;
-  padding-left: 1.25rem;
-  margin-bottom: 0.5rem;
-  color: var(--color-text-secondary);
+@media (prefers-reduced-motion: reduce) {
+  .molecular-stage__svg g,
+  .molecular-stage__svg rect,
+  .molecular-stage__svg text {
+    transition: none;
+  }
 }
 
-.molecular-stage__desc-list li::before {
-  content: "•";
-  position: absolute;
-  left: 0.25rem;
-  color: var(--color-accent);
-  font-weight: bold;
+/* Definições de opacidade qualitativas baseadas na Etapa Ativa (step-X) */
+
+/* Etapa 0: Segurança e caráter qualitativo - Todos visíveis */
+.step-0 #svg-triglyceride,
+.step-0 #svg-naoh,
+.step-0 #svg-arrow,
+.step-0 #svg-glycerol,
+.step-0 #svg-soap,
+.step-0 #svg-green-chem {
+  opacity: 1;
 }
 
+/* Etapa 1: Triglicerídeo como Reagente - Triglicerídeo em destaque, outros opacos */
+.step-1 #svg-triglyceride { opacity: 1; }
+.step-1 #svg-naoh { opacity: 0.15; }
+.step-1 #svg-arrow { opacity: 0.15; }
+.step-1 #svg-glycerol { opacity: 0.15; }
+.step-1 #svg-soap { opacity: 0.15; }
+.step-1 #svg-green-chem { opacity: 0.15; }
+
+/* Etapa 2: Presença de NaOH - NaOH em destaque, outros opacos */
+.step-2 #svg-triglyceride { opacity: 0.15; }
+.step-2 #svg-naoh { opacity: 1; }
+.step-2 #svg-arrow { opacity: 0.15; }
+.step-2 #svg-glycerol { opacity: 0.15; }
+.step-2 #svg-soap { opacity: 0.15; }
+.step-2 #svg-green-chem { opacity: 0.15; }
+
+/* Etapa 3: Proporção didática 1:3 - Triglicerídeo e NaOH visíveis */
+.step-3 #svg-triglyceride { opacity: 1; }
+.step-3 #svg-naoh { opacity: 1; }
+.step-3 #svg-arrow { opacity: 0.15; }
+.step-3 #svg-glycerol { opacity: 0.15; }
+.step-3 #svg-soap { opacity: 0.15; }
+.step-3 #svg-green-chem { opacity: 0.15; }
+
+/* Etapa 4: Clivagem qualitativa - Triglicerídeo, NaOH e Seta ativos */
+.step-4 #svg-triglyceride { opacity: 1; }
+.step-4 #svg-naoh { opacity: 1; }
+.step-4 #svg-arrow { opacity: 1; }
+.step-4 #svg-glycerol { opacity: 0.15; }
+.step-4 #svg-soap { opacity: 0.15; }
+.step-4 #svg-green-chem { opacity: 0.15; }
+
+/* Etapa 5: Formação de sabão - Sabão em destaque */
+.step-5 #svg-triglyceride { opacity: 0.15; }
+.step-5 #svg-naoh { opacity: 0.15; }
+.step-5 #svg-arrow { opacity: 0.15; }
+.step-5 #svg-glycerol { opacity: 0.15; }
+.step-5 #svg-soap { opacity: 1; }
+.step-5 #svg-green-chem { opacity: 0.15; }
+
+/* Etapa 6: Formação de glicerol - Glicerol em destaque */
+.step-6 #svg-triglyceride { opacity: 0.15; }
+.step-6 #svg-naoh { opacity: 0.15; }
+.step-6 #svg-arrow { opacity: 0.15; }
+.step-6 #svg-glycerol { opacity: 1; }
+.step-6 #svg-soap { opacity: 0.15; }
+.step-6 #svg-green-chem { opacity: 0.15; }
+
+/* Etapa 7: Química Verde - Glicerol, Sabão e Green Chem visíveis */
+.step-7 #svg-triglyceride { opacity: 0.15; }
+.step-7 #svg-naoh { opacity: 0.15; }
+.step-7 #svg-arrow { opacity: 0.15; }
+.step-7 #svg-glycerol { opacity: 1; }
+.step-7 #svg-soap { opacity: 1; }
+.step-7 #svg-green-chem { opacity: 1; }
+
+/* Etapa 8: Síntese conceitual - Todos visíveis */
+.step-8 #svg-triglyceride { opacity: 1; }
+.step-8 #svg-naoh { opacity: 1; }
+.step-8 #svg-arrow { opacity: 1; }
+.step-8 #svg-glycerol { opacity: 1; }
+.step-8 #svg-soap { opacity: 1; }
+.step-8 #svg-green-chem { opacity: 1; }
+
+/* Controles com outline de foco nítido e acessível */
+#molecular-stage-prev:focus-visible,
+#molecular-stage-next:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}

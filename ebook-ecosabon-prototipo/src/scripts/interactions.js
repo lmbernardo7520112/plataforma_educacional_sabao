@@ -35,3 +35,10 @@ export {
 export {
   evaluateChecklist
 } from './checklist.js';
+
+export {
+  getMolecularStageStep,
+  setMolecularStageStep,
+  initMolecularStageStepper
+} from './molecular-stage.js';
+
