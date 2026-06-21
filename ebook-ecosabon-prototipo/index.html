@@ -243,6 +243,272 @@
             <p class="infographic-panel__content"><strong>Atenção:</strong> O hidróxido de sódio (soda cáustica) é uma base forte altamente corrosiva. O manuseio exige obrigatoriamente equipamentos de proteção individual (óculos de segurança e luvas) e ambiente ventilado, pois a reação é exotérmica.</p>
           </div>
         </div>
+      </div>
+
+      <!-- Palco Molecular — Visualização Qualitativa da Saponificação -->
+      <div class="card" id="palco-molecular-secao">
+        <h3 class="card__title">🔬 Palco Molecular — Visualização Qualitativa da Saponificação</h3>
+
+        <div class="molecular-stage__equation" style="text-align: center; margin-bottom: 1.5rem; font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--color-success);">
+          Triglicerídeo + 3 NaOH &rarr; 3 Sabão + Glicerol
+        </div>
+        
+        <div class="warning-block">
+          <p class="warning-block__text"><strong>Aviso de Isenção Científica:</strong> Visualização qualitativa e didática. Não representa simulação molecular, cálculo quantitativo ou modelo científico validado.</p>
+        </div>
+
+        <div class="molecular-stage">
+          <div class="molecular-stage__visual" aria-hidden="true">
+            <!-- Inline SVG showing molecular schemas -->
+            <svg viewBox="0 0 800 320" class="molecular-stage__svg">
+              <defs>
+                <!-- Gradients for premium 2.5D spheroids -->
+                <radialGradient id="grad-carbon" cx="30%" cy="30%" r="70%">
+                  <stop offset="0%" stop-color="#718096" />
+                  <stop offset="100%" stop-color="#2D3748" />
+                </radialGradient>
+                <radialGradient id="grad-oxygen" cx="30%" cy="30%" r="70%">
+                  <stop offset="0%" stop-color="#FEB2B2" />
+                  <stop offset="100%" stop-color="#C53030" />
+                </radialGradient>
+                <radialGradient id="grad-hydrogen" cx="30%" cy="30%" r="70%">
+                  <stop offset="0%" stop-color="#FFFFFF" />
+                  <stop offset="100%" stop-color="#CBD5E0" />
+                </radialGradient>
+                <radialGradient id="grad-sodium" cx="30%" cy="30%" r="70%">
+                  <stop offset="0%" stop-color="#B794F4" />
+                  <stop offset="100%" stop-color="#553C9A" />
+                </radialGradient>
+                <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+                  <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+                </filter>
+              </defs>
+
+              <!-- REAGENT BG -->
+              <rect x="5" y="5" width="375" height="310" rx="10" fill="rgba(255, 255, 255, 0.02)" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1" />
+              <text x="20" y="25" fill="rgba(255,255,255,0.4)" font-size="11" font-weight="bold" letter-spacing="1">REAGENTES</text>
+
+              <!-- Triglyceride schema (left) -->
+              <g transform="translate(20, 45)" filter="url(#shadow)">
+                <!-- Backbone (Glycerol C-C-C) -->
+                <circle cx="20" cy="50" r="14" fill="url(#grad-carbon)" />
+                <text x="20" y="54" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+                
+                <line x1="20" y1="64" x2="20" y2="126" stroke="#4A5568" stroke-width="4" />
+                
+                <circle cx="20" cy="140" r="14" fill="url(#grad-carbon)" />
+                <text x="20" y="144" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+                
+                <line x1="20" y1="154" x2="20" y2="216" stroke="#4A5568" stroke-width="4" />
+                
+                <circle cx="20" cy="230" r="14" fill="url(#grad-carbon)" />
+                <text x="20" y="234" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+
+                <!-- Ester O links -->
+                <line x1="34" y1="50" x2="66" y2="50" stroke="#4A5568" stroke-width="3" />
+                <circle cx="80" cy="50" r="12" fill="url(#grad-oxygen)" />
+                <text x="80" y="53" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">O</text>
+
+                <line x1="34" y1="140" x2="66" y2="140" stroke="#4A5568" stroke-width="3" />
+                <circle cx="80" cy="140" r="12" fill="url(#grad-oxygen)" />
+                <text x="80" y="143" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">O</text>
+
+                <line x1="34" y1="230" x2="66" y2="230" stroke="#4A5568" stroke-width="3" />
+                <circle cx="80" cy="230" r="12" fill="url(#grad-oxygen)" />
+                <text x="80" y="233" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">O</text>
+
+                <!-- Rupture markings (yellow dashed lines) -->
+                <line x1="92" y1="35" x2="92" y2="65" stroke="#ECC94B" stroke-dasharray="3,3" stroke-width="2" />
+                <line x1="92" y1="125" x2="92" y2="155" stroke="#ECC94B" stroke-dasharray="3,3" stroke-width="2" />
+                <line x1="92" y1="215" x2="92" y2="245" stroke="#ECC94B" stroke-dasharray="3,3" stroke-width="2" />
+
+                <!-- Carbonyl C -->
+                <line x1="92" y1="50" x2="116" y2="50" stroke="#E53E3E" stroke-width="3" />
+                <circle cx="120" cy="50" r="14" fill="url(#grad-carbon)" />
+                <text x="120" y="54" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+
+                <line x1="92" y1="140" x2="116" y2="140" stroke="#E53E3E" stroke-width="3" />
+                <circle cx="120" cy="140" r="14" fill="url(#grad-carbon)" />
+                <text x="120" y="144" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+
+                <line x1="92" y1="230" x2="116" y2="230" stroke="#E53E3E" stroke-width="3" />
+                <circle cx="120" cy="230" r="14" fill="url(#grad-carbon)" />
+                <text x="120" y="234" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+
+                <!-- Double Bond O -->
+                <line x1="120" y1="36" x2="120" y2="14" stroke="#E53E3E" stroke-width="4" />
+                <line x1="124" y1="36" x2="124" y2="14" stroke="#E53E3E" stroke-width="4" />
+                <circle cx="122" cy="10" r="10" fill="url(#grad-oxygen)" />
+                <text x="122" y="13" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">O</text>
+
+                <line x1="120" y1="126" x2="120" y2="104" stroke="#E53E3E" stroke-width="4" />
+                <line x1="124" y1="126" x2="124" y2="104" stroke="#E53E3E" stroke-width="4" />
+                <circle cx="122" cy="100" r="10" fill="url(#grad-oxygen)" />
+                <text x="122" y="103" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">O</text>
+
+                <line x1="120" y1="216" x2="120" y2="194" stroke="#E53E3E" stroke-width="4" />
+                <line x1="124" y1="216" x2="124" y2="194" stroke="#E53E3E" stroke-width="4" />
+                <circle cx="122" cy="190" r="10" fill="url(#grad-oxygen)" />
+                <text x="122" y="193" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">O</text>
+
+                <!-- Radical Tails R -->
+                <line x1="134" y1="50" x2="160" y2="50" stroke="#4A5568" stroke-width="3" />
+                <path d="M 160,50 L 170,40 L 180,50 L 190,40 L 200,50" fill="none" stroke="#718096" stroke-width="3" />
+                <text x="210" y="48" font-size="11" fill="#A0AEC0" font-weight="bold" font-family="monospace">R1</text>
+
+                <line x1="134" y1="140" x2="160" y2="140" stroke="#4A5568" stroke-width="3" />
+                <path d="M 160,140 L 170,130 L 180,140 L 190,130 L 200,140" fill="none" stroke="#718096" stroke-width="3" />
+                <text x="210" y="138" font-size="11" fill="#A0AEC0" font-weight="bold" font-family="monospace">R2</text>
+
+                <line x1="134" y1="230" x2="160" y2="230" stroke="#4A5568" stroke-width="3" />
+                <path d="M 160,230 L 170,220 L 180,230 L 190,220 L 200,230" fill="none" stroke="#718096" stroke-width="3" />
+                <text x="210" y="228" font-size="11" fill="#A0AEC0" font-weight="bold" font-family="monospace">R3</text>
+              </g>
+
+              <!-- NaOH (3x) -->
+              <g transform="translate(290, 60)" filter="url(#shadow)">
+                <!-- NaOH 1 -->
+                <circle cx="20" cy="20" r="12" fill="url(#grad-sodium)" />
+                <text x="20" y="23" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">Na+</text>
+                <circle cx="45" cy="20" r="10" fill="url(#grad-oxygen)" />
+                <text x="45" y="23" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">OH-</text>
+                
+                <!-- NaOH 2 -->
+                <circle cx="20" cy="110" r="12" fill="url(#grad-sodium)" />
+                <text x="20" y="113" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">Na+</text>
+                <circle cx="45" cy="110" r="10" fill="url(#grad-oxygen)" />
+                <text x="45" y="113" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">OH-</text>
+
+                <!-- NaOH 3 -->
+                <circle cx="20" cy="200" r="12" fill="url(#grad-sodium)" />
+                <text x="20" y="203" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">Na+</text>
+                <circle cx="45" cy="200" r="10" fill="url(#grad-oxygen)" />
+                <text x="45" y="203" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">OH-</text>
+
+                <!-- 3x notation -->
+                <rect x="-12" y="-12" width="76" height="234" rx="6" fill="none" stroke="#805AD5" stroke-dasharray="4,4" stroke-width="1.5" />
+                <text x="26" y="238" fill="#B794F4" font-size="11" font-weight="bold" text-anchor="middle">Proporção 3×</text>
+              </g>
+
+              <!-- REACTION ARROW (Middle) -->
+              <g transform="translate(390, 140)">
+                <line x1="0" y1="15" x2="30" y2="15" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                <polygon points="28,8 38,15 28,22" fill="currentColor"/>
+                <text x="15" y="-5" fill="rgba(255,255,255,0.5)" font-size="9" text-anchor="middle">Reação</text>
+              </g>
+
+              <!-- PRODUCTS BG -->
+              <rect x="435" y="5" width="360" height="310" rx="10" fill="rgba(255, 255, 255, 0.02)" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1" />
+              <text x="450" y="25" fill="rgba(255,255,255,0.4)" font-size="11" font-weight="bold" letter-spacing="1">PRODUTOS</text>
+
+              <!-- Glicerol (right, left-side of products area) -->
+              <g transform="translate(450, 70)" filter="url(#shadow)">
+                <text x="35" y="-12" fill="#4FD1C5" font-size="11" font-weight="bold" text-anchor="middle">1× Glicerol</text>
+                
+                <!-- Glycerol backbone C-C-C -->
+                <circle cx="20" cy="30" r="12" fill="url(#grad-carbon)" />
+                <text x="20" y="33" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+                <line x1="20" y1="42" x2="20" y2="78" stroke="#4A5568" stroke-width="3" />
+                
+                <circle cx="20" cy="90" r="12" fill="url(#grad-carbon)" />
+                <text x="20" y="93" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+                <line x1="20" y1="102" x2="20" y2="138" stroke="#4A5568" stroke-width="3" />
+                
+                <circle cx="20" cy="150" r="12" fill="url(#grad-carbon)" />
+                <text x="20" y="153" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+
+                <!-- Attached OH groups -->
+                <line x1="32" y1="30" x2="48" y2="30" stroke="#4A5568" stroke-width="2" />
+                <circle cx="58" cy="30" r="9" fill="url(#grad-oxygen)" />
+                <text x="58" y="33" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">OH</text>
+
+                <line x1="32" y1="90" x2="48" y2="90" stroke="#4A5568" stroke-width="2" />
+                <circle cx="58" cy="90" r="9" fill="url(#grad-oxygen)" />
+                <text x="58" y="93" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">OH</text>
+
+                <line x1="32" y1="150" x2="48" y2="150" stroke="#4A5568" stroke-width="2" />
+                <circle cx="58" cy="150" r="9" fill="url(#grad-oxygen)" />
+                <text x="58" y="153" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">OH</text>
+              </g>
+
+              <!-- Sabão (right, right-side of products area) -->
+              <g transform="translate(565, 60)" filter="url(#shadow)">
+                <text x="90" y="-2" fill="#4FD1C5" font-size="11" font-weight="bold" text-anchor="middle">3× Sabão (Tensoativo)</text>
+                
+                <!-- Soap Molecule 1 -->
+                <g transform="translate(0, 20)">
+                  <path d="M 10,10 L 20,0 L 30,10 L 40,0 L 50,10" fill="none" stroke="#718096" stroke-width="3" />
+                  <text x="-12" y="8" font-size="10" fill="#A0AEC0" font-weight="bold" font-family="monospace">R1</text>
+                  <!-- Carboxylate head -->
+                  <circle cx="62" cy="0" r="10" fill="url(#grad-oxygen)" />
+                  <text x="62" y="3" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">O-</text>
+                  <circle cx="85" cy="0" r="11" fill="url(#grad-sodium)" />
+                  <text x="85" y="3" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">Na+</text>
+                </g>
+
+                <!-- Soap Molecule 2 -->
+                <g transform="translate(0, 100)">
+                  <path d="M 10,10 L 20,0 L 30,10 L 40,0 L 50,10" fill="none" stroke="#718096" stroke-width="3" />
+                  <text x="-12" y="8" font-size="10" fill="#A0AEC0" font-weight="bold" font-family="monospace">R2</text>
+                  <!-- Carboxylate head -->
+                  <circle cx="62" cy="0" r="10" fill="url(#grad-oxygen)" />
+                  <text x="62" y="3" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">O-</text>
+                  <circle cx="85" cy="0" r="11" fill="url(#grad-sodium)" />
+                  <text x="85" y="3" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">Na+</text>
+                </g>
+
+                <!-- Soap Molecule 3 -->
+                <g transform="translate(0, 180)">
+                  <path d="M 10,10 L 20,0 L 30,10 L 40,0 L 50,10" fill="none" stroke="#718096" stroke-width="3" />
+                  <text x="-12" y="8" font-size="10" fill="#A0AEC0" font-weight="bold" font-family="monospace">R3</text>
+                  <!-- Carboxylate head -->
+                  <circle cx="62" cy="0" r="10" fill="url(#grad-oxygen)" />
+                  <text x="62" y="3" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">O-</text>
+                  <circle cx="85" cy="0" r="11" fill="url(#grad-sodium)" />
+                  <text x="85" y="3" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">Na+</text>
+                </g>
+              </g>
+
+              <!-- GREEN CHEMISTRY INDICATOR (bottom right badge) -->
+              <g transform="translate(450, 275)">
+                <rect x="0" y="0" width="300" height="26" rx="5" fill="rgba(72, 187, 120, 0.1)" stroke="#48BB78" stroke-width="1" />
+                <text x="15" y="17" fill="#48BB78" font-size="10" font-weight="bold">🍃 Economia Atômica: Conservação de Massa de 100%</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Legenda -->
+          <div class="molecular-stage__legend">
+            <h4 class="molecular-stage__legend-title">Legenda de Esferas Atômicas:</h4>
+            <div class="molecular-stage__legend-items">
+              <span class="molecular-stage__legend-item"><span class="legend-dot legend-dot--carbon"></span> Carbono (C)</span>
+              <span class="molecular-stage__legend-item"><span class="legend-dot legend-dot--oxygen"></span> Oxigênio (O)</span>
+              <span class="molecular-stage__legend-item"><span class="legend-dot legend-dot--hydrogen"></span> Hidrogênio (H)</span>
+              <span class="molecular-stage__legend-item"><span class="legend-dot legend-dot--sodium"></span> Sódio (Na⁺)</span>
+              <span class="molecular-stage__legend-item"><span class="legend-dot legend-dot--tail"></span> Cadeia Hidrofóbica (Radical R)</span>
+              <span class="molecular-stage__legend-item"><span class="legend-dot legend-dot--rupture"></span> Ruptura de Ligação Éster</span>
+            </div>
+          </div>
+
+          <!-- Texto equivalente acessível -->
+          <div class="molecular-stage__description">
+            <h4 class="sr-only">Descrição Equivalente Detalhada (Acessibilidade)</h4>
+            <p class="molecular-stage__desc-text">
+              <strong>Mecanismo da Reação de Saponificação (Nível Submicroscópico):</strong> A ilustração mostra que um mol de triglicerídeo (gordura), que possui três ligações éster conectadas a cadeias de radicais de ácidos graxos (representadas pelas caudas R1, R2 e R3), reage estequiometricamente com três mols de hidróxido de sódio (NaOH/base forte). 
+            </p>
+            <p class="molecular-stage__desc-text">
+              As linhas tracejadas amarelas indicam a zona de ruptura qualitativa de cada uma das três ligações éster, que ocorre por ataque do agente hidróxido (OH⁻). Após a quebra, formam-se dois produtos principais de valor didático:
+            </p>
+            <ul class="molecular-stage__desc-list">
+              <li><strong>Três moléculas de Sabão (Tensoativo):</strong> Formadas pela atração eletrostática entre os grupos carboxilato negativos (R-COO⁻) e os cátions sódio (Na⁺). Cada molécula de sabão possui uma longa cauda apolar hidrofóbica (compatível com óleos) e uma cabeça polar hidrofílica (compatível com água), conferindo a ação tensoativa.</li>
+              <li><strong>Uma molécula de Glicerol (Glicerina):</strong> Formada pela estabilização da estrutura vertical de carbono do triglicerídeo original por recombinação química com três grupos hidroxila (OH). O glicerol atua como agente umectante no sabão final.</li>
+            </ul>
+            <p class="molecular-stage__desc-text">
+              Conforme as diretrizes de sustentabilidade da <strong>Química Verde</strong>, destaca-se que todos os átomos presentes nos reagentes se conservam e se reorganizam nos produtos úteis finais (sabão biodegradável e glicerina purificada), atingindo um patamar de alta eficiência de economia atômica.
+            </p>
+          </div>
+        </div>
+      </div>
 
       <!-- Checklist Pré-Aula -->
       <div class="card">
