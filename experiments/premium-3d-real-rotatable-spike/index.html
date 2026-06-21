@@ -31,13 +31,18 @@
           <button id="btn-view-side" class="btn btn--secondary">Visão Lateral</button>
           <button id="btn-view-top" class="btn btn--secondary">Visão Superior</button>
           <button id="btn-view-persp" class="btn btn--secondary">Perspectiva</button>
-          <button id="btn-reset" class="btn btn--primary">Resetar Câmera</button>
+          <button id="btn-reset" class="btn btn--primary">Resetar visão</button>
         </div>
 
-        <div id="canvas-container" class="canvas-container">
+        <div id="canvas-container" class="canvas-container" tabindex="0" role="region" aria-label="Visualizador tridimensional interativo do Palco Molecular. Rotacione usando o mouse arrastando ou use as setas do teclado. Teclas de mais e menos controlam o zoom.">
           <!-- WebGL canvas will be injected here. If WebGL fails, this fallback displays. -->
           <div id="webgl-fallback" class="webgl-fallback" style="display: none;">
-            <p><strong>Aviso:</strong> O WebGL não está disponível ou foi desativado no seu navegador. Consulte a descrição textual equivalente abaixo para compreender o modelo molecular didático.</p>
+            <div class="webgl-fallback-card">
+              <span class="fallback-icon">⚠️</span>
+              <h3>WebGL Indisponível</h3>
+              <p>O acelerador gráfico 3D (WebGL) não está ativo ou não é suportado pelo seu navegador ou dispositivo escolar.</p>
+              <p><strong>Não se preocupe:</strong> A descrição detalhada e a legenda estática abaixo contêm todas as informações didáticas equivalentes do modelo molecular.</p>
+            </div>
           </div>
         </div>
 
@@ -48,17 +53,36 @@
         <div class="description-panel">
           <h3>Descrição Textual Equivalente (Acessibilidade)</h3>
           <p id="scene-description">
-            <strong>Cena Tridimensional da Reação:</strong> O modelo exibe, da esquerda para a direita, a molécula de Triglicerídeo (estrutura com backbone de glicerol acoplada a 3 cadeias graxas representadas por esferas e cilindros verdes), cercada didaticamente por 3 moléculas de Hidróxido de Sódio (NaOH, em esferas vermelhas e azuis). Ao girar a câmera, o usuário pode explorar a disposição espacial qualitativa das carbonilas e a zona de clivagem.
+            <strong>Cena Tridimensional da Reação:</strong> O modelo exibe, da esquerda para a direita, a molécula de Triglicerídeo (estrutura com backbone de glicerol acoplada a 3 caudas graxas longas representadas por esferas e cilindros verdes), cercada didaticamente por 3 moléculas de Hidróxido de Sódio (NaOH, em esferas vermelhas e cinzas). À direita, vemos os produtos resultantes: o Glicerol (estrutura com backbone vertical em laranja) e 3 cadeias lineares de Sabão (em azul). Ao girar a câmera ou utilizar o teclado, o usuário pode explorar a disposição espacial qualitativa do ataque químico e clivagem.
           </p>
           
           <div class="legend-box">
             <h4>Legenda de Átomos e Moléculas (Procedural)</h4>
             <ul class="legend-list">
-              <li><span class="legend-dot legend-dot--green"></span> <strong>Triglicerídeo (Verde):</strong> Molécula de óleo/gordura.</li>
-              <li><span class="legend-dot legend-dot--red"></span> <strong>NaOH (Vermelho/Cinza):</strong> Hidróxido de Sódio (Soda cáustica).</li>
-              <li><span class="legend-dot legend-dot--blue"></span> <strong>Sabão (Azul):</strong> Tensoativo formado pós-clivagem.</li>
-              <li><span class="legend-dot legend-dot--orange"></span> <strong>Glicerol (Laranja):</strong> Coproduto umectante da reação.</li>
+              <li><span class="legend-dot legend-dot--green"></span> <strong>Triglicerídeo (Verde):</strong> Molécula de óleo/gordura (esquerda).</li>
+              <li><span class="legend-dot legend-dot--red"></span> <strong>NaOH (Vermelho/Cinza):</strong> Hidróxido de Sódio (meio).</li>
+              <li><span class="legend-dot legend-dot--blue"></span> <strong>Sabão (Azul):</strong> Tensoativo formado pós-clivagem (direita).</li>
+              <li><span class="legend-dot legend-dot--orange"></span> <strong>Glicerol (Laranja):</strong> Coproduto umectante da reação (direita).</li>
             </ul>
+          </div>
+        </div>
+
+        <!-- Print-only static representation of views -->
+        <div class="print-only">
+          <h3>Representação Estática das Visões Tridimensionais</h3>
+          <div class="print-view-grid">
+            <div class="print-view-item">
+              <strong>1. Visão Frontal:</strong> Observamos os reagentes à esquerda (Triglicerídeo em verde) e à direita os produtos (Glicerol em laranja e as três cadeias lineares de Sabão em azul). Os três mols de NaOH flutuam na zona intermediária.
+            </div>
+            <div class="print-view-item">
+              <strong>2. Visão Lateral:</strong> Foco no alinhamento das cadeias de carbono e hidrogênio. Notamos a espessura tridimensional das três caudas hidrofóbicas do óleo vegetal e as posições aproximadas dos íons de Sódio.
+            </div>
+            <div class="print-view-item">
+              <strong>3. Visão Superior:</strong> Uma perspectiva de cima para baixo revelando a separação espacial entre os reagentes e o ataque didático das carbonilas pelo hidróxido nas três posições verticais.
+            </div>
+            <div class="print-view-item">
+              <strong>4. Visão de Perspectiva:</strong> Exibe a profundidade espacial completa das cadeias lipídicas de sabão em azul e a estrutura tridimensional complexa do óleo vegetal original à esquerda.
+            </div>
           </div>
         </div>
       </div>
