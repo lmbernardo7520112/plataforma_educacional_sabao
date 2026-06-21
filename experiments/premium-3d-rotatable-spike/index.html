@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spike — Premium 3D Rotacionável Qualitativo | EcoSabon</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">EcoSabon Experiments</div>
+      <h1 class="title">Estudo de Viabilidade — Visualização Rotacionável Premium 3D</h1>
+      <p class="subtitle">Fase C0: Spike técnico qualitativo por perspectives de rotação vetorial</p>
+    </header>
+
+    <main class="main-content">
+      <div class="card warning-card">
+        <p><strong>Aviso de Escopo:</strong> Esta é uma prova técnica isolada para avaliar a rotação qualitativa discreta. O código não está acoplado ao e-book EcoSabon consolidado. Não representa uma simulação científica real ou modelo validado.</p>
+      </div>
+
+      <div class="card interactive-card" id="spike-container" data-angle="0">
+        <h2 class="card-title">Palco Molecular 3D — Rotação Qualitativa</h2>
+        
+        <!-- Controls -->
+        <div class="controls-panel">
+          <button id="btn-rotate-left" class="btn btn--secondary" aria-label="Girar para esquerda">&larr; Girar Esquerda</button>
+          <div class="angle-indicator" id="angle-display" aria-live="polite">Ângulo Ativo: 0° (Perspectiva Frontal)</div>
+          <button id="btn-rotate-right" class="btn btn--primary" aria-label="Girar para direita">Girar Direita &rarr;</button>
+        </div>
+
+        <div class="visualizer-wrapper">
+          <!-- 3D Projection Box SVG -->
+          <svg class="molecule-svg" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="trig-grad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#9AE6B4" />
+                <stop offset="100%" stop-color="#319795" />
+              </radialGradient>
+              <radialGradient id="naoh-grad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FEB2B2" />
+                <stop offset="100%" stop-color="#E53E3E" />
+              </radialGradient>
+              <radialGradient id="soap-grad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#90CDF4" />
+                <stop offset="100%" stop-color="#3182CE" />
+              </radialGradient>
+              <radialGradient id="glyc-grad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FBD38D" />
+                <stop offset="100%" stop-color="#DD6B20" />
+              </radialGradient>
+            </defs>
+
+            <!-- Ground Grid for 3D Perspective -->
+            <path d="M 100,300 L 700,300 L 600,380 L 200,380 Z" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1.5" />
+
+            <!-- Perspective 0° (Front View) -->
+            <g class="projection projection--0">
+              <text x="400" y="50" text-anchor="middle" fill="var(--color-accent)" font-size="14" font-weight="bold">Perspectiva Frontal (0°)</text>
+              <!-- Triglyceride (Left) -->
+              <circle cx="250" cy="200" r="45" fill="url(#trig-grad)" />
+              <text x="250" y="205" font-size="12" fill="#FFF" font-weight="bold" text-anchor="middle">Triglicerídeo</text>
+              <line x1="250" y1="200" x2="350" y2="200" stroke="#FFF" stroke-dasharray="4" stroke-width="2" />
+              <!-- NaOH (Right) -->
+              <circle cx="550" cy="200" r="30" fill="url(#naoh-grad)" />
+              <text x="550" y="204" font-size="10" fill="#FFF" font-weight="bold" text-anchor="middle">3x NaOH</text>
+            </g>
+
+            <!-- Perspective 90° (Right Side View) -->
+            <g class="projection projection--90">
+              <text x="400" y="50" text-anchor="middle" fill="var(--color-accent)" font-size="14" font-weight="bold">Perspectiva Lateral Direita (90°)</text>
+              <!-- Triglyceride rotates to front, NaOH goes to background -->
+              <circle cx="400" cy="230" r="45" fill="url(#trig-grad)" />
+              <text x="400" y="235" font-size="12" fill="#FFF" font-weight="bold" text-anchor="middle">Triglicerídeo</text>
+              <circle cx="400" cy="150" r="22" fill="url(#naoh-grad)" opacity="0.6" />
+              <text x="400" y="153" font-size="8" fill="#FFF" font-weight="bold" text-anchor="middle">NaOH (Atrás)</text>
+            </g>
+
+            <!-- Perspective 180° (Back View) -->
+            <g class="projection projection--180">
+              <text x="400" y="50" text-anchor="middle" fill="var(--color-accent)" font-size="14" font-weight="bold">Perspectiva Traseira (180°)</text>
+              <!-- Roles reversed spatially -->
+              <circle cx="550" cy="200" r="45" fill="url(#trig-grad)" />
+              <text x="550" y="205" font-size="12" fill="#FFF" font-weight="bold" text-anchor="middle">Triglicerídeo</text>
+              <line x1="250" y1="200" x2="550" y2="200" stroke="#FFF" stroke-dasharray="4" stroke-width="2" />
+              <circle cx="250" cy="200" r="30" fill="url(#naoh-grad)" />
+              <text x="250" y="204" font-size="10" fill="#FFF" font-weight="bold" text-anchor="middle">3x NaOH</text>
+            </g>
+
+            <!-- Perspective 270° (Left Side View) -->
+            <g class="projection projection--270">
+              <text x="400" y="50" text-anchor="middle" fill="var(--color-accent)" font-size="14" font-weight="bold">Perspectiva Lateral Esquerda (270°)</text>
+              <circle cx="400" cy="150" r="35" fill="url(#trig-grad)" opacity="0.6" />
+              <text x="400" y="154" font-size="10" fill="#FFF" font-weight="bold" text-anchor="middle">Triglicerídeo</text>
+              <circle cx="400" cy="230" r="35" fill="url(#naoh-grad)" />
+              <text x="400" y="234" font-size="10" fill="#FFF" font-weight="bold" text-anchor="middle">3x NaOH</text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="description-panel" id="description-text">
+          Nesta perspectiva frontal, observamos o alinhamento plano dos reagentes: o Triglicerídeo (óleo/gordura) à esquerda e os três mols de hidróxido de sódio (NaOH) à direita, preparados para a clivagem qualitativa.
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2026 EcoSabon — Spike Técnico de Viabilidade da Camada Premium 3D. Sem finalidade de comercialização imediata.</p>
+    </footer>
+  </div>
+
+  <script src="spike.js"></script>
+</body>
+</html>
