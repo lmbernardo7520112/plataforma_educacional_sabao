@@ -59,4 +59,53 @@ document.addEventListener("DOMContentLoaded", () => {
       descriptionText.innerHTML = "<strong>Visão de Perspectiva:</strong> Exibe a profundidade espacial completa das cadeias lipídicas de sabão em azul e a estrutura tridimensional complexa do óleo vegetal original à esquerda.";
     }
   });
+
+  // Keyboard accessibility controls for rotation and zoom
+  const container = document.getElementById("canvas-container");
+  if (container) {
+    container.addEventListener("keydown", (e) => {
+      let moved = false;
+      let actionText = "";
+
+      if (e.key === "ArrowLeft") {
+        sceneController.rotate(-0.08, 0);
+        moved = true;
+        actionText = "Girou a câmera para a esquerda";
+      } else if (e.key === "ArrowRight") {
+        sceneController.rotate(0.08, 0);
+        moved = true;
+        actionText = "Girou a câmera para a direita";
+      } else if (e.key === "ArrowUp") {
+        sceneController.rotate(0, -0.05);
+        moved = true;
+        actionText = "Inclinou a câmera para cima";
+      } else if (e.key === "ArrowDown") {
+        sceneController.rotate(0, 0.05);
+        moved = true;
+        actionText = "Inclinou a câmera para baixo";
+      } else if (e.key === "+" || e.key === "=") {
+        sceneController.zoom(-0.5);
+        moved = true;
+        actionText = "Aproximou o zoom";
+      } else if (e.key === "-") {
+        sceneController.zoom(0.5);
+        moved = true;
+        actionText = "Afastou o zoom";
+      }
+
+      if (moved) {
+        e.preventDefault();
+        const angles = sceneController.getCameraAngles();
+        if (ariaStatus) {
+          ariaStatus.textContent = `${actionText}. Ângulos atuais - Giro horizontal: ${angles.theta} graus, Inclinação vertical: ${angles.phi} graus, Distância da câmera: ${angles.zoom} unidades.`;
+        }
+      }
+    });
+
+    container.addEventListener("focus", () => {
+      if (ariaStatus) {
+        ariaStatus.textContent = "Visualizador 3D focado. Use as setas do teclado para rotacionar a câmera e as teclas mais (+) e menos (-) para ajustar o zoom.";
+      }
+    });
+  }
 });

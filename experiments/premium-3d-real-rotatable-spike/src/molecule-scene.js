@@ -251,6 +251,28 @@ export function createMoleculeScene(containerId, fallbackId) {
 
   return {
     setView,
-    reset: () => setView(7, 5, 8)
+    reset: () => setView(7, 5, 8),
+    rotate: (deltaTheta, deltaPhi) => {
+      theta += deltaTheta;
+      phi = Math.max(0.1, Math.min(Math.PI - 0.1, phi + deltaPhi));
+      
+      targetCameraPos.x = radius * Math.sin(phi) * Math.sin(theta);
+      targetCameraPos.y = radius * Math.cos(phi);
+      targetCameraPos.z = radius * Math.sin(phi) * Math.cos(theta);
+    },
+    zoom: (deltaRadius) => {
+      radius = Math.max(5, Math.min(25, radius + deltaRadius));
+      
+      targetCameraPos.x = radius * Math.sin(phi) * Math.sin(theta);
+      targetCameraPos.y = radius * Math.cos(phi);
+      targetCameraPos.z = radius * Math.sin(phi) * Math.cos(theta);
+    },
+    getCameraAngles: () => {
+      return {
+        theta: Math.round(theta * 180 / Math.PI),
+        phi: Math.round(phi * 180 / Math.PI),
+        zoom: Math.round(radius)
+      };
+    }
   };
 }
