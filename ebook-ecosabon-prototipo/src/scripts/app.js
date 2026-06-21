@@ -39,6 +39,10 @@ import {
   initMolecularStageStepper
 } from './molecular-stage.js';
 
+import {
+  initPremium3DStage
+} from './premium-3d-stage.js';
+
 
 // ─── Botão toggle da sidebar (mobile) ───────────────────────────────────────
 const toggleBtn = document.getElementById('btn-sidebar-toggle');
@@ -125,4 +129,7 @@ initModulePagination();
 
 // ─── Inicialização do Sequenciador Molecular (Fase B2) ──────────────────────
 initMolecularStageStepper();
+
+// ─── Inicialização do Visualizador Premium 3D (Fase C3) ─────────────────────
+initPremium3DStage();
 

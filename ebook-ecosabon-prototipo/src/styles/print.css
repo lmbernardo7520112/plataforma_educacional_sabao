@@ -226,4 +226,21 @@
   .molecular-stage__svg text {
     opacity: 1 !important;
   }
+
+  /* Premium 3D Stage na Impressão */
+  .premium-3d-stage__viewer,
+  .premium-3d-stage__controls {
+    display: none !important;
+  }
+
+  .premium-3d-stage {
+    page-break-inside: avoid;
+  }
+
+  .premium-3d-stage__warning {
+    background: none !important;
+    border-left-color: #333 !important;
+    color: #222 !important;
+  }
 }
+

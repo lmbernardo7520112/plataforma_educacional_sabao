@@ -1391,3 +1391,40 @@ body.js-enabled .molecular-stage__fallback {
   outline: 3px solid var(--color-primary);
   outline-offset: 2px;
 }
+
+/* Experiência Premium 3D */
+.premium-3d-stage {
+  margin-top: 2rem;
+  background: var(--color-surface-1);
+}
+
+.premium-3d-stage__viewer {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.premium-3d-stage__viewer:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.4);
+}
+
+.premium-3d-stage__controls .btn {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.premium-3d-stage__controls .btn:hover {
+  transform: translateY(-1px);
+}
+
+.premium-3d-stage__controls .btn:active {
+  transform: translateY(0);
+}
+
+/* Responsividade do visualizador */
+@media (max-width: 768px) {
+  #premium-3d-canvas-container {
+    height: 300px !important;
+  }
+}
+

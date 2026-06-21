@@ -42,3 +42,7 @@ export {
   initMolecularStageStepper
 } from './molecular-stage.js';
 
+export {
+  initPremium3DStage
+} from './premium-3d-stage.js';
+

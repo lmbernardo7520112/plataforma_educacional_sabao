@@ -999,19 +999,21 @@ describe('Palco Molecular Estático MVP (Fase B1)', () => {
     expect(legend.textContent).toContain('Oxigênio');
   });
 
-  it('T80 — ausência de controles interativos proibidos e bibliotecas 3D', () => {
-    const rangeInputs = realDoc.querySelectorAll('input[type="range"]');
+  it('T80 — ausência de controles interativos proibidos e bibliotecas 3D no Palco B1', () => {
+    const b1Stage = realDoc.getElementById('palco-molecular-secao');
+    const rangeInputs = b1Stage.querySelectorAll('input[type="range"]');
     expect(rangeInputs.length).toBe(0);
 
-    const canvasElements = realDoc.querySelectorAll('canvas');
+    const canvasElements = b1Stage.querySelectorAll('canvas');
     expect(canvasElements.length).toBe(0);
 
-    const htmlLower = realHTML.toLowerCase();
-    expect(htmlLower).not.toContain('three.js');
-    expect(htmlLower).not.toContain('webgl');
-    expect(htmlLower).not.toContain('sketchfab');
-    expect(htmlLower).not.toContain('unity');
+    const b1HtmlLower = b1Stage.innerHTML.toLowerCase();
+    expect(b1HtmlLower).not.toContain('three.js');
+    expect(b1HtmlLower).not.toContain('webgl');
+    expect(b1HtmlLower).not.toContain('sketchfab');
+    expect(b1HtmlLower).not.toContain('unity');
   });
+
 });
 
 // ─── Novos Testes: Sequenciador 4D Qualitativo (Fase B2) ──────────────────────
@@ -1113,6 +1115,113 @@ describe('Sequenciador 4D Qualitativo (Fase B2)', () => {
 
   it('T89 — checklist Go/No-Go continua funcionando e preservado', () => {
     expect(typeof evaluateChecklist).toBe('function');
+  });
+});
+
+describe('Integração Premium 3D (Fase C3)', () => {
+  it('T90 — seção Premium 3D existe no HTML real', () => {
+    const secao = realDoc.querySelector('.premium-3d-stage');
+    expect(secao).not.toBeNull();
+  });
+
+  it('T91 — a seção possui o disclaimer / aviso de isenção qualitativa obrigatório', () => {
+    const disclaimer = realDoc.querySelector('.premium-3d-stage .warning-card, .premium-3d-stage__warning');
+    expect(disclaimer).not.toBeNull();
+    const text = disclaimer.textContent;
+    expect(text).toContain('Esta é uma visualização tridimensional didática e qualitativa');
+    expect(text).toContain('Não representa simulação molecular validada, cálculo químico ou previsão real da reação');
+  });
+
+  it('T92 — existe fallback textual acessível', () => {
+    const fallbackText = realDoc.getElementById('premium-3d-description');
+    expect(fallbackText).not.toBeNull();
+    expect(fallbackText.textContent.trim().length).toBeGreaterThan(0);
+  });
+
+  it('T93 — existe container 3D com identificação semântica adequada', () => {
+    const container = realDoc.getElementById('premium-3d-canvas-container');
+    expect(container).not.toBeNull();
+    expect(container.getAttribute('tabindex')).toBe('0');
+    expect(container.getAttribute('role')).toBe('region');
+    expect(container.getAttribute('aria-label')).toBeTruthy();
+  });
+
+  it('T94 — controles de câmera existem como botões nativos', () => {
+    const btnFront = realDoc.getElementById('premium-btn-front');
+    const btnSide = realDoc.getElementById('premium-btn-side');
+    const btnTop = realDoc.getElementById('premium-btn-top');
+    const btnPersp = realDoc.getElementById('premium-btn-persp');
+    const btnReset = realDoc.getElementById('premium-btn-reset');
+
+    expect(btnFront.tagName.toLowerCase()).toBe('button');
+    expect(btnSide.tagName.toLowerCase()).toBe('button');
+    expect(btnTop.tagName.toLowerCase()).toBe('button');
+    expect(btnPersp.tagName.toLowerCase()).toBe('button');
+    expect(btnReset.tagName.toLowerCase()).toBe('button');
+
+    expect(btnFront.textContent).toContain('Frontal');
+    expect(btnSide.textContent).toContain('Lateral');
+    expect(btnTop.textContent).toContain('Superior');
+    expect(btnPersp.textContent).toContain('Perspectiva');
+    expect(btnReset.textContent).toContain('Resetar visão');
+  });
+
+  it('T95 — a seção não contém inputs do tipo range (sliders)', () => {
+    const ranges = realDoc.querySelectorAll('.premium-3d-stage input[type="range"]');
+    expect(ranges.length).toBe(0);
+  });
+
+  it('T96 — a seção não contém campos de coleta de dados ou formulários', () => {
+    const inputs = realDoc.querySelectorAll('.premium-3d-stage input:not([type="checkbox"])');
+    expect(inputs.length).toBe(0);
+  });
+
+  it('T97 — o fallback textual permanece disponível no DOM mesmo em caso de falha de WebGL', () => {
+    const fallbackText = realDoc.getElementById('premium-3d-description');
+    expect(fallbackText).not.toBeNull();
+    expect(fallbackText.hasAttribute('hidden')).toBe(false);
+  });
+
+  it('T98 — o CSS de impressão oculta o canvas/controles e exibe o fallback textual/legendas', () => {
+    const printCSSPath = resolve(__dirname, '..', 'src/styles/print.css');
+    const printCSS = readFileSync(printCSSPath, 'utf-8');
+    expect(printCSS).toContain('.premium-3d-stage__viewer');
+    expect(printCSS).toContain('display: none !important');
+  });
+
+  it('T99 — o Palco Molecular Estático B1 continua presente', () => {
+    const b1Stage = realDoc.getElementById('palco-molecular-secao');
+    expect(b1Stage).not.toBeNull();
+  });
+
+  it('T100 — os hotspots interativos do infográfico continuam presentes e funcionais', () => {
+    const hotspots = realDoc.querySelectorAll('.infographic-hotspot');
+    expect(hotspots.length).toBe(8);
+  });
+
+  it('T101 — o stepper sequenciador pedagógico B2 continua presente', () => {
+    const stepperIndicator = realDoc.getElementById('molecular-stage-step-indicator');
+    expect(stepperIndicator).not.toBeNull();
+  });
+
+  it('T102 — o disclaimer da seção deixa claro o caráter estritamente qualitativo', () => {
+    const disclaimer = realDoc.querySelector('.premium-3d-stage .warning-card, .premium-3d-stage__warning');
+    expect(disclaimer.textContent).toContain('Não representa simulação molecular validada');
+  });
+
+  it('T103 — não há dependências de rede externas na seção Premium 3D', () => {
+    const sectionHtml = realDoc.querySelector('.premium-3d-stage').innerHTML;
+    expect(sectionHtml).not.toContain('http://');
+    expect(sectionHtml).not.toContain('https://');
+    expect(sectionHtml).not.toContain('cdn');
+  });
+
+  it('T104 — não há arquivos de modelo 3D externos chamados no HTML ou scripts do e-book principal', () => {
+    const htmlLower = realHTML.toLowerCase();
+    expect(htmlLower).not.toContain('.glb');
+    expect(htmlLower).not.toContain('.gltf');
+    expect(htmlLower).not.toContain('.obj');
+    expect(htmlLower).not.toContain('.fbx');
   });
 });
 
