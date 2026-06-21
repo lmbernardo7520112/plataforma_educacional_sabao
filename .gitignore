@@ -84,3 +84,5 @@ __pycache__/
 # Generated release artifacts — not versioned in main
 release/
 
+# Generated commercial artifacts — not versioned in main
+commercial_release/
