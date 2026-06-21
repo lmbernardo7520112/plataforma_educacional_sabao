@@ -5,6 +5,7 @@
   "description": "Protótipo de e-book interativo EcoSabon — Saponificação e Química Verde por Estações",
   "scripts": {
     "dev": "npx -y vite --open",
+    "build": "npx -y vite build",
     "test": "npx -y vitest run",
     "test:watch": "npx -y vitest",
     "preview": "npx -y vite preview"
