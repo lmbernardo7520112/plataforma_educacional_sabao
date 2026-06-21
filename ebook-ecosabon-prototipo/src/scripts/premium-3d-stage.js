@@ -30,14 +30,16 @@ export function initPremium3DStage(doc = document, win = window) {
   scene.background = new THREE.Color(0x0a0e17);
 
   // Camera Setup
-  const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+  const initialWidth = container.clientWidth || 800;
+  const initialHeight = container.clientHeight || 400;
+  const camera = new THREE.PerspectiveCamera(45, initialWidth / initialHeight, 0.1, 100);
   const defaultTarget = new THREE.Vector3(0, 0, 0);
   let targetCameraPos = new THREE.Vector3(7, 5, 8);
   camera.position.copy(targetCameraPos);
 
   // Renderer Setup
   const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setSize(initialWidth, initialHeight);
   renderer.setPixelRatio(Math.min(win.devicePixelRatio || 1, 2));
   container.appendChild(renderer.domElement);
 
@@ -237,14 +239,32 @@ export function initPremium3DStage(doc = document, win = window) {
   }
   animate();
 
-  // Resize handler
+  // Resize handling (Window Resize and Element Resize via ResizeObserver)
+  let resizeObserver = null;
   const resizeHandler = () => {
-    if (container.clientWidth && container.clientHeight) {
-      camera.aspect = container.clientWidth / container.clientHeight;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    if (width > 0 && height > 0) {
+      camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setSize(width, height);
     }
   };
+
+  if (win.ResizeObserver) {
+    resizeObserver = new win.ResizeObserver((entries) => {
+      for (let entry of entries) {
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        if (width > 0 && height > 0) {
+          camera.aspect = width / height;
+          camera.updateProjectionMatrix();
+          renderer.setSize(width, height);
+        }
+      }
+    });
+    resizeObserver.observe(container);
+  }
   win.addEventListener('resize', resizeHandler);
 
   // Expose controls controller
@@ -270,6 +290,9 @@ export function initPremium3DStage(doc = document, win = window) {
     destroy: () => {
       cancelAnimationFrame(animationFrameId);
       win.removeEventListener('resize', resizeHandler);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
       renderer.dispose();
       if (domEl.parentNode) {
         domEl.parentNode.removeChild(domEl);
