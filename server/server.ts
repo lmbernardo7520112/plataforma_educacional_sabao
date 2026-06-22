@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import { fileURLToPath } from 'url';
 
 import basicRoutes from './routes/index.js';
@@ -35,6 +36,11 @@ if (!process.env.DATABASE_URL) {
   process.exit(1);
 }
 
+if (!process.env.JWT_SECRET) {
+  console.error('❌ JWT_SECRET is missing in .env file. Server startup aborted.');
+  process.exit(1);
+}
+
 // ==========================================================
 // EXPRESS APP
 // ==========================================================
@@ -61,6 +67,18 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve uploaded files as static assets
 app.use('/uploads', express.static('uploads'));
+
+// ==========================================================
+// RATE LIMITING (H1 Hardening — basic abuse protection)
+// ==========================================================
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,                  // max 100 requests per windowMs per IP
+  standardHeaders: true,     // Return rate limit info in RateLimit-* headers
+  legacyHeaders: false,      // Disable X-RateLimit-* headers
+  message: { success: false, message: 'Limite de requisições excedido. Tente novamente em 15 minutos.' },
+});
+app.use('/api/', apiLimiter);
 
 // ==========================================================
 // ROUTES
