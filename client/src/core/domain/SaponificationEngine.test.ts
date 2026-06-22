@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { SaponificationEngine } from './SaponificationEngine';
+import { SaponificationEngine } from 'shared/domain/SaponificationEngine';
 
 describe('SaponificationEngine (Core Domain)', () => {
   const engine = new SaponificationEngine();

@@ -1,6 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
+// JWT_SECRET is validated at server startup (server.ts).
+// This getter provides a fail-safe in case the middleware is loaded in isolation.
+function getJWTSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET environment variable is required but not set.');
+  }
+  return secret;
+}
+
 export interface DecodedToken {
   id?: string;
   squadId?: string;
@@ -18,7 +28,7 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction) => 
 
   const token = authHeader.split(' ')[1];
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'ecosabon_master_key') as DecodedToken;
+    const decoded = jwt.verify(token, getJWTSecret()) as DecodedToken;
     (req as any).user = decoded;
     next();
   } catch (error) {

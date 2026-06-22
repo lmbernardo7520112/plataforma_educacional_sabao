@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useJourneyStore } from '../core/store/useJourneyStore';
-import { SaponificationEngine } from '../core/domain/SaponificationEngine';
+import { SaponificationEngine } from 'shared/domain/SaponificationEngine';
 import { api } from '../lib/api';
 import axios from 'axios';
 import { MISSION_DOCS, ScientificField } from 'shared/config/missionDocs';

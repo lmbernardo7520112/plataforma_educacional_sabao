@@ -1,5 +1,10 @@
-// server/domain/SaponificationEngine.ts
-// Migrated from frontend — server-side validation of stoichiometry, enthalpy, and pH.
+// shared/domain/SaponificationEngine.ts
+// ============================================================================
+// EcoSabon — Motor de Saponificação (implementação canônica compartilhada)
+// ============================================================================
+// Regras estequiométricas, termodinâmicas e de qualidade para produção segura
+// de sabão em contexto escolar. Consumido por server e client.
+// ============================================================================
 
 export interface SaponificationResult {
   oilMassGrams: number;
@@ -9,14 +14,14 @@ export interface SaponificationResult {
 }
 
 export class SaponificationEngine {
-  // SAP padrão para óleo de soja = ~191 mg KOH/g
-  // Fator KOH → NaOH (40.00 / 56.11) = ~0.713
+  // O Índice de Saponificação (SAP) padrão para óleo de soja (mais comum no Brasil escolar) é ~191 mg KOH/g
+  // Fator de conversão de KOH para NaOH (Massa Molar NaOH 40.00 / Massa Molar KOH 56.11) = ~0.713
   private readonly KOH_TO_NAOH_RATIO = 0.713;
   private readonly DEFAULT_SOY_SAP_KOH = 191;
 
   /**
-   * Calcula a estequiometria exata para produção segura de sabão,
-   * com "superfatting" de 5% para segurança do aluno.
+   * Calcula a estequiometria exata para a produção segura de sabão, garantindo
+   * um "superfatting" (excesso de gordura) de segurança para o aluno.
    */
   public calculateSaponificationValue(oilMassGrams: number): SaponificationResult {
     if (oilMassGrams <= 0) {
@@ -24,14 +29,13 @@ export class SaponificationEngine {
     }
 
     // NaOH bruto = (massa_oleo * SAP_KOH / 1000) * fat_conversao
-    const naohGramsFull =
-      (oilMassGrams * this.DEFAULT_SOY_SAP_KOH / 1000) * this.KOH_TO_NAOH_RATIO;
+    const naohGramsFull = (oilMassGrams * this.DEFAULT_SOY_SAP_KOH / 1000) * this.KOH_TO_NAOH_RATIO;
 
-    // Superfatting obrigatório de 5% (evitar sabão cáustico)
+    // Superfatting obrigatório de 5% p/ segurança (evitar sabão cáustico)
     const superfatMargin = 0.05;
     const safeNaohGrams = naohGramsFull * (1 - superfatMargin);
 
-    // Razão hídrica segura: Água = 33% do peso do óleo
+    // Razão hídrica segura: Água = 33% do peso do óleo (concentração da soda ~28%)
     const waterGrams = oilMassGrams * 0.33;
 
     return {
@@ -43,7 +47,8 @@ export class SaponificationEngine {
   }
 
   /**
-   * Valida Reação Exotérmica (Entalpia).
+   * Valida a Reação Exotérmica (Entalpia).
+   * Em pequenas amostras laboratoriais escolares, espera-se aumento mínimo de 2°C a 5°C.
    * Erro se não houver variação térmica positiva mínima de 2°C.
    */
   public validateEnergyRelease(startTemp: number, currentTemp: number): boolean {
@@ -57,7 +62,7 @@ export class SaponificationEngine {
 
   /**
    * Audita o nível de alcalinidade do sabão curado.
-   * Sabão seguro: pH entre 8.0 e 10.5.
+   * Sabão curado seguro opera no range entre 8.0 e 10.5.
    */
   public evaluatePHTolerance(ph: number): boolean {
     if (ph < 0 || ph > 14) {

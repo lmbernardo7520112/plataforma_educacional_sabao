@@ -3,7 +3,15 @@ import bcrypt from 'bcryptjs';
 import { Teacher } from '../models/Teacher.ts';
 import { Squad } from '../models/Squad.ts';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'ecosabon_master_key';
+
+// JWT_SECRET is validated at server startup (server.ts).
+function getJWTSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET environment variable is required but not set.');
+  }
+  return secret;
+}
 
 export class AuthService {
   async authenticateTeacher(email: string, passwordPlain: string) {
@@ -15,7 +23,7 @@ export class AuthService {
 
     const token = jwt.sign(
       { id: teacher._id, role: 'TEACHER' },
-      JWT_SECRET,
+      getJWTSecret(),
       { expiresIn: '8h' }
     );
 
@@ -41,7 +49,7 @@ export class AuthService {
     
     const token = jwt.sign(
       { squadId: squad._id, classroomId: squad.classroomId, role: 'SQUAD' },
-      JWT_SECRET,
+      getJWTSecret(),
       { expiresIn: '24h' }
     );
 
