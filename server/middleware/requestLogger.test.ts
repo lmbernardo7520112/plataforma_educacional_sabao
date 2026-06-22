@@ -5,7 +5,7 @@ import { requestLogger } from './requestLogger.ts';
 import { Request, Response, NextFunction } from 'express';
 
 function createMockReqRes() {
-  const finishCallbacks: Function[] = [];
+  const finishCallbacks: (() => void)[] = [];
   const req = {
     method: 'GET',
     originalUrl: '/api/test',
@@ -15,7 +15,7 @@ function createMockReqRes() {
   const res = {
     statusCode: 200,
     setHeader: (key: string, value: string) => { headers[key] = value; },
-    on: (event: string, cb: Function) => {
+    on: (event: string, cb: () => void) => {
       if (event === 'finish') finishCallbacks.push(cb);
     },
   } as any as Response;
