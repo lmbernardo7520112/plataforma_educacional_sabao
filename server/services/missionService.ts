@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 import { JourneyState } from '../models/JourneyState.ts';
-import { SaponificationEngine } from '../domain/SaponificationEngine.ts';
+import { SaponificationEngine } from 'shared/domain/SaponificationEngine.js';
 import { MISSION_DOCS } from 'shared/config/missionDocs.js';
 
 export class MissionService {

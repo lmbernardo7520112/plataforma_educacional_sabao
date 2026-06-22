@@ -1,7 +1,7 @@
 // server/domain/SaponificationEngine.test.ts
 
 import { describe, it, expect } from 'vitest';
-import { SaponificationEngine } from './SaponificationEngine.ts';
+import { SaponificationEngine } from 'shared/domain/SaponificationEngine.js';
 
 describe('SaponificationEngine (Server Domain)', () => {
   const engine = new SaponificationEngine();
