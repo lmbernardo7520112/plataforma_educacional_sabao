@@ -6,6 +6,7 @@ import { authService } from '../services/authService.ts';
 import { requireAuth, requireRole } from '../middleware/auth.ts';
 import { validate } from '../middleware/validate.ts';
 import { createSquadSchema, getSquadParamsSchema, updateSquadSchema, deleteSquadParamsSchema } from '../schemas/squad.schema.ts';
+import { classroomIdFromParentSchema } from '../schemas/common.schema.ts';
 
 const router = Router({ mergeParams: true });
 
@@ -13,13 +14,9 @@ const router = Router({ mergeParams: true });
 // and also standalone at /api/squads
 
 // GET /api/classrooms/:classroomId/squads
-router.get('/', requireAuth, async (req: Request, res: Response) => {
+router.get('/', requireAuth, validate(classroomIdFromParentSchema), async (req: Request, res: Response) => {
   try {
     const { classroomId } = req.params;
-    if (!classroomId) {
-      res.status(400).json({ success: false, message: 'classroomId Missing' });
-      return;
-    }
     const list = await squadService.getSquadsByClassroom(classroomId as string);
     res.json({ success: true, data: list });
   } catch (error: unknown) {

@@ -1,11 +1,13 @@
 import { Router, Request, Response } from 'express';
 import { requireAuth } from '../middleware/auth.ts';
 import { reportService } from '../services/reportService.ts';
+import { validate } from '../middleware/validate.ts';
+import { squadIdParamSchema } from '../schemas/common.schema.ts';
 
 const router = Router();
 
 // Extração do Dossiê Acadêmico Unificado
-router.get('/squads/:squadId', requireAuth, async (req: Request, res: Response) => {
+router.get('/squads/:squadId', requireAuth, validate(squadIdParamSchema), async (req: Request, res: Response) => {
   try {
     const squadId = req.params.squadId as string;
     const userRole = (req as any).user.role;
