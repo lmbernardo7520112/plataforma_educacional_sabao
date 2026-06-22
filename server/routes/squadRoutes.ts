@@ -13,7 +13,7 @@ const router = Router({ mergeParams: true });
 // and also standalone at /api/squads
 
 // GET /api/classrooms/:classroomId/squads
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', requireAuth, async (req: Request, res: Response) => {
   try {
     const { classroomId } = req.params;
     if (!classroomId) {
@@ -78,7 +78,7 @@ router.delete('/:squadId', requireAuth, requireRole(['TEACHER']), validate(delet
 });
 
 // GET /api/squads/:id (Mounted separately)
-router.get('/standalone/:id', validate(getSquadParamsSchema), async (req: Request, res: Response) => {
+router.get('/standalone/:id', requireAuth, validate(getSquadParamsSchema), async (req: Request, res: Response) => {
   try {
     const squad = await squadService.getSquadById(req.params.id as string);
     res.json({ success: true, data: squad });

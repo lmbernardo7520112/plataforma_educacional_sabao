@@ -55,9 +55,28 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
 }));
 
+// ==========================================================
+// CORS (H2 Hardening — environment-driven origins)
+// ==========================================================
+const allowedOrigins: string[] = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim()).filter(Boolean)
+  : ['http://localhost:5173', 'http://127.0.0.1:5173'];
+
+if (process.env.NODE_ENV === 'production' && !process.env.ALLOWED_ORIGINS) {
+  console.error('❌ ALLOWED_ORIGINS is required in production. Server startup aborted.');
+  process.exit(1);
+}
+
 app.use(
   cors({
-    origin: ['http://localhost:5173'],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (server-to-server, curl, mobile apps)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error(`CORS: Origin ${origin} not allowed.`));
+    },
     credentials: true,
   })
 );
@@ -69,11 +88,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static('uploads'));
 
 // ==========================================================
-// RATE LIMITING (H1 Hardening — basic abuse protection)
+// RATE LIMITING (H1 Hardening — configurable via env)
 // ==========================================================
+const rateLimitWindowMs = parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10);
+const rateLimitMax = parseInt(process.env.RATE_LIMIT_MAX || '100', 10);
+
 const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,                  // max 100 requests per windowMs per IP
+  windowMs: rateLimitWindowMs,
+  max: rateLimitMax,
   standardHeaders: true,     // Return rate limit info in RateLimit-* headers
   legacyHeaders: false,      // Disable X-RateLimit-* headers
   message: { success: false, message: 'Limite de requisições excedido. Tente novamente em 15 minutos.' },
