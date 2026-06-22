@@ -26,6 +26,7 @@
 | **C3** | Integração controlada do Premium 3D ao e-book principal | PR #22 | ✅ Mergeado |
 | **C3.2** | Homologação offline pós-merge | PR #23 | ✅ Mergeado |
 | **RC1** | Preparação e publicação da Release Candidate | PR #24 | ✅ Mergeado e publicado |
+| **RC1-fix** | Correção do print CSS (`media="print"`) e regeneração do PDF de conferência | PR #25 | ✅ Em andamento |
 
 ---
 
@@ -37,9 +38,9 @@ O EcoSabon possui agora uma **Release Candidate demonstrável** (`v0.2.0-rc1`) c
 - **B1 — Palco Molecular Estático**: diagrama SVG qualitativo com contagem de átomos simplificada, legenda e disclaimer científico
 - **B2 — Sequenciador 4D Qualitativo**: stepper pedagógico com 4 etapas da saponificação, painel aria-live e navegação acessível
 - **C3 — Premium 3D Real Rotacionável**: modelo molecular procedural autoral em Three.js, com controles de câmera (Frontal, Lateral, Topo), fallback textual acessível e disclaimer qualitativo
-- **Build estático** via Vite v6.4.3, gerando pacote de 3 arquivos (~585 KB raw, ~144 KB gzip)
-- **ZIP offline** distribuível (141 KB)
-- **PDF de conferência** (309 KB, 22 páginas, gerado por Chrome headless)
+- **Build estático** via Vite v6.4.3, gerando pacote de 4 arquivos (~590 KB raw, ~145 KB gzip) — print CSS separado via `media="print"`
+- **ZIP offline** distribuível (142 KB)
+- **PDF de conferência** (1.3 MB, 22 páginas, gerado via Chrome CDP com emulação de @media print, contendo todos os módulos com conteúdo completo)
 - **GitHub Release publicada** como pre-release com ambos os artefatos anexados
 - **104 testes automatizados** passando (T1–T104)
 
@@ -129,8 +130,23 @@ Nenhuma nova feature técnica deve ser implementada sem nova autorização.
 
 | Artefato | Nome | Tamanho | Estado |
 |----------|------|---------|--------|
-| ZIP offline | `ecosabon-premium3d-v0.2.0-rc1-offline.zip` | 141 KB | ✅ Anexado à release |
-| PDF conferência | `ecosabon-premium3d-v0.2.0-rc1-conferencia.pdf` | 309 KB | ✅ Anexado à release |
+| ZIP offline | `ecosabon-premium3d-v0.2.0-rc1-offline.zip` | 142 KB | ✅ Anexado à release (atualizado) |
+| PDF conferência | `ecosabon-premium3d-v0.2.0-rc1-conferencia.pdf` | 1.3 MB | ✅ Anexado à release (corrigido — todos os módulos visíveis) |
+
+### Checksums SHA256
+
+```
+786bb8058c729694efa507077a6b04e21a3ef7558852a9f45811c6f80f32a4b7  ecosabon-premium3d-v0.2.0-rc1-offline.zip
+8cce862882fa6ed3c1caea064ee0d7679e3b15495aed27670a1eb1dc2dbb16fb  ecosabon-premium3d-v0.2.0-rc1-conferencia.pdf
+```
+
+### Correção aplicada no print CSS
+
+O PDF de conferência original (v0.1.0 e primeira geração da RC1) exibia apenas a primeira página com conteúdo, com as demais páginas em branco. Causa raiz: o `<link>` para `print.css` no `index.html` não possuía o atributo `media="print"`, fazendo com que o Vite concatenasse as regras de impressão ao CSS principal sem preservar o contexto `@media print`. Correções aplicadas:
+
+1. **`index.html`**: adicionado `media="print"` ao `<link>` de `print.css`
+2. **`print.css`**: adicionado `body.js-enabled .ebook-section` ao seletor de impressão para alinhar especificidade com a regra `@media screen`
+3. **Geração do PDF**: substituído `--print-to-pdf` do Chrome CLI pelo método CDP `Page.printToPDF` com `Emulation.setEmulatedMedia({ media: 'print' })`, que aciona corretamente `@media print`
 
 ---
 
