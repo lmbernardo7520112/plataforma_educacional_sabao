@@ -4,11 +4,12 @@ import { upload } from '../middleware/upload.ts';
 import { validate } from '../middleware/validate.ts';
 import { requireAuth } from '../middleware/auth.ts';
 import { SubmitMissionSchema } from '../schemas/mission.schema.ts';
+import { squadIdParamSchema } from '../schemas/common.schema.ts';
 
 const router = Router({ mergeParams: true });
 const missionService = new MissionService();
 
-router.get('/', requireAuth, async (req, res) => {
+router.get('/', requireAuth, validate(squadIdParamSchema), async (req, res) => {
   try {
     const { squadId } = req.params as { squadId: string };
     const missions = await missionService.getSquadMissions(squadId);

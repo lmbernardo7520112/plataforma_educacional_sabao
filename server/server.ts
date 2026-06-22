@@ -10,6 +10,8 @@ import { fileURLToPath } from 'url';
 import basicRoutes from './routes/index.js';
 import { connectDB } from './config/database.js';
 import dbInit from './models/init.js';
+import { requestLogger } from './middleware/requestLogger.js';
+import { errorHandler } from './middleware/errorHandler.js';
 
 // ==========================================================
 // GLOBAL ERROR HANDLERS
@@ -103,6 +105,11 @@ const apiLimiter = rateLimit({
 app.use('/api/', apiLimiter);
 
 // ==========================================================
+// REQUEST LOGGING (H3 — structured logs with X-Request-Id)
+// ==========================================================
+app.use(requestLogger);
+
+// ==========================================================
 // ROUTES
 // ==========================================================
 app.use('/', basicRoutes);
@@ -112,14 +119,10 @@ app.use((_req: Request, res: Response) => {
   res.status(404).json({ error: 'Page not found' });
 });
 
-// 500 — Internal error
-app.use(
-  (err: Error, _req: Request, res: Response, _next: NextFunction) => {
-    console.error(`💥 Application error: ${err.message}`);
-    console.error(err.stack);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-);
+// ==========================================================
+// CENTRALIZED ERROR HANDLER (H3 — standardized error responses)
+// ==========================================================
+app.use(errorHandler);
 
 // ==========================================================
 // START SERVER
