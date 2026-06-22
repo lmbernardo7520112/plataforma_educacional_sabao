@@ -25,10 +25,13 @@
 
   .container { max-width: 100% !important; margin-left: 0 !important; padding: 0 !important; }
 
-  /* Mostrar todos os módulos para impressão */
+  /* Mostrar todos os módulos para impressão —
+     especificidade alinhada com body.js-enabled .ebook-section (screen)
+     para garantir que @media print vença sobre @media screen */
   .module-section,
   .ebook-section,
-  .ebook-section[hidden] {
+  .ebook-section[hidden],
+  body.js-enabled .ebook-section {
     display: block !important;
     page-break-before: always;
   }
