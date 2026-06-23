@@ -1428,3 +1428,358 @@ body.js-enabled .molecular-stage__fallback {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════════ */
+/* PLATFORM SHOWCASE — "Do Web-book à Plataforma EcoSabon" (P1)      */
+/* ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── Disclaimer ─────────────────────────────────────────────────── */
+.platform-showcase__disclaimer {
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-left: 4px solid var(--color-warning);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* ─── Platform Map SVG ───────────────────────────────────────────── */
+.platform-showcase__map {
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+
+.platform-map-svg {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ─── Platform Hotspots ──────────────────────────────────────────── */
+.platform-showcase__hotspots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.platform-hotspot {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: var(--color-text);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  transition: all var(--transition);
+}
+
+.platform-hotspot:hover,
+.platform-hotspot:focus-visible {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+}
+
+.platform-hotspot[aria-expanded="true"] {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: var(--color-primary);
+  font-weight: 600;
+}
+
+.platform-hotspot-panel {
+  background: rgba(16, 185, 129, 0.04);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.75rem;
+  animation: platformPanelFadeIn 200ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .platform-hotspot-panel {
+    animation: none;
+  }
+}
+
+@keyframes platformPanelFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.platform-hotspot-panel h4 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-primary);
+}
+
+.platform-hotspot-panel p {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ─── Role Flip Cards ────────────────────────────────────────────── */
+.platform-showcase__roles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+.platform-role-card {
+  perspective: 600px;
+}
+
+.platform-role-card__trigger {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  height: 220px;
+  font-family: var(--font-body);
+  color: var(--color-text);
+}
+
+.platform-role-card__trigger:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+  border-radius: var(--radius-md);
+}
+
+.platform-role-card__front,
+.platform-role-card__back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  text-align: center;
+  transition: transform 400ms ease;
+  border: 1px solid var(--color-border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .platform-role-card__front,
+  .platform-role-card__back {
+    transition: none;
+  }
+}
+
+.platform-role-card__front {
+  background: var(--color-surface);
+  transform: rotateY(0deg);
+}
+
+.platform-role-card__back {
+  background: var(--color-surface-2);
+  transform: rotateY(180deg);
+}
+
+.platform-role-card--flipped .platform-role-card__front {
+  transform: rotateY(-180deg);
+}
+
+.platform-role-card--flipped .platform-role-card__back {
+  transform: rotateY(0deg);
+}
+
+.platform-role-card__icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.platform-role-card__name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.platform-role-card__hint {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  display: block;
+}
+
+.platform-role-card__desc {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+
+/* ─── Journey Timeline ───────────────────────────────────────────── */
+.platform-showcase__journey {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+.platform-journey-step {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  position: relative;
+  padding-bottom: 1.25rem;
+}
+
+.platform-journey-step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 40px;
+  bottom: 0;
+  width: 2px;
+  background: rgba(16, 185, 129, 0.2);
+}
+
+.platform-journey-step__marker {
+  min-width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.12);
+  border: 2px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.platform-journey-step__content {
+  padding-top: 0.4rem;
+}
+
+.platform-journey-step__content strong {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--color-text);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.platform-journey-step__content p {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ─── Status Grid (Real / Demo / Roadmap) ────────────────────────── */
+.platform-showcase__status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.platform-status-block {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+}
+
+.platform-status-block h4 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.platform-status-block ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.platform-status-block li {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  padding-left: 0.75rem;
+  position: relative;
+}
+
+.platform-status-block li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--color-text-muted);
+}
+
+.platform-status-block--real {
+  border-color: rgba(52, 211, 153, 0.2);
+}
+
+.platform-status-block--real h4 {
+  color: var(--color-success);
+}
+
+.platform-status-block--demo {
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.platform-status-block--demo h4 {
+  color: var(--color-warning);
+}
+
+.platform-status-block--roadmap {
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+.platform-status-block--roadmap h4 {
+  color: var(--color-info);
+}
+
+/* ─── CTA ────────────────────────────────────────────────────────── */
+.platform-showcase__cta {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: rgba(16, 185, 129, 0.04);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  border-radius: var(--radius-lg);
+  margin-top: 1.5rem;
+}
+
+.platform-showcase__cta-text {
+  font-size: 1.05rem;
+  color: var(--color-text);
+  line-height: 1.6;
+  margin: 0 0 0.75rem;
+}
+
+.platform-showcase__cta-subtext {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--color-primary);
+  font-weight: 700;
+  margin: 0;
+}
+

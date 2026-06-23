@@ -43,6 +43,10 @@ import {
   initPremium3DStage
 } from './premium-3d-stage.js';
 
+import {
+  initPlatformShowcase
+} from './platform-showcase.js';
+
 
 // ─── Botão toggle da sidebar (mobile) ───────────────────────────────────────
 const toggleBtn = document.getElementById('btn-sidebar-toggle');
@@ -132,4 +136,7 @@ initMolecularStageStepper();
 
 // ─── Inicialização do Visualizador Premium 3D (Fase C3) ─────────────────────
 initPremium3DStage();
+
+// ─── Inicialização da Seção "Do Web-book à Plataforma" (P1) ──────────────────
+initPlatformShowcase();
 

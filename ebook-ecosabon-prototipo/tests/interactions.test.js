@@ -31,7 +31,10 @@ import {
   initModulePagination,
   getMolecularStageStep,
   setMolecularStageStep,
-  initMolecularStageStepper
+  initMolecularStageStepper,
+  togglePlatformHotspotPanel,
+  togglePlatformRoleCard,
+  initPlatformShowcase
 } from '../src/scripts/interactions.js';
 
 // ─── Helper: cria um DOM mínimo para testes ──────────────────────────────────
@@ -1225,4 +1228,200 @@ describe('Integração Premium 3D (Fase C3)', () => {
   });
 });
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// TESTES — PLATAFORMA SHOWCASE P1
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ─── Helper: DOM com estrutura de Platform Showcase ──────────────────────────
+
+function createPlatformShowcaseTestDOM() {
+  const dom = new JSDOM(`
+    <!DOCTYPE html>
+    <html>
+    <body>
+      <div id="platform-showcase-aria-status" aria-live="polite"></div>
+
+      <!-- Platform hotspots -->
+      <button class="platform-hotspot" data-target="ph-conteudo" aria-controls="panel-ph-conteudo" aria-expanded="false">Conteúdo</button>
+      <button class="platform-hotspot" data-target="ph-curso" aria-controls="panel-ph-curso" aria-expanded="false">Curso</button>
+      <button class="platform-hotspot" data-target="ph-backend" aria-controls="panel-ph-backend" aria-expanded="false">Backend</button>
+
+      <div id="panel-ph-conteudo" class="platform-hotspot-panel" hidden>Conteúdo desc</div>
+      <div id="panel-ph-curso" class="platform-hotspot-panel" hidden>Curso desc</div>
+      <div id="panel-ph-backend" class="platform-hotspot-panel" hidden>Backend desc</div>
+
+      <!-- Role flip cards -->
+      <div class="platform-role-card" id="role-card-professor" data-role-name="Professor">
+        <button class="platform-role-card__trigger" type="button">
+          <div class="platform-role-card__front">Professor</div>
+          <div class="platform-role-card__back" aria-hidden="true">Professor details</div>
+        </button>
+      </div>
+      <div class="platform-role-card" id="role-card-squad" data-role-name="Squad">
+        <button class="platform-role-card__trigger" type="button">
+          <div class="platform-role-card__front">Squad</div>
+          <div class="platform-role-card__back" aria-hidden="true">Squad details</div>
+        </button>
+      </div>
+    </body>
+    </html>
+  `);
+  return dom.window.document;
+}
+
+describe('Platform Showcase — Interação de Hotspots (P1)', () => {
+  let doc;
+  beforeEach(() => { doc = createPlatformShowcaseTestDOM(); });
+
+  it('T105 — togglePlatformHotspotPanel abre um painel e atualiza aria-expanded', () => {
+    const result = togglePlatformHotspotPanel('ph-conteudo', doc);
+    const btn = doc.querySelector('.platform-hotspot[data-target="ph-conteudo"]');
+    const panel = doc.getElementById('panel-ph-conteudo');
+
+    expect(result).toBe(true);
+    expect(btn.getAttribute('aria-expanded')).toBe('true');
+    expect(panel.hasAttribute('hidden')).toBe(false);
+  });
+
+  it('T106 — togglePlatformHotspotPanel fecha um painel aberto', () => {
+    togglePlatformHotspotPanel('ph-conteudo', doc);
+    togglePlatformHotspotPanel('ph-conteudo', doc);
+    const btn = doc.querySelector('.platform-hotspot[data-target="ph-conteudo"]');
+    const panel = doc.getElementById('panel-ph-conteudo');
+
+    expect(btn.getAttribute('aria-expanded')).toBe('false');
+    expect(panel.hasAttribute('hidden')).toBe(true);
+  });
+
+  it('T107 — apenas um painel de platform hotspot ativo por vez', () => {
+    togglePlatformHotspotPanel('ph-conteudo', doc);
+    togglePlatformHotspotPanel('ph-curso', doc);
+
+    const btn1 = doc.querySelector('.platform-hotspot[data-target="ph-conteudo"]');
+    const btn2 = doc.querySelector('.platform-hotspot[data-target="ph-curso"]');
+    const panel1 = doc.getElementById('panel-ph-conteudo');
+    const panel2 = doc.getElementById('panel-ph-curso');
+
+    expect(btn1.getAttribute('aria-expanded')).toBe('false');
+    expect(panel1.hasAttribute('hidden')).toBe(true);
+    expect(btn2.getAttribute('aria-expanded')).toBe('true');
+    expect(panel2.hasAttribute('hidden')).toBe(false);
+  });
+
+  it('T108 — togglePlatformHotspotPanel retorna false para ID inexistente', () => {
+    const result = togglePlatformHotspotPanel('ph-inexistente', doc);
+    expect(result).toBe(false);
+  });
+
+  it('T109 — togglePlatformHotspotPanel retorna false sem document', () => {
+    const result = togglePlatformHotspotPanel('ph-conteudo', null);
+    expect(result).toBe(false);
+  });
+});
+
+describe('Platform Showcase — Role Flip Cards (P1)', () => {
+  let doc;
+  beforeEach(() => { doc = createPlatformShowcaseTestDOM(); });
+
+  it('T110 — togglePlatformRoleCard adiciona classe --flipped', () => {
+    const result = togglePlatformRoleCard('role-card-professor', doc);
+    const card = doc.getElementById('role-card-professor');
+
+    expect(result).toBe(true);
+    expect(card.classList.contains('platform-role-card--flipped')).toBe(true);
+  });
+
+  it('T111 — togglePlatformRoleCard remove classe --flipped ao chamar novamente', () => {
+    togglePlatformRoleCard('role-card-professor', doc);
+    togglePlatformRoleCard('role-card-professor', doc);
+    const card = doc.getElementById('role-card-professor');
+
+    expect(card.classList.contains('platform-role-card--flipped')).toBe(false);
+  });
+
+  it('T112 — togglePlatformRoleCard retorna false para card inexistente', () => {
+    const result = togglePlatformRoleCard('card-inexistente', doc);
+    expect(result).toBe(false);
+  });
+
+  it('T113 — togglePlatformRoleCard atualiza ARIA live region', () => {
+    togglePlatformRoleCard('role-card-professor', doc);
+    const liveRegion = doc.getElementById('platform-showcase-aria-status');
+    expect(liveRegion.textContent).toContain('Professor');
+  });
+});
+
+describe('Platform Showcase — Inicialização (P1)', () => {
+  let doc;
+  beforeEach(() => { doc = createPlatformShowcaseTestDOM(); });
+
+  it('T114 — initPlatformShowcase retorna contagem de elementos inicializados', () => {
+    const count = initPlatformShowcase(doc);
+    // 3 hotspots + 2 flip cards = 5
+    expect(count).toBe(5);
+  });
+
+  it('T115 — initPlatformShowcase retorna 0 sem elementos', () => {
+    const emptyDOM = new JSDOM('<!DOCTYPE html><html><body></body></html>');
+    const count = initPlatformShowcase(emptyDOM.window.document);
+    expect(count).toBe(0);
+  });
+
+  it('T116 — initPlatformShowcase retorna 0 sem document', () => {
+    const count = initPlatformShowcase(null);
+    expect(count).toBe(0);
+  });
+});
+
+describe('Platform Showcase — Smoke Tests HTML Real (P1)', () => {
+  it('T117 — seção #mod-plataforma existe no HTML real', () => {
+    const section = realDoc.getElementById('mod-plataforma');
+    expect(section).not.toBeNull();
+    expect(section.tagName.toLowerCase()).toBe('section');
+  });
+
+  it('T118 — disclaimer da seção contém aviso de dados fictícios', () => {
+    const disclaimer = realDoc.getElementById('platform-showcase-disclaimer');
+    expect(disclaimer).not.toBeNull();
+    expect(disclaimer.textContent).toContain('Demonstração visual');
+    expect(disclaimer.textContent).toContain('fictícios');
+  });
+
+  it('T119 — existem 5 hotspots de plataforma no HTML real', () => {
+    const hotspots = realDoc.querySelectorAll('.platform-hotspot');
+    expect(hotspots.length).toBe(5);
+  });
+
+  it('T120 — existem 3 role flip cards no HTML real', () => {
+    const cards = realDoc.querySelectorAll('.platform-role-card');
+    expect(cards.length).toBe(3);
+  });
+
+  it('T121 — existem 6 etapas na jornada demonstrativa', () => {
+    const steps = realDoc.querySelectorAll('.platform-journey-step');
+    expect(steps.length).toBe(6);
+  });
+
+  it('T122 — sidebar contém link para #mod-plataforma', () => {
+    const link = realDoc.querySelector('a[href="#mod-plataforma"]');
+    expect(link).not.toBeNull();
+    expect(link.textContent).toContain('Plataforma');
+  });
+
+  it('T123 — não há fetch, localStorage ou WebSocket na seção plataforma', () => {
+    const section = realDoc.getElementById('mod-plataforma');
+    const html = section.innerHTML;
+    expect(html).not.toContain('fetch(');
+    expect(html).not.toContain('localStorage');
+    expect(html).not.toContain('WebSocket');
+  });
+
+  it('T124 — print.css contém regras para platform-showcase', () => {
+    const printCSSPath = resolve(__dirname, '..', 'src/styles/print.css');
+    const printCSS = readFileSync(printCSSPath, 'utf-8');
+    expect(printCSS).toContain('.platform-showcase__disclaimer');
+    expect(printCSS).toContain('.platform-hotspot-panel');
+    expect(printCSS).toContain('.platform-role-card');
+  });
+});
 
