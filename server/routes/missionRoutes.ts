@@ -2,14 +2,14 @@ import { Router } from 'express';
 import { MissionService } from '../services/missionService.ts';
 import { upload } from '../middleware/upload.ts';
 import { validate } from '../middleware/validate.ts';
-import { requireAuth } from '../middleware/auth.ts';
+import { requireAuth, requireSquadOwnership } from '../middleware/auth.ts';
 import { SubmitMissionSchema } from '../schemas/mission.schema.ts';
 import { squadIdParamSchema } from '../schemas/common.schema.ts';
 
 const router = Router({ mergeParams: true });
 const missionService = new MissionService();
 
-router.get('/', requireAuth, validate(squadIdParamSchema), async (req, res) => {
+router.get('/', requireAuth, requireSquadOwnership, validate(squadIdParamSchema), async (req, res) => {
   try {
     const { squadId } = req.params as { squadId: string };
     const missions = await missionService.getSquadMissions(squadId);
@@ -19,7 +19,7 @@ router.get('/', requireAuth, validate(squadIdParamSchema), async (req, res) => {
   }
 });
 
-router.post('/submit', requireAuth, upload.single('evidencePhoto'), validate(SubmitMissionSchema), async (req, res) => {
+router.post('/submit', requireAuth, requireSquadOwnership, upload.single('evidencePhoto'), validate(SubmitMissionSchema), async (req, res) => {
   try {
     const { squadId } = req.params;
     const { missionId, scientificMethod, numericInputs } = req.body;

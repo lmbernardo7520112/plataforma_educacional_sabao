@@ -29,7 +29,7 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction) => 
   const token = authHeader.split(' ')[1];
   try {
     const decoded = jwt.verify(token, getJWTSecret()) as DecodedToken;
-    (req as any).user = decoded;
+    (req as unknown as { user: DecodedToken }).user = decoded;
     next();
   } catch (error) {
     return res.status(401).json({ success: false, message: 'Identidade Criptográfica Expirada ou Malformada. Operação barrada.' });
@@ -38,10 +38,53 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction) => 
 
 export const requireRole = (allowedRoles: ('TEACHER' | 'SQUAD')[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const user = (req as any).user as DecodedToken | undefined;
+    const user = (req as unknown as { user?: DecodedToken }).user;
     if (!user || !allowedRoles.includes(user.role)) {
-      return res.status(403).json({ success: false, message: `Intrusão RBAC Bloqueada. A patente [${user?.role || 'Desconhecido'}] não possui privilégios de Cátedra para concluir a operação solicitada.` });
+      return res.status(403).json({
+        error: {
+          code: 'FORBIDDEN',
+          message: `Intrusão RBAC Bloqueada. A patente [${user?.role || 'Desconhecido'}] não possui privilégios para esta operação.`,
+          requestId: (req as unknown as { requestId?: string }).requestId,
+        },
+      });
     }
     next();
   };
+};
+
+/**
+ * H4 — Ensures the authenticated squad can only access its own resources.
+ * Teachers bypass this check (they can view any squad).
+ * Reads squadId from req.params.squadId or req.params.id (standalone route).
+ */
+export const requireSquadOwnership = (req: Request, res: Response, next: NextFunction) => {
+  const user = (req as unknown as { user?: DecodedToken }).user;
+  if (!user) {
+    return res.status(401).json({
+      error: {
+        code: 'AUTHENTICATION_REQUIRED',
+        message: 'Autenticação necessária.',
+        requestId: (req as unknown as { requestId?: string }).requestId,
+      },
+    });
+  }
+
+  // Teachers can access any squad's resources
+  if (user.role === 'TEACHER') {
+    return next();
+  }
+
+  // Squads can only access their own resources
+  const paramSquadId = req.params.squadId || req.params.id;
+  if (user.role === 'SQUAD' && user.squadId && paramSquadId && user.squadId.toString() === paramSquadId) {
+    return next();
+  }
+
+  return res.status(403).json({
+    error: {
+      code: 'FORBIDDEN',
+      message: 'Acesso negado. Esta bancada não pode acessar recursos de outra bancada.',
+      requestId: (req as unknown as { requestId?: string }).requestId,
+    },
+  });
 };
