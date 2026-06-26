@@ -2,7 +2,9 @@
 
 ## 1. Objetivo
 
-Documentar o plano técnico completo, gratuito ou de custo zero inicial, para publicar a Plataforma EcoSabon completa na internet — incluindo Client React/Vite, Backend Express/API, Banco MongoDB, autenticação JWT, RBAC, uploads de evidências fotográficas e seed de dados — preservando o web-book já publicado no GitHub Pages.
+Documentar o plano técnico de referência, com custo inicial potencialmente zero, para um spike controlado de publicação da Plataforma EcoSabon na internet — incluindo Client React/Vite, Backend Express/API, Banco MongoDB, autenticação JWT, RBAC, uploads de evidências fotográficas e seed de dados — preservando o web-book já publicado no GitHub Pages.
+
+> ⚠️ Este documento é um plano de estudo e planejamento. Não constitui autorização automática de deploy. A execução do deploy exige fase separada com validação incremental.
 
 ## 2. Inventário Técnico Auditado
 
@@ -92,13 +94,14 @@ Documentar o plano técnico completo, gratuito ou de custo zero inicial, para pu
 
 ### 3.2 Resumo da Recomendação
 
-| Camada | Serviço Recomendado | Tier | Custo | Justificativa |
+| Camada | Serviço Candidato | Tier | Custo Inicial* | Justificativa |
 |---|---|---|---|---|
 | **Client (SPA)** | **Vercel** | Free | $0 | Build nativo de Vite, CDN global, preview deploys, env vars seguro |
 | **Server (API)** | **Render** | Free | $0 | Node.js nativo, env vars, HTTPS automático, logs integrados |
 | **Banco (MongoDB)** | **MongoDB Atlas** | M0 Free | $0 | 512 MB, backup automático, IP allowlist, TLS nativo |
 | **Web-book** | **GitHub Pages** | Free | $0 | **Já publicado. NÃO alterar.** |
 
+> \* Custos baseados nos termos atuais dos provedores (jun/2026). Termos de serviço gratuitos podem mudar sem aviso prévio. Validar antes da execução.
 ## 4. Comparação de Alternativas Gratuitas
 
 ### 4.1 Hospedagem do Client (Frontend React SPA)
@@ -400,42 +403,54 @@ O `vite.config.ts` do client aponta proxy para `http://localhost:4000`. Em produ
 | JWT_SECRET fraco | Tokens falsificáveis | Gerar com `openssl rand -base64 32` |
 | IP allowlist Atlas | Render IP muda | Usar `0.0.0.0/0` (permitir qualquer). Atlas M0 não suporta VPC peering |
 
-## 13. Custos
+## 13. Custos (Estimativa Atual)
 
-| Serviço | Tier | Custo Mensal | Observação |
+| Serviço | Tier | Custo Mensal Estimado | Observação |
 |---|---|---|---|
-| Vercel | Hobby (Free) | $0 | Até 100 GB bandwidth |
-| Render | Free | $0 | 750 h/mês, spin-down |
-| MongoDB Atlas | M0 | $0 | 512 MB, shared cluster |
+| Vercel | Hobby (Free) | $0* | Até 100 GB bandwidth |
+| Render | Free | $0* | 750 h/mês, spin-down |
+| MongoDB Atlas | M0 | $0* | 512 MB, shared cluster |
 | GitHub Pages | Free | $0 | Já ativo (web-book) |
-| **Total** | — | **$0/mês** | — |
+| **Total** | — | **$0/mês*** | — |
 
-## 14. GO/NO-GO para Deploy Completo
+> \* Sujeito aos termos de serviço atuais de cada provedor (jun/2026). Tiers gratuitos podem ser alterados, descontinuados ou ter limitações adicionais a qualquer momento.
+
+## 14. GO/NO-GO para Spike Controlado de Deploy
 
 | Gate | Status | Veredicto |
 |---|---|---|
-| Código pronto para deploy? | ✅ 211 testes passando | GO |
-| Alteração mínima necessária? | ✅ Apenas `vercel.json` | GO |
-| Segurança implementada? | ✅ JWT + RBAC + Helmet + CORS + Rate Limit | GO |
-| Variáveis de ambiente documentadas? | ✅ `.env.example` completo | GO |
-| Seed de dados disponível? | ✅ `npm run seed:turmas` | GO |
+| Código pronto para spike? | ✅ 211 testes passando | GO para spike |
+| Alteração mínima necessária? | ✅ Apenas `vercel.json` | GO para spike |
+| Segurança implementada? | ✅ JWT + RBAC + Helmet + CORS + Rate Limit | GO para spike |
+| Variáveis de ambiente documentadas? | ✅ `.env.example` completo | GO para spike |
+| Seed de dados disponível? | ✅ `npm run seed:turmas` | GO para spike |
 | Web-book preservado? | ✅ Intocado | GO |
-| Custo zero confirmado? | ✅ Vercel + Render + Atlas M0 | GO |
-| Uploads efêmeros documentados? | ✅ Risco aceito para MVP | GO |
+| Custo inicial potencialmente zero? | ⚠️ Sujeito aos termos atuais | GO com ressalva |
+| Uploads efêmeros documentados? | ⚠️ Risco aceito apenas para demo | GO com ressalva |
+| Pronto para produção escolar real? | ❌ Requer governança adicional | NO-GO |
 
-**VEREDICTO FINAL: 🟢 GO — A plataforma pode ser implantada gratuitamente.**
+**VEREDICTO FINAL: 🟡 GO PARA SPIKE CONTROLADO — A arquitetura é viável para demo/piloto técnico, mas NÃO constitui deploy de produção escolar real. Deploy completo exige fase separada com governança, backup, persistência de uploads e validação incremental.**
 
 ## 15. Próxima Fase Recomendada
 
-**FDP-DEPLOY** — Execução controlada do deploy:
+**FDP-SPIKE-0** — Verificação de requisitos reais para spike controlado:
+1. Verificar termos atuais dos free tiers (Vercel, Render, Atlas M0)
+2. Verificar banco Docker local antes de migração
+3. Validar se o seed atual é suficiente para demo
+4. Definir escopo exato do spike (quais fluxos testar)
+5. Criar branch `spike/ecosabon-platform-deploy-prep`
+6. Adicionar `client/vercel.json` mínimo
+7. Documentar decisão de prosseguir ou não
+
+Somente após FDP-SPIKE-0 aprovado:
+
+**FDP-DEPLOY** — Execução controlada do deploy (spike):
 1. Criar contas nos serviços (Atlas, Render, Vercel)
-2. Criar branch `deploy/ecosabon-full-platform`
-3. Adicionar `client/vercel.json`
-4. Configurar variáveis de ambiente nos dashboards
-5. Deploy server → seed → deploy client
-6. Validação ponta a ponta
-7. Relatório R102
+2. Configurar variáveis de ambiente nos dashboards
+3. Deploy server → seed → deploy client
+4. Validação ponta a ponta (sem dados reais de alunos)
+5. Relatório R102
 
 ## 16. Decisão
 
-`DECISÃO: PLANO DE DEPLOY GRATUITO DA PLATAFORMA ECOSABON COMPLETA ELABORADO COM SUCESSO. ARQUITETURA RECOMENDADA: VERCEL (CLIENT) + RENDER (SERVER) + MONGODB ATLAS M0 (BANCO). CUSTO: $0/MÊS. VEREDICTO: GO PARA DEPLOY. PRÓXIMA FASE: FDP-DEPLOY.`
+`DECISÃO: GO PARA SPIKE CONTROLADO DE DEPLOY GRATUITO, NÃO PARA DEPLOY COMPLETO IMEDIATO. A ARQUITETURA VERCEL + RENDER + MONGODB ATLAS M0 FREE É VIÁVEL PARA DEMO/PILOTO CONTROLADO, DESDE QUE SEM DADOS SENSÍVEIS REAIS, SEM MIGRAÇÃO AUTOMÁTICA E COM VALIDAÇÃO INCREMENTAL. CUSTO INICIAL POTENCIALMENTE ZERO, SUJEITO AOS TERMOS ATUAIS DOS PROVEDORES. PRÓXIMA FASE: FDP-SPIKE-0.`
