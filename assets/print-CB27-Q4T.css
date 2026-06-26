@@ -1,0 +1,373 @@
+/* ============================================================================
+ * EcoSabon — E-book Protótipo | Print Styles (print.css)
+ * ============================================================================
+ * Garante que o professor possa imprimir o e-book com legibilidade.
+ * ============================================================================ */
+
+@media print {
+  /* Remove elementos interativos e de navegação */
+  .navbar,
+  .sidebar,
+  .sidebar-toggle,
+  .back-to-top,
+  .btn--reveal,
+  .hero__actions,
+  .navbar__links,
+  .reveal-block__icon { display: none !important; }
+
+  /* Força fundo branco e texto escuro */
+  body {
+    background: #fff !important;
+    color: #111 !important;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  .container { max-width: 100% !important; margin-left: 0 !important; padding: 0 !important; }
+
+  /* Mostrar todos os módulos para impressão —
+     especificidade alinhada com body.js-enabled .ebook-section (screen)
+     para garantir que @media print vença sobre @media screen */
+  .module-section,
+  .ebook-section,
+  .ebook-section[hidden],
+  body.js-enabled .ebook-section {
+    display: block !important;
+    page-break-before: always;
+  }
+
+  .module-section:first-of-type,
+  .ebook-section:first-of-type { page-break-before: auto; }
+
+  /* Cards e blocos */
+  .card,
+  .station-field,
+  .reveal-block,
+  .placeholder-block {
+    background: #f5f5f5 !important;
+    border-color: #ccc !important;
+    color: #222 !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .card__title,
+  .module-header__title,
+  .hero__title {
+    color: #111 !important;
+    -webkit-text-fill-color: #111 !important;
+    background: none !important;
+  }
+
+  .card__label,
+  .module-header__number { color: #333 !important; }
+  .card__content,
+  .module-header__subtitle { color: #444 !important; }
+
+  /* Revelar conteúdo oculto ao imprimir */
+  .hidden { display: block !important; }
+
+  /* Tabelas */
+  .rubric-table th { background: #e5e5e5 !important; color: #111 !important; }
+  .rubric-table td { color: #333 !important; }
+
+  /* Links com URL visível */
+  a[href]::after { content: " (" attr(href) ")"; font-size: 0.75em; color: #666; }
+  a[href^="#"]::after { content: ""; }
+
+  /* Diagrama */
+  .classroom-diagram__station {
+    background: #f0f0f0 !important;
+    border-color: #333 !important;
+    color: #111 !important;
+    cursor: default !important;
+    border-top-width: 3px !important;
+  }
+
+  /* Station Cards Enriquecidos (Execução 3) */
+  .station-card {
+    page-break-inside: avoid;
+  }
+
+  .station-card__header {
+    background: #f0f0f0 !important;
+    border-bottom-color: #ccc !important;
+    color: #333 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .station-card__icon {
+    color: #333 !important;
+    stroke: #333 !important;
+  }
+
+  .station-card__number {
+    color: #555 !important;
+  }
+
+  .station-card__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Infográfico (Execução 3) */
+  .infographic {
+    flex-direction: row !important;
+    page-break-inside: avoid;
+  }
+
+  .infographic__molecule-icon {
+    border-color: #999 !important;
+    background: #f5f5f5 !important;
+  }
+
+  .infographic__svg {
+    color: #333 !important;
+  }
+
+  .infographic__arrow-svg {
+    color: #333 !important;
+    transform: none !important;
+  }
+
+  .infographic__label {
+    color: #111 !important;
+  }
+
+  .infographic__sublabel,
+  .infographic__operator {
+    color: #555 !important;
+  }
+
+  /* Hotspots do Infográfico (Mídia Impressa) */
+  .infographic-hotspot {
+    display: none !important;
+  }
+
+  .infographic-panel,
+  .infographic-panel[hidden] {
+    display: block !important;
+    background: #f5f5f5 !important;
+    border-left: 3px solid #333 !important;
+    color: #222 !important;
+    margin-bottom: 0.5rem !important;
+    padding: 0.5rem 0.75rem !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+
+  .infographic-panel__title {
+    color: #111 !important;
+    font-size: 10pt !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .infographic-panel__content {
+    color: #333 !important;
+    font-size: 9pt !important;
+  }
+
+  /* Palco Molecular (Mídia Impressa) */
+  #palco-molecular-secao {
+    page-break-inside: avoid;
+  }
+
+  .molecular-stage__visual {
+    background: #fff !important;
+    border-color: #ccc !important;
+    box-shadow: none !important;
+  }
+
+  .molecular-stage__svg {
+    color: #111 !important;
+    filter: none !important; /* Desativa sombras/filtros no PDF impresso */
+  }
+
+  .molecular-stage__legend {
+    background: #f5f5f5 !important;
+    border-color: #ccc !important;
+    color: #111 !important;
+  }
+
+  .molecular-stage__legend-title {
+    color: #111 !important;
+  }
+
+  .molecular-stage__legend-item {
+    color: #333 !important;
+  }
+  /* Ocultar controles interativos do stepper no PDF */
+  .molecular-stage__stepper-container {
+    display: none !important;
+  }
+
+  /* Forçar exibição do fallback linear didático no papel/PDF */
+  body.js-enabled .molecular-stage__fallback {
+    display: block !important;
+    background: none !important;
+    border-left-color: #333 !important;
+    color: #222 !important;
+    padding-left: 1rem !important;
+  }
+
+  .molecular-stage__fallback-step {
+    border-left-color: #555 !important;
+  }
+
+  .molecular-stage__fallback-step strong {
+    color: #111 !important;
+  }
+
+  .molecular-stage__fallback-step p {
+    color: #333 !important;
+  }
+
+  /* Garantir que todos os componentes do SVG sejam impressos com opacidade total, ignorando o estado ativo do stepper */
+  .molecular-stage__svg g,
+  .molecular-stage__svg rect,
+  .molecular-stage__svg text {
+    opacity: 1 !important;
+  }
+
+  /* Premium 3D Stage na Impressão */
+  .premium-3d-stage__viewer,
+  .premium-3d-stage__controls {
+    display: none !important;
+  }
+
+  .premium-3d-stage {
+    page-break-inside: avoid;
+  }
+
+  .premium-3d-stage__warning {
+    background: none !important;
+    border-left-color: #333 !important;
+    color: #222 !important;
+  }
+
+  /* ─── Platform Showcase P1 Print Styles ──────────────────────────── */
+  .platform-showcase__disclaimer {
+    background: none !important;
+    border: 1px solid #999 !important;
+    border-left: 4px solid #666 !important;
+    color: #222 !important;
+  }
+
+  .platform-showcase__map {
+    overflow: visible !important;
+  }
+
+  .platform-map-svg {
+    max-width: 100% !important;
+  }
+
+  .platform-showcase__hotspots {
+    display: none !important;
+  }
+
+  .platform-hotspot-panel {
+    display: block !important;
+    background: none !important;
+    border: 1px solid #ccc !important;
+    color: #222 !important;
+    page-break-inside: avoid;
+  }
+
+  .platform-hotspot-panel[hidden] {
+    display: block !important;
+  }
+
+  .platform-hotspot-panel h4 {
+    color: #111 !important;
+  }
+
+  .platform-hotspot-panel p {
+    color: #333 !important;
+  }
+
+  .platform-role-card__trigger {
+    height: auto !important;
+    position: static !important;
+  }
+
+  .platform-role-card__front,
+  .platform-role-card__back {
+    position: static !important;
+    transform: none !important;
+    backface-visibility: visible !important;
+    background: none !important;
+    border: 1px solid #ccc !important;
+    height: auto !important;
+    margin-bottom: 0.5rem;
+    color: #222 !important;
+  }
+
+  .platform-role-card__back {
+    display: block !important;
+  }
+
+  .platform-role-card__back[aria-hidden="true"] {
+    display: block !important;
+  }
+
+  .platform-role-card__hint {
+    display: none !important;
+  }
+
+  .platform-role-card__desc {
+    color: #333 !important;
+  }
+
+  .platform-journey-step__marker {
+    background: none !important;
+    border-color: #333 !important;
+    color: #333 !important;
+  }
+
+  .platform-journey-step__content strong {
+    color: #111 !important;
+  }
+
+  .platform-journey-step__content p {
+    color: #333 !important;
+  }
+
+  .platform-journey-step:not(:last-child)::before {
+    background: #ccc !important;
+  }
+
+  .platform-status-block {
+    background: none !important;
+    border: 1px solid #ccc !important;
+    page-break-inside: avoid;
+  }
+
+  .platform-status-block h4 {
+    color: #111 !important;
+  }
+
+  .platform-status-block li {
+    color: #333 !important;
+  }
+
+  .platform-showcase__cta {
+    background: none !important;
+    border: 1px solid #999 !important;
+    page-break-inside: avoid;
+  }
+
+  .platform-showcase__cta-text {
+    color: #222 !important;
+  }
+
+  .platform-showcase__cta-subtext {
+    color: #111 !important;
+  }
+
+  .platform-showcase__map-fallback,
+  .platform-showcase__roles-fallback {
+    display: block !important;
+  }
+}
+

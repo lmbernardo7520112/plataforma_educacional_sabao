@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Protótipo de e-book interativo sobre ensino de saponificação e Química Verde por rotação de estações — EcoSabon." />
+  <title>Saponificação em Estações — E-book Interativo | EcoSabon</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests" />
+  <link rel="stylesheet" href="/plataforma_educacional_sabao/assets/print-CB27-Q4T.css" media="print" />
+  <script type="module" crossorigin src="/plataforma_educacional_sabao/assets/index-BkjHQuj1.js"></script>
+  <link rel="stylesheet" crossorigin href="/plataforma_educacional_sabao/assets/index-CVpDIWPQ.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- NAVBAR                                                                 -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <nav class="navbar" role="navigation" aria-label="Navegação principal do e-book">
+    <div class="navbar__inner">
+      <button class="sidebar-toggle" aria-expanded="false" aria-controls="sidebar-nav" aria-label="Alternar sumário lateral" id="btn-sidebar-toggle">☰</button>
+      <div class="navbar__brand"><span>Eco</span>Sabon — E-book</div>
+    </div>
+  </nav>
+
+  <!-- Sumário Lateral (Sidebar) -->
+  <aside class="sidebar" id="sidebar-nav" aria-label="Sumário" aria-hidden="true">
+    <nav class="sidebar__nav">
+      <ul class="sidebar__links">
+        <li><a href="#mod-inicio" class="sidebar__link sidebar__link--active" aria-current="true" id="nav-inicio">Início</a></li>
+        <li><a href="#mod-1" class="sidebar__link" id="nav-mod1">Módulo 1: O Desafio Proporcional</a></li>
+        <li><a href="#mod-2" class="sidebar__link" id="nav-mod2">Módulo 2: Missões na Prática</a></li>
+        <li><a href="#mod-3" class="sidebar__link" id="nav-mod3">Módulo 3: Evidências</a></li>
+        <li><a href="#mod-4" class="sidebar__link" id="nav-mod4">Caixa de Ferramentas</a></li>
+        <li><a href="#mod-governanca" class="sidebar__link" id="nav-gov">Governança de Qualidade</a></li>
+        <li><a href="#mod-plataforma" class="sidebar__link" id="nav-plat">Do Web-book à Plataforma</a></li>
+        <li><a href="#mod-validacao" class="sidebar__link" id="nav-val">Validação Docente</a></li>
+        <li><a href="#mod-checklist" class="sidebar__link" id="nav-check">Checklist Go/No-Go</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="container">
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- TELA INICIAL                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-inicio" class="ebook-section ebook-section--active">
+      <div class="hero">
+        <div class="hero__eyebrow">Produto Educacional</div>
+        <h1 class="hero__title">Saponificação em Estações</h1>
+        <p class="hero__subtitle">Protótipo de e-book interativo para ensino de proporções, relações quantitativas e Química Verde por rotação de estações</p>
+        
+        <div class="cover-metadata">
+          <div class="cover-metadata__item"><strong>Mestrado Profissional em Ensino de Ciências</strong></div>
+          <div class="cover-metadata__item">Autor: <span>[DADOS FICTÍCIOS PARA TESTE]</span></div>
+          <div class="cover-metadata__item">Orientador: <span>[DADOS FICTÍCIOS PARA TESTE]</span></div>
+        </div>
+
+        <div class="hero__warning">⚠️ Protótipo com dados fictícios para teste. Substituir por dados reais da dissertação.</div>
+        <div class="hero__actions">
+          <button class="btn btn--primary" data-nav="mod-1" id="btn-start">Começar pelo Módulo 1 →</button>
+          <button class="btn btn--outline" data-nav="mod-4" id="btn-tools">Ir para Caixa de Ferramentas</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- MÓDULO 1 — O Desafio Proporcional                                  -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-1" class="ebook-section">
+      <div class="module-header">
+        <p class="module-header__number">Módulo 1</p>
+        <h2 class="module-header__title">O Desafio Proporcional na Saponificação</h2>
+        <p class="module-header__subtitle">Por que proporções, conversões e relações quantitativas costumam dificultar o aprendizado em Química Verde</p>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">O Problema na Prática Docente</h3>
+        <div class="card__content">
+          <p>Professor(a), você já percebeu como a produção de sabão ecológico parece simples na teoria, mas na prática os alunos tropeçam nos cálculos? A conversão entre volume e massa, a proporção molar óleo–NaOH e o controle de temperatura são pontos de ruptura frequentes.</p>
+          <p style="margin-top: 0.75rem;">O desafio não é apenas "ensinar estequiometria". É fazer o aluno <strong>perceber que sem a proporção correta</strong>, o sabão não solidifica, o pH fica perigoso, e o produto final é inutilizável. A Química Verde depende de rigor quantitativo.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">O que é <span class="tooltip-trigger" tabindex="0">saponificação<span class="tooltip-content">Saponificação é a reação química entre um éster (geralmente um triglicerídeo presente em óleos e gorduras) e uma base forte (como NaOH), produzindo sabão (sal de ácido graxo) e glicerol.</span></span>?</h3>
+        <div class="card__content">
+          <p>A saponificação é o processo químico que transforma óleos e gorduras em sabão. No contexto do EcoSabon, utilizamos óleo de cozinha residual — um resíduo ambiental — como matéria-prima, conectando estequiometria à sustentabilidade.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">💭 Pergunta Reflexiva</h3>
+        <div class="card__content">
+          <p style="font-style: italic; color: var(--color-accent);">Na sua experiência, em que momento da aula os alunos mais demonstram dificuldade com proporções: na montagem do experimento, no cálculo prévio, ou na interpretação dos resultados?</p>
+          <p style="margin-top: 0.5rem; font-size: 0.82rem; color: var(--color-text-muted);">Esta pergunta é reflexiva e não avaliativa. Serve para o professor situar sua própria prática antes de conhecer as estações.</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <button class="btn btn--primary" data-nav="mod-2" id="btn-to-mod2">Avançar para Módulo 2 — Missões na Prática →</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- MÓDULO 2 — A Rotação na Prática (Missões/Estações)                 -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-2" class="ebook-section">
+      <div class="module-header">
+        <p class="module-header__number">Módulo 2</p>
+        <h2 class="module-header__title">Missões na Prática — Rotação por Estações</h2>
+        <p class="module-header__subtitle">3 estações demonstrativas para ensino de saponificação e Química Verde</p>
+      </div>
+
+      <div class="placeholder-block">
+        <span class="placeholder-block__tag">⚠️ Dados Fictícios para Teste</span>
+        <p>As 3 estações abaixo são <strong>demonstrativas</strong>. Devem ser substituídas por estações reais após definição metodológica da dissertação.</p>
+      </div>
+
+      <!-- Diagrama de Sala (Mapa Interativo) -->
+      <div class="card">
+        <h3 class="card__title">📐 Organização da Sala (Mapa Interativo)</h3>
+        <p class="card__content" style="margin-bottom: 1rem;">Clique ou toque em uma estação para navegar até sua descrição detalhada.</p>
+        <div class="classroom-diagram">
+          <div class="classroom-diagram__station" data-station="estacao-1"
+               role="button" tabindex="0" aria-label="Ir para Estação 1 — Filtração do Óleo">
+            🧪 Estação 1<br/>Filtração do Óleo
+          </div>
+          <div class="classroom-diagram__station" data-station="estacao-2"
+               role="button" tabindex="0" aria-label="Ir para Estação 2 — Reator IoT vs Manual">
+            ⚗️ Estação 2<br/>Reator IoT vs Manual
+          </div>
+          <div class="classroom-diagram__station" data-station="estacao-3"
+               role="button" tabindex="0" aria-label="Ir para Estação 3 — Teste de pH">
+            📊 Estação 3<br/>Teste de pH
+          </div>
+          <div class="classroom-diagram__center">👩‍🏫 Professor circula entre as estações · Grupos de 4-6 alunos · Rotação a cada ~25 min</div>
+        </div>
+      </div>
+
+      <!-- Infográfico da Reação de Saponificação -->
+      <div class="card" id="infografico-saponificacao">
+        <h3 class="card__title">🔬 Reação de Saponificação (Visão Geral)</h3>
+        <p class="card__content" style="margin-bottom: 1rem;">Selecione os pontos interativos (pins circulares ou botões) para explorar os detalhes químicos, ambientais e de segurança.</p>
+        <div class="infographic">
+          <div class="infographic__side infographic__side--reagents">
+            <div class="infographic__molecule infographic__reagent">
+              <div class="infographic__molecule-icon-wrapper" style="position: relative; display: inline-block;">
+                <div class="infographic__molecule-icon">
+                  <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><circle cx="24" cy="18" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="14" cy="34" r="6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="34" r="6" fill="none" stroke="currentColor" stroke-width="2"/><line x1="20" y1="24" x2="16" y2="29" stroke="currentColor" stroke-width="2"/><line x1="28" y1="24" x2="32" y2="29" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+                <button class="infographic-hotspot" data-target="triglicerideo" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-triglicerideo" aria-label="Detalhar Triglicerídeo" title="Detalhar Triglicerídeo"></button>
+              </div>
+              <span class="infographic__label">Triglicerídeo</span>
+              <span class="infographic__sublabel">(óleo/gordura)</span>
+            </div>
+            <span class="infographic__operator">+</span>
+            <div class="infographic__molecule infographic__reagent">
+              <div class="infographic__molecule-icon-wrapper" style="position: relative; display: inline-block;">
+                <div class="infographic__molecule-icon">
+                  <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><text x="24" y="30" text-anchor="middle" font-size="16" fill="currentColor" font-weight="bold">3×</text></svg>
+                </div>
+                <button class="infographic-hotspot infographic-hotspot--top-right" data-target="naoh" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-naoh" aria-label="Detalhar NaOH" title="Detalhar NaOH"></button>
+                <button class="infographic-hotspot infographic-hotspot--top-left" data-target="coeficiente-reagente" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-coeficiente-reagente" aria-label="Detalhar Coeficiente 3×" title="Detalhar Coeficiente 3×"></button>
+              </div>
+              <span class="infographic__label">3 NaOH</span>
+              <span class="infographic__sublabel">(base forte)</span>
+            </div>
+          </div>
+          <div class="infographic__arrow-wrapper" style="position: relative; display: inline-block; padding: 0.5rem;">
+            <div class="infographic__arrow" aria-hidden="true">
+              <svg class="infographic__arrow-svg" viewBox="0 0 60 30" aria-hidden="true">
+                <line x1="5" y1="15" x2="45" y2="15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <polygon points="45,8 55,15 45,22" fill="currentColor"/>
+              </svg>
+            </div>
+            <button class="infographic-hotspot infographic-hotspot--arrow" data-target="seta-reacao" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-seta-reacao" aria-label="Detalhar Seta da Reação" title="Detalhar Seta da Reação"></button>
+          </div>
+          <div class="infographic__side infographic__side--products">
+            <div class="infographic__molecule infographic__product">
+              <div class="infographic__molecule-icon-wrapper" style="position: relative; display: inline-block;">
+                <div class="infographic__molecule-icon">
+                  <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="6" fill="none" stroke="currentColor" stroke-width="2"/><line x1="18" y1="20" x2="30" y2="20" stroke="currentColor" stroke-width="1.5" opacity="0.5"/><line x1="18" y1="26" x2="30" y2="26" stroke="currentColor" stroke-width="1.5" opacity="0.5"/></svg>
+                </div>
+                <button class="infographic-hotspot" data-target="sabao" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-sabao" aria-label="Detalhar Sabão" title="Detalhar Sabão"></button>
+              </div>
+              <span class="infographic__label">3 Sabão</span>
+              <span class="infographic__sublabel">(sal de ác. graxo)</span>
+            </div>
+            <span class="infographic__operator">+</span>
+            <div class="infographic__molecule infographic__product">
+              <div class="infographic__molecule-icon-wrapper" style="position: relative; display: inline-block;">
+                <div class="infographic__molecule-icon">
+                  <svg viewBox="0 0 48 48" class="infographic__svg" aria-hidden="true"><circle cx="24" cy="24" r="10" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="4" fill="currentColor" opacity="0.3"/></svg>
+                </div>
+                <button class="infographic-hotspot" data-target="glicerol" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-glicerol" aria-label="Detalhar Glicerol" title="Detalhar Glicerol"></button>
+              </div>
+              <span class="infographic__label">Glicerol</span>
+              <span class="infographic__sublabel">(subproduto)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Badges para Química Verde e Segurança Laboratorial -->
+        <div class="infographic__badges" style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+          <button class="infographic-hotspot infographic-hotspot--badge infographic-hotspot--green" data-target="quimica-verde" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-quimica-verde" aria-label="Detalhar Relação com Química Verde">
+            🍃 Química Verde
+          </button>
+          <button class="infographic-hotspot infographic-hotspot--badge infographic-hotspot--alert" data-target="alerta-seguranca" aria-expanded="false" aria-haspopup="dialog" aria-controls="desc-alerta-seguranca" aria-label="Detalhar Alerta de Segurança (NaOH)">
+            ⚠️ Segurança
+          </button>
+        </div>
+
+        <!-- Painéis Explicativos Inline (Acessibilidade) -->
+        <div class="infographic-panels">
+          <div id="desc-triglicerideo" class="infographic-panel" hidden>
+            <h4 class="infographic-panel__title">Triglicerídeo (Óleo Residual)</h4>
+            <p class="infographic-panel__content">O óleo de fritura usado é composto predominantemente por triglicerídeos (triésteres derivados de glicerol e ácidos graxos). Na reação, as ligações éster são clivadas pela base forte.</p>
+          </div>
+          <div id="desc-naoh" class="infographic-panel" hidden>
+            <h4 class="infographic-panel__title">NaOH (Hidróxido de Sódio)</h4>
+            <p class="infographic-panel__content">A base forte atua como agente de hidrólise. Em solução aquosa, dissocia-se em íons Na⁺ e OH⁻, sendo o hidróxido o agente nucleofílico que ataca as carbonilas do triglicerídeo.</p>
+          </div>
+          <div id="desc-coeficiente-reagente" class="infographic-panel" hidden>
+            <h4 class="infographic-panel__title">Proporção Estequiométrica (3×)</h4>
+            <p class="infographic-panel__content">Indica a relação molar estequiométrica: são necessários exatamente 3 mols de NaOH para clivar as 3 ligações éster presentes em 1 mol de triglicerídeo, produzindo sabão e glicerina.</p>
+          </div>
+          <div id="desc-seta-reacao" class="infographic-panel" hidden>
+            <h4 class="infographic-panel__title">Dinâmica da Reação</h4>
+            <p class="infographic-panel__content">Representa a conversão irreversível dos reagentes em produtos. Ocorre sob aquecimento moderado e agitação vigorosa, acelerando o contato entre as fases imiscíveis.</p>
+          </div>
+          <div id="desc-sabao" class="infographic-panel" hidden>
+            <h4 class="infographic-panel__title">Sabão (Sais de Ácidos Graxos)</h4>
+            <p class="infographic-panel__content">Produto principal da reação. As moléculas possuem caráter anfifílico (cauda apolar hidrofóbica e cabeça polar hidrofílica), permitindo a formação de micelas e ação tensoativa de limpeza.</p>
+          </div>
+          <div id="desc-glicerol" class="infographic-panel" hidden>
+            <h4 class="infographic-panel__title">Glicerol (Glicerina)</h4>
+            <p class="infographic-panel__content">O subproduto valioso da hidrólise. Com propriedades altamente umectantes e hidratantes, o glicerol agrega valor ao produto final, deixando a barra de sabão mais suave para a pele.</p>
+          </div>
+          <div id="desc-quimica-verde" class="infographic-panel" hidden>
+            <h4 class="infographic-panel__title">🍃 Princípios da Química Verde</h4>
+            <p class="infographic-panel__content">Esta rota pedagógica exemplifica a valorização de resíduos. Ao utilizar óleo de cozinha usado como matéria-prima, evita-se o descarte incorreto que polui milhares de litros de água, promovendo economia circular e sustentabilidade.</p>
+          </div>
+          <div id="desc-alerta-seguranca" class="infographic-panel infographic-panel--alert" hidden>
+            <h4 class="infographic-panel__title">⚠️ Alerta de Segurança e Causticidade</h4>
+            <p class="infographic-panel__content"><strong>Atenção:</strong> O hidróxido de sódio (soda cáustica) é uma base forte altamente corrosiva. O manuseio exige obrigatoriamente equipamentos de proteção individual (óculos de segurança e luvas) e ambiente ventilado, pois a reação é exotérmica.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Palco Molecular — Visualização Qualitativa da Saponificação -->
+      <div class="card" id="palco-molecular-secao">
+        <h3 class="card__title">🔬 Palco Molecular — Visualização Qualitativa da Saponificação</h3>
+
+        <div class="molecular-stage__equation" style="text-align: center; margin-bottom: 1.5rem; font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--color-success);">
+          Triglicerídeo + 3 NaOH &rarr; 3 Sabão + Glicerol
+        </div>
+        
+        <div class="warning-block">
+          <p class="warning-block__text"><strong>Aviso de Isenção Científica:</strong> Visualização qualitativa e didática. Não representa simulação molecular, cálculo quantitativo ou modelo científico validado.</p>
+        </div>
+
+        <div class="molecular-stage" tabindex="0" aria-label="Sequenciador de etapas do Palco Molecular">
+          <!-- Controle do Sequenciador (Fase B2) -->
+          <div class="molecular-stage__stepper-container">
+            <div class="molecular-stage__controls" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 1rem;">
+              <button id="molecular-stage-prev" class="btn btn--secondary" aria-label="Etapa anterior" style="margin: 0;">&larr; Anterior</button>
+              <span id="molecular-stage-step-indicator" class="molecular-stage__step-indicator" aria-live="polite" style="font-family: var(--font-display); font-weight: 700; color: var(--color-text);">Etapa 0 de 8</span>
+              <button id="molecular-stage-next" class="btn btn--primary" aria-label="Próxima etapa" style="margin: 0;">Avançar &rarr;</button>
+            </div>
+            
+            <div id="molecular-stage-live-panel" class="molecular-stage__live-panel" aria-live="polite" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;">
+              <h4 id="molecular-stage-step-title" class="molecular-stage__step-title" style="margin-top: 0; color: var(--color-accent); font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Etapa 0: Contexto e Segurança</h4>
+              <p id="molecular-stage-step-content" class="molecular-stage__step-content" style="margin: 0; color: var(--color-text-secondary); line-height: 1.6; font-size: 0.95rem;">Bem-vindo à visualização molecular qualitativa. Aqui, observamos uma representação esquemática dos átomos e ligações durante a fabricação do sabão. Lembre-se: esta é uma ilustração didática e não uma simulação em tempo real.</p>
+            </div>
+          </div>
+
+          <div class="molecular-stage__visual" aria-hidden="true">
+            <!-- Inline SVG showing molecular schemas -->
+            <svg viewBox="0 0 800 320" class="molecular-stage__svg">
+              <defs>
+                <!-- Gradients for premium 2.5D spheroids -->
+                <radialGradient id="grad-carbon" cx="30%" cy="30%" r="70%">
+                  <stop offset="0%" stop-color="#718096" />
+                  <stop offset="100%" stop-color="#2D3748" />
+                </radialGradient>
+                <radialGradient id="grad-oxygen" cx="30%" cy="30%" r="70%">
+                  <stop offset="0%" stop-color="#FEB2B2" />
+                  <stop offset="100%" stop-color="#C53030" />
+                </radialGradient>
+                <radialGradient id="grad-hydrogen" cx="30%" cy="30%" r="70%">
+                  <stop offset="0%" stop-color="#FFFFFF" />
+                  <stop offset="100%" stop-color="#CBD5E0" />
+                </radialGradient>
+                <radialGradient id="grad-sodium" cx="30%" cy="30%" r="70%">
+                  <stop offset="0%" stop-color="#B794F4" />
+                  <stop offset="100%" stop-color="#553C9A" />
+                </radialGradient>
+                <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+                  <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+                </filter>
+              </defs>
+
+              <!-- REAGENT BG -->
+              <rect x="5" y="5" width="375" height="310" rx="10" fill="rgba(255, 255, 255, 0.02)" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1" />
+              <text x="20" y="25" fill="rgba(255,255,255,0.4)" font-size="11" font-weight="bold" letter-spacing="1">REAGENTES</text>
+
+              <!-- Triglyceride schema (left) -->
+              <g id="svg-triglyceride" transform="translate(20, 45)" filter="url(#shadow)">
+                <!-- Backbone (Glycerol C-C-C) -->
+                <circle cx="20" cy="50" r="14" fill="url(#grad-carbon)" />
+                <text x="20" y="54" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+                
+                <line x1="20" y1="64" x2="20" y2="126" stroke="#4A5568" stroke-width="4" />
+                
+                <circle cx="20" cy="140" r="14" fill="url(#grad-carbon)" />
+                <text x="20" y="144" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+                
+                <line x1="20" y1="154" x2="20" y2="216" stroke="#4A5568" stroke-width="4" />
+                
+                <circle cx="20" cy="230" r="14" fill="url(#grad-carbon)" />
+                <text x="20" y="234" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+
+                <!-- Ester O links -->
+                <line x1="34" y1="50" x2="66" y2="50" stroke="#4A5568" stroke-width="3" />
+                <circle cx="80" cy="50" r="12" fill="url(#grad-oxygen)" />
+                <text x="80" y="53" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">O</text>
+
+                <line x1="34" y1="140" x2="66" y2="140" stroke="#4A5568" stroke-width="3" />
+                <circle cx="80" cy="140" r="12" fill="url(#grad-oxygen)" />
+                <text x="80" y="143" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">O</text>
+
+                <line x1="34" y1="230" x2="66" y2="230" stroke="#4A5568" stroke-width="3" />
+                <circle cx="80" cy="230" r="12" fill="url(#grad-oxygen)" />
+                <text x="80" y="233" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">O</text>
+
+                <!-- Rupture markings (yellow dashed lines) -->
+                <line x1="92" y1="35" x2="92" y2="65" stroke="#ECC94B" stroke-dasharray="3,3" stroke-width="2" />
+                <line x1="92" y1="125" x2="92" y2="155" stroke="#ECC94B" stroke-dasharray="3,3" stroke-width="2" />
+                <line x1="92" y1="215" x2="92" y2="245" stroke="#ECC94B" stroke-dasharray="3,3" stroke-width="2" />
+
+                <!-- Carbonyl C -->
+                <line x1="92" y1="50" x2="116" y2="50" stroke="#E53E3E" stroke-width="3" />
+                <circle cx="120" cy="50" r="14" fill="url(#grad-carbon)" />
+                <text x="120" y="54" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+
+                <line x1="92" y1="140" x2="116" y2="140" stroke="#E53E3E" stroke-width="3" />
+                <circle cx="120" cy="140" r="14" fill="url(#grad-carbon)" />
+                <text x="120" y="144" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+
+                <line x1="92" y1="230" x2="116" y2="230" stroke="#E53E3E" stroke-width="3" />
+                <circle cx="120" cy="230" r="14" fill="url(#grad-carbon)" />
+                <text x="120" y="234" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+
+                <!-- Double Bond O -->
+                <line x1="120" y1="36" x2="120" y2="14" stroke="#E53E3E" stroke-width="4" />
+                <line x1="124" y1="36" x2="124" y2="14" stroke="#E53E3E" stroke-width="4" />
+                <circle cx="122" cy="10" r="10" fill="url(#grad-oxygen)" />
+                <text x="122" y="13" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">O</text>
+
+                <line x1="120" y1="126" x2="120" y2="104" stroke="#E53E3E" stroke-width="4" />
+                <line x1="124" y1="126" x2="124" y2="104" stroke="#E53E3E" stroke-width="4" />
+                <circle cx="122" cy="100" r="10" fill="url(#grad-oxygen)" />
+                <text x="122" y="103" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">O</text>
+
+                <line x1="120" y1="216" x2="120" y2="194" stroke="#E53E3E" stroke-width="4" />
+                <line x1="124" y1="216" x2="124" y2="194" stroke="#E53E3E" stroke-width="4" />
+                <circle cx="122" cy="190" r="10" fill="url(#grad-oxygen)" />
+                <text x="122" y="193" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">O</text>
+
+                <!-- Radical Tails R -->
+                <line x1="134" y1="50" x2="160" y2="50" stroke="#4A5568" stroke-width="3" />
+                <path d="M 160,50 L 170,40 L 180,50 L 190,40 L 200,50" fill="none" stroke="#718096" stroke-width="3" />
+                <text x="210" y="48" font-size="11" fill="#A0AEC0" font-weight="bold" font-family="monospace">R1</text>
+
+                <line x1="134" y1="140" x2="160" y2="140" stroke="#4A5568" stroke-width="3" />
+                <path d="M 160,140 L 170,130 L 180,140 L 190,130 L 200,140" fill="none" stroke="#718096" stroke-width="3" />
+                <text x="210" y="138" font-size="11" fill="#A0AEC0" font-weight="bold" font-family="monospace">R2</text>
+
+                <line x1="134" y1="230" x2="160" y2="230" stroke="#4A5568" stroke-width="3" />
+                <path d="M 160,230 L 170,220 L 180,230 L 190,220 L 200,230" fill="none" stroke="#718096" stroke-width="3" />
+                <text x="210" y="228" font-size="11" fill="#A0AEC0" font-weight="bold" font-family="monospace">R3</text>
+              </g>
+
+              <!-- NaOH (3x) -->
+              <g id="svg-naoh" transform="translate(290, 60)" filter="url(#shadow)">
+                <!-- NaOH 1 -->
+                <circle cx="20" cy="20" r="12" fill="url(#grad-sodium)" />
+                <text x="20" y="23" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">Na+</text>
+                <circle cx="45" cy="20" r="10" fill="url(#grad-oxygen)" />
+                <text x="45" y="23" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">OH-</text>
+                
+                <!-- NaOH 2 -->
+                <circle cx="20" cy="110" r="12" fill="url(#grad-sodium)" />
+                <text x="20" y="113" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">Na+</text>
+                <circle cx="45" cy="110" r="10" fill="url(#grad-oxygen)" />
+                <text x="45" y="113" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">OH-</text>
+
+                <!-- NaOH 3 -->
+                <circle cx="20" cy="200" r="12" fill="url(#grad-sodium)" />
+                <text x="20" y="203" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">Na+</text>
+                <circle cx="45" cy="200" r="10" fill="url(#grad-oxygen)" />
+                <text x="45" y="203" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">OH-</text>
+
+                <!-- 3x notation -->
+                <rect x="-12" y="-12" width="76" height="234" rx="6" fill="none" stroke="#805AD5" stroke-dasharray="4,4" stroke-width="1.5" />
+                <text x="26" y="238" fill="#B794F4" font-size="11" font-weight="bold" text-anchor="middle">Proporção 3×</text>
+              </g>
+
+              <!-- REACTION ARROW (Middle) -->
+              <g id="svg-arrow" transform="translate(390, 140)">
+                <line x1="0" y1="15" x2="30" y2="15" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                <polygon points="28,8 38,15 28,22" fill="currentColor"/>
+                <text x="15" y="-5" fill="rgba(255,255,255,0.5)" font-size="9" text-anchor="middle">Reação</text>
+              </g>
+
+              <!-- PRODUCTS BG -->
+              <rect x="435" y="5" width="360" height="310" rx="10" fill="rgba(255, 255, 255, 0.02)" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1" />
+              <text x="450" y="25" fill="rgba(255,255,255,0.4)" font-size="11" font-weight="bold" letter-spacing="1">PRODUTOS</text>
+
+              <!-- Glicerol (right, left-side of products area) -->
+              <g id="svg-glycerol" transform="translate(450, 70)" filter="url(#shadow)">
+                <text x="35" y="-12" fill="#4FD1C5" font-size="11" font-weight="bold" text-anchor="middle">1× Glicerol</text>
+                
+                <!-- Glycerol backbone C-C-C -->
+                <circle cx="20" cy="30" r="12" fill="url(#grad-carbon)" />
+                <text x="20" y="33" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+                <line x1="20" y1="42" x2="20" y2="78" stroke="#4A5568" stroke-width="3" />
+                
+                <circle cx="20" cy="90" r="12" fill="url(#grad-carbon)" />
+                <text x="20" y="93" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+                <line x1="20" y1="102" x2="20" y2="138" stroke="#4A5568" stroke-width="3" />
+                
+                <circle cx="20" cy="150" r="12" fill="url(#grad-carbon)" />
+                <text x="20" y="153" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">C</text>
+
+                <!-- Attached OH groups -->
+                <line x1="32" y1="30" x2="48" y2="30" stroke="#4A5568" stroke-width="2" />
+                <circle cx="58" cy="30" r="9" fill="url(#grad-oxygen)" />
+                <text x="58" y="33" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">OH</text>
+
+                <line x1="32" y1="90" x2="48" y2="90" stroke="#4A5568" stroke-width="2" />
+                <circle cx="58" cy="90" r="9" fill="url(#grad-oxygen)" />
+                <text x="58" y="93" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">OH</text>
+
+                <line x1="32" y1="150" x2="48" y2="150" stroke="#4A5568" stroke-width="2" />
+                <circle cx="58" cy="150" r="9" fill="url(#grad-oxygen)" />
+                <text x="58" y="153" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">OH</text>
+              </g>
+
+              <!-- Sabão (right, right-side of products area) -->
+              <g id="svg-soap" transform="translate(565, 60)" filter="url(#shadow)">
+                <text x="90" y="-2" fill="#4FD1C5" font-size="11" font-weight="bold" text-anchor="middle">3× Sabão (Tensoativo)</text>
+                
+                <!-- Soap Molecule 1 -->
+                <g transform="translate(0, 20)">
+                  <path d="M 10,10 L 20,0 L 30,10 L 40,0 L 50,10" fill="none" stroke="#718096" stroke-width="3" />
+                  <text x="-12" y="8" font-size="10" fill="#A0AEC0" font-weight="bold" font-family="monospace">R1</text>
+                  <!-- Carboxylate head -->
+                  <circle cx="62" cy="0" r="10" fill="url(#grad-oxygen)" />
+                  <text x="62" y="3" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">O-</text>
+                  <circle cx="85" cy="0" r="11" fill="url(#grad-sodium)" />
+                  <text x="85" y="3" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">Na+</text>
+                </g>
+
+                <!-- Soap Molecule 2 -->
+                <g transform="translate(0, 100)">
+                  <path d="M 10,10 L 20,0 L 30,10 L 40,0 L 50,10" fill="none" stroke="#718096" stroke-width="3" />
+                  <text x="-12" y="8" font-size="10" fill="#A0AEC0" font-weight="bold" font-family="monospace">R2</text>
+                  <!-- Carboxylate head -->
+                  <circle cx="62" cy="0" r="10" fill="url(#grad-oxygen)" />
+                  <text x="62" y="3" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">O-</text>
+                  <circle cx="85" cy="0" r="11" fill="url(#grad-sodium)" />
+                  <text x="85" y="3" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">Na+</text>
+                </g>
+
+                <!-- Soap Molecule 3 -->
+                <g transform="translate(0, 180)">
+                  <path d="M 10,10 L 20,0 L 30,10 L 40,0 L 50,10" fill="none" stroke="#718096" stroke-width="3" />
+                  <text x="-12" y="8" font-size="10" fill="#A0AEC0" font-weight="bold" font-family="monospace">R3</text>
+                  <!-- Carboxylate head -->
+                  <circle cx="62" cy="0" r="10" fill="url(#grad-oxygen)" />
+                  <text x="62" y="3" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">O-</text>
+                  <circle cx="85" cy="0" r="11" fill="url(#grad-sodium)" />
+                  <text x="85" y="3" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">Na+</text>
+                </g>
+              </g>
+
+              <!-- GREEN CHEMISTRY INDICATOR (bottom right badge) -->
+              <g id="svg-green-chem" transform="translate(450, 275)">
+                <rect x="0" y="0" width="300" height="26" rx="5" fill="rgba(72, 187, 120, 0.1)" stroke="#48BB78" stroke-width="1" />
+                <text x="15" y="17" fill="#48BB78" font-size="10" font-weight="bold">🍃 Economia Atômica: Conservação de Massa de 100%</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Legenda -->
+          <div class="molecular-stage__legend">
+            <h4 class="molecular-stage__legend-title">Legenda de Esferas Atômicas:</h4>
+            <div class="molecular-stage__legend-items">
+              <span class="molecular-stage__legend-item"><span class="legend-dot legend-dot--carbon"></span> Carbono (C)</span>
+              <span class="molecular-stage__legend-item"><span class="legend-dot legend-dot--oxygen"></span> Oxigênio (O)</span>
+              <span class="molecular-stage__legend-item"><span class="legend-dot legend-dot--hydrogen"></span> Hidrogênio (H)</span>
+              <span class="molecular-stage__legend-item"><span class="legend-dot legend-dot--sodium"></span> Sódio (Na⁺)</span>
+              <span class="molecular-stage__legend-item"><span class="legend-dot legend-dot--tail"></span> Cadeia Hidrofóbica (Radical R)</span>
+              <span class="molecular-stage__legend-item"><span class="legend-dot legend-dot--rupture"></span> Ruptura de Ligação Éster</span>
+            </div>
+          </div>
+
+          <!-- Texto equivalente acessível / Fallback Linear (JS desabilitado e Impressão) -->
+          <div class="molecular-stage__fallback">
+            <h4 class="sr-only">Sequência Didática das Etapas da Saponificação</h4>
+            <div class="molecular-stage__fallback-steps" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 0: Segurança e caráter qualitativo:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">Bem-vindo à visualização molecular qualitativa. Aqui, observamos uma representação esquemática dos átomos e ligações durante a fabricação do sabão. Lembre-se: esta é uma ilustração didática e não uma simulação em tempo real.</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 1: Triglicerídeo como reagente:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">O óleo vegetal ou gordura animal é formado por triglicerídeos. Cada molécula possui uma estrutura de glicerol conectada a três cadeias de ácidos graxos.</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 2: Presença de NaOH:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">Para que a reação ocorra, adicionamos hidróxido de sódio (NaOH) dissolvido em água, gerando os íons sódio (Na⁺) e hidróxido (OH⁻).</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 3: Proporção didática 1:3:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">Estequiometria: Note que 1 molécula de triglicerídeo necessita de exatamente 3 íons hidróxido (OH⁻) para clivar todas as suas três ligações éster.</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 4: Clivagem qualitativa das ligações éster:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">O íon hidróxido ataca a carbonila do éster. As ligações entre o oxigênio do glicerol e o carbono da carbonila são clivadas (quebradas).</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 5: Formação de sabão:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">Os grupos carboxilatos liberados unem-se aos íons sódio (Na⁺), formando os sais de ácidos graxos: as moléculas de sabão.</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 6: Formação de glicerol:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">O backbone do glicerol liga-se aos hidrogênios remanescentes, formando a molécula de glicerol (glicerina), um subproduto umectante valioso.</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 7: Química Verde e reaproveitamento:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">Química Verde: Esta transformação aproveita todos os átomos dos reagentes originais, transformando o óleo residual em sabão biodegradável e glicerina purificada.</p>
+              </div>
+              <div class="molecular-stage__fallback-step" style="border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                <strong style="color: var(--color-text);">Etapa 8: Síntese conceitual:</strong>
+                <p style="margin: 0.25rem 0 0 0; color: var(--color-text-secondary); font-size: 0.9rem;">Revisão Final da Reação: 1 Triglicerídeo (Óleo) + 3 NaOH (Base) → 3 Sais de Ácidos Graxos (Sabão) + 1 Glicerol (Glicerina). A matéria se conserva e se transforma.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experiência Premium 3D — visualização molecular didática -->
+      <div class="card premium-3d-stage">
+        <h3 class="card__title">🔬 Experiência Premium 3D — visualização molecular didática</h3>
+        
+        <div class="warning-card premium-3d-stage__warning" style="border-left: 4px solid var(--color-accent); background: rgba(251, 211, 141, 0.03); padding: 1.25rem 2rem; margin-bottom: 1.5rem; border-radius: var(--radius-md);">
+          <p style="margin: 0; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6;"><strong>Aviso de Isenção:</strong> Esta é uma visualização tridimensional didática e qualitativa. Não representa simulação molecular validada, cálculo químico ou previsão real da reação.</p>
+        </div>
+
+        <div class="premium-3d-stage__controls" style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.5rem; justify-content: center;">
+          <button id="premium-btn-front" class="btn btn--secondary">Frontal</button>
+          <button id="premium-btn-side" class="btn btn--secondary">Lateral</button>
+          <button id="premium-btn-top" class="btn btn--secondary">Superior</button>
+          <button id="premium-btn-persp" class="btn btn--secondary">Perspectiva</button>
+          <button id="premium-btn-reset" class="btn btn--primary">Resetar visão</button>
+        </div>
+
+        <div id="premium-3d-canvas-container" class="premium-3d-stage__viewer" tabindex="0" role="region" aria-label="Visualizador tridimensional interativo do Palco Molecular. Rotacione usando o mouse arrastando ou use as setas do teclado. Teclas de mais e menos controlam o zoom." style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--color-border); border-radius: var(--radius-md); height: 400px; width: 100%; position: relative; overflow: hidden; margin-bottom: 1.5rem;">
+          <!-- WebGL canvas will be injected here. If WebGL fails, this fallback displays. -->
+          <div id="premium-3d-webgl-fallback" class="premium-3d-stage__fallback" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 80%; color: var(--color-accent); font-size: 0.95rem; line-height: 1.6;">
+            <div class="webgl-fallback-card" style="background: rgba(15, 23, 42, 0.95); border: 2px dashed var(--color-accent); border-radius: var(--radius-md); padding: 1.5rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); max-width: 480px; margin: 0 auto;">
+              <span class="fallback-icon" style="font-size: 2rem; display: block; margin-bottom: 0.5rem;">⚠️</span>
+              <h3 style="font-family: var(--font-display); margin-top: 0; margin-bottom: 0.5rem; color: var(--color-accent); font-size: 1.15rem;">WebGL Indisponível</h3>
+              <p style="font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0 0 0.75rem 0;">O acelerador gráfico 3D (WebGL) não está ativo ou não é suportado pelo seu navegador ou dispositivo escolar.</p>
+              <p style="font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0;"><strong>Não se preocupe:</strong> A descrição detalhada e a legenda estática abaixo contêm todas as informações didáticas equivalentes do modelo molecular.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ARIA Live region for camera changes -->
+        <div id="premium-3d-aria-status" class="sr-only" aria-live="polite"></div>
+
+        <!-- Equivalent Textual Fallback (Acessibilidade) -->
+        <div class="description-panel" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.5rem;">
+          <h4 style="font-family: var(--font-display); margin-top: 0; margin-bottom: 0.75rem; font-size: 1.1rem; color: var(--color-success);">Descrição Textual Equivalente (Acessibilidade)</h4>
+          <p id="premium-3d-description" style="color: var(--color-text-secondary); line-height: 1.6; font-size: 0.95rem; margin: 0 0 1.5rem 0;">
+            <strong>Cena Tridimensional da Reação:</strong> O modelo exibe, da esquerda para a direita, a molécula de Triglicerídeo (estrutura com backbone de glicerol acoplada a 3 caudas graxas longas representadas por esferas e cilindros verdes), cercada didaticamente por 3 moléculas de Hidróxido de Sódio (NaOH, em esferas vermelhas e cinzas). À direita, vemos os produtos resultantes: o Glicerol (estrutura com backbone vertical em laranja) e 3 cadeias lineares de Sabão (em azul). Ao girar a câmera ou utilizar o teclado, o usuário pode explorar a disposição espacial qualitativa do ataque químico e clivagem.
+          </p>
+          
+          <div class="legend-box" style="border-top: 1px solid var(--color-border); padding-top: 1rem;">
+            <h5 style="font-family: var(--font-display); margin-top: 0; margin-bottom: 0.75rem; font-size: 0.95rem; color: var(--color-text);">Legenda de Átomos e Moléculas (Procedural)</h5>
+            <ul class="legend-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 1.5rem;">
+              <li style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--color-text-secondary);"><span class="legend-dot" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; background-color: #48bb78;"></span> <strong>Triglicerídeo (Verde):</strong> Molécula de óleo/gordura (esquerda).</li>
+              <li style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--color-text-secondary);"><span class="legend-dot" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; background-color: #e53e3e;"></span> <strong>NaOH (Vermelho/Cinza):</strong> Hidróxido de Sódio (meio).</li>
+              <li style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--color-text-secondary);"><span class="legend-dot" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; background-color: #3182ce;"></span> <strong>Sabão (Azul):</strong> Tensoativo formado pós-clivagem (direita).</li>
+              <li style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--color-text-secondary);"><span class="legend-dot" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; background-color: #dd6b20;"></span> <strong>Glicerol (Laranja):</strong> Coproduto umectante da reação (direita).</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Print-only static representation of views -->
+        <div class="print-only">
+          <h3>Representação Estática das Visões Tridimensionais</h3>
+          <div class="print-view-grid">
+            <div class="print-view-item">
+              <strong>1. Visão Frontal:</strong> Observamos os reagentes à esquerda (Triglicerídeo em verde) e à direita os produtos (Glicerol em laranja e as três cadeias lineares de Sabão em azul). Os três mols de NaOH flutuam na zona intermediária.
+            </div>
+            <div class="print-view-item">
+              <strong>2. Visão Lateral:</strong> Foco no alinhamento das cadeias de carbono e hidrogênio. Notamos a espessura tridimensional das três caudas hidrofóbicas do óleo vegetal e as posições aproximadas dos íons de Sódio.
+            </div>
+            <div class="print-view-item">
+              <strong>3. Visão Superior:</strong> Uma perspectiva de cima para baixo revelando a separação espacial entre os reagentes e o ataque didático das carbonilas pelo hidróxido nas três posições verticais.
+            </div>
+            <div class="print-view-item">
+              <strong>4. Visão de Perspectiva:</strong> Exibe a profundidade espacial completa das cadeias lipídicas de sabão em azul e a estrutura tridimensional complexa do óleo vegetal original à esquerda.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Checklist Pré-Aula -->
+      <div class="card">
+        <h3 class="card__title">✅ Checklist Pré-Aula</h3>
+        <ul class="checklist">
+          <li class="checklist__item"><input type="checkbox" id="pre-1" /> EPIs disponíveis em quantidade suficiente</li>
+          <li class="checklist__item"><input type="checkbox" id="pre-2" /> Óleo residual coletado e armazenado</li>
+          <li class="checklist__item"><input type="checkbox" id="pre-3" /> Solução de NaOH preparada na concentração correta</li>
+          <li class="checklist__item"><input type="checkbox" id="pre-4" /> Roteiros dos estudantes impressos ou acessíveis</li>
+          <li class="checklist__item"><input type="checkbox" id="pre-5" /> Sensor IoT carregado (ou termômetro analógico)</li>
+          <li class="checklist__item"><input type="checkbox" id="pre-6" /> Ambiente ventilado para a estação de saponificação</li>
+          <li class="checklist__item"><input type="checkbox" id="pre-7" /> Indicadores de pH dentro do prazo de validade</li>
+        </ul>
+      </div>
+
+      <!-- ─── ESTAÇÃO 1 ──────────────────────────────────────────────── -->
+      <div class="card station-card station-card--e1" id="estacao-1">
+        <div class="station-card__header station-card__header--e1">
+          <svg class="station-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h4l2 3h4a2 2 0 0 1 2 2v3"/><path d="M6 14h12"/><path d="M10 22V14"/><path d="M14 22V14"/></svg>
+          <div>
+            <span class="station-card__number">Estação 1</span>
+            <h3 class="card__title">Filtração e Preparo do Óleo Residual</h3>
+          </div>
+        </div>
+        <span class="placeholder-block__tag" style="margin-bottom: 0.75rem;">Dados Fictícios para Teste</span>
+        <div class="station-card__grid">
+          <div class="station-field">
+            <p class="card__label">Objetivo Pedagógico</p>
+            <p class="card__content">Compreender a importância da purificação da matéria-prima e calcular a proporção óleo:solvente</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Conteúdo Específico</p>
+            <p class="card__content">Filtração simples, cálculo de rendimento mássico, proporções e conversão de unidades (mL → g via densidade)</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Materiais</p>
+            <p class="card__content">Óleo usado, filtro de papel/tecido, funil, béquer, balança, calculadora</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Tempo Estimado</p>
+            <p class="card__content">20 minutos</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Mediação Docente</p>
+            <p class="card__content">Circular entre os grupos. Perguntar: "Por que filtrar antes de reagir?". Validar cálculos de rendimento.</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Avaliação</p>
+            <p class="card__content">Registro no roteiro do estudante (proporção calculada + justificativa escrita)</p>
+          </div>
+        </div><!-- /.station-card__grid -->
+        <div style="margin-top: 1rem;">
+          <button class="btn btn--reveal" data-reveal="reveal-e1-planob" id="btn-e1-planob" aria-expanded="false">📋 Ver Adaptação de Baixo Recurso</button>
+          <button class="btn btn--reveal" data-reveal="reveal-e1-erro" id="btn-e1-erro" aria-expanded="false">⚠️ Erro Comum dos Alunos</button>
+        </div>
+        <div id="reveal-e1-planob" class="reveal-block reveal-block--planb hidden" aria-hidden="true">
+          <div class="reveal-block__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+          </div>
+          <div class="reveal-block__content">
+            <strong>Plano B:</strong> Substituir balança por medida volumétrica com copo graduado; usar coador doméstico ao invés de funil de laboratório.
+          </div>
+        </div>
+        <div id="reveal-e1-erro" class="reveal-block reveal-block--error hidden" aria-hidden="true">
+          <div class="reveal-block__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          </div>
+          <div class="reveal-block__content">
+            <strong>Erro comum:</strong> Esquecer de pesar o óleo antes de filtrar. Dica: peça que anotem a massa ANTES de montar o funil.
+          </div>
+        </div>
+        <p style="margin-top: 0.75rem; font-size: 0.85rem;"><a href="anexos/roteiro-estudante-estacao-1.md">Acessar roteiro do estudante — Estação 1</a></p>
+      </div>
+
+      <!-- ─── ESTAÇÃO 2 ──────────────────────────────────────────────── -->
+      <div class="card station-card station-card--e2" id="estacao-2">
+        <div class="station-card__header station-card__header--e2">
+          <svg class="station-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6v4H9z"/><path d="M12 7v4"/><path d="M8 11h8l1 9H7l1-9z"/><circle cx="12" cy="15" r="1"/></svg>
+          <div>
+            <span class="station-card__number">Estação 2</span>
+            <h3 class="card__title">Reator de Saponificação (IoT vs Manual)</h3>
+          </div>
+        </div>
+        <span class="placeholder-block__tag" style="margin-bottom: 0.75rem;">Dados Fictícios para Teste</span>
+        <div class="station-card__grid">
+          <div class="station-field">
+            <p class="card__label">Objetivo Pedagógico</p>
+            <p class="card__content">Comparar o processo de saponificação com e sem mediação tecnológica, identificando variáveis controladas</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Conteúdo Específico</p>
+            <p class="card__content">Reação de saponificação (triglicerídeo + NaOH → sabão + glicerol), estequiometria molar, controle de temperatura</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Materiais</p>
+            <p class="card__content">NaOH diluído, óleo filtrado, termômetro (ou sensor IoT), cronômetro, EPIs obrigatórios</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Tempo Estimado</p>
+            <p class="card__content">30 minutos</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Mediação Docente</p>
+            <p class="card__content">Demonstrar procedimento seguro. Perguntar: "Que variáveis mudam entre o método IoT e o manual?". Supervisionar EPIs.</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Avaliação</p>
+            <p class="card__content">Tabela comparativa IoT vs Manual preenchida no roteiro + cálculo estequiométrico</p>
+          </div>
+        </div><!-- /.station-card__grid -->
+        <div style="margin-top: 1rem;">
+          <button class="btn btn--reveal" data-reveal="reveal-e2-planob" id="btn-e2-planob" aria-expanded="false">📋 Ver Adaptação de Baixo Recurso</button>
+          <button class="btn btn--reveal" data-reveal="reveal-e2-dica" id="btn-e2-dica" aria-expanded="false">💡 Dica de Mediação</button>
+        </div>
+        <div id="reveal-e2-planob" class="reveal-block reveal-block--planb hidden" aria-hidden="true">
+          <div class="reveal-block__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+          </div>
+          <div class="reveal-block__content">
+            <strong>Plano B:</strong> Sem sensor IoT: usar termômetro analógico e cronômetro do celular. Registrar manualmente no roteiro.
+          </div>
+        </div>
+        <div id="reveal-e2-dica" class="reveal-block reveal-block--tip hidden" aria-hidden="true">
+          <div class="reveal-block__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2v1"></path><path d="M12 14V17"></path><path d="M15 10c0-1.7-1.3-3-3-3s-3 1.3-3 3c0 1.1.4 2.1 1 2.8V14h4v-1.2c.6-.7 1-1.7 1-2.8z"></path></svg>
+          </div>
+          <div class="reveal-block__content">
+            <strong>Dica:</strong> Demonstre o manuseio seguro de NaOH antes de liberar os grupos. Fique fisicamente próximo desta estação durante toda a rotação.
+          </div>
+        </div>
+        <p style="margin-top: 0.75rem; font-size: 0.85rem;"><a href="anexos/roteiro-estudante-estacao-2.md">Acessar roteiro do estudante — Estação 2</a></p>
+      </div>
+
+      <!-- ─── ESTAÇÃO 3 ──────────────────────────────────────────────── -->
+      <div class="card station-card station-card--e3" id="estacao-3">
+        <div class="station-card__header station-card__header--e3">
+          <svg class="station-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 17l4-8 4 4 4-10"/></svg>
+          <div>
+            <span class="station-card__number">Estação 3</span>
+            <h3 class="card__title">Controle de Qualidade (Teste de pH)</h3>
+          </div>
+        </div>
+        <span class="placeholder-block__tag" style="margin-bottom: 0.75rem;">Dados Fictícios para Teste</span>
+        <div class="station-card__grid">
+          <div class="station-field">
+            <p class="card__label">Objetivo Pedagógico</p>
+            <p class="card__content">Avaliar a qualidade do sabão produzido por meio de indicadores de pH e interpretar resultados quantitativos</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Conteúdo Específico</p>
+            <p class="card__content">Escala de pH, indicadores ácido-base (fenolftaleína, papel indicador), faixa ideal para sabão (pH 8-10)</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Materiais</p>
+            <p class="card__content">Amostras de sabão, papel indicador de pH, fenolftaleína, água destilada, tabela de referência</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Tempo Estimado</p>
+            <p class="card__content">15 minutos</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Mediação Docente</p>
+            <p class="card__content">Perguntar: "O que significa um pH acima de 10 para a pele?". Relacionar com excesso de NaOH.</p>
+          </div>
+          <div class="station-field">
+            <p class="card__label">Avaliação</p>
+            <p class="card__content">Registro do pH medido + classificação (ácido/neutro/básico) + parecer sobre adequação</p>
+          </div>
+        </div><!-- /.station-card__grid -->
+        <div style="margin-top: 1rem;">
+          <button class="btn btn--reveal" data-reveal="reveal-e3-planob" id="btn-e3-planob" aria-expanded="false">📋 Ver Adaptação de Baixo Recurso</button>
+          <button class="btn btn--reveal" data-reveal="reveal-e3-erro" id="btn-e3-erro" aria-expanded="false">⚠️ Erro Comum dos Alunos</button>
+        </div>
+        <div id="reveal-e3-planob" class="reveal-block reveal-block--planb hidden" aria-hidden="true">
+          <div class="reveal-block__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+          </div>
+          <div class="reveal-block__content">
+            <strong>Plano B:</strong> Usar extrato de repolho roxo como indicador natural. Substituir água destilada por água filtrada.
+          </div>
+        </div>
+        <div id="reveal-e3-erro" class="reveal-block reveal-block--error hidden" aria-hidden="true">
+          <div class="reveal-block__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          </div>
+          <div class="reveal-block__content">
+            <strong>Erro comum:</strong> Interpretar a cor do indicador por intuição, sem comparar com a tabela de referência. Entregue a tabela impressa junto com o roteiro.
+          </div>
+        </div>
+        <p style="margin-top: 0.75rem; font-size: 0.85rem;"><a href="anexos/roteiro-estudante-estacao-3.md">Acessar roteiro do estudante — Estação 3</a></p>
+      </div>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <button class="btn btn--primary" data-nav="mod-3" id="btn-to-mod3">Avançar para Módulo 3 — Evidências →</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- MÓDULO 3 — Evidências da Aplicação                                 -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-3" class="ebook-section">
+      <div class="module-header">
+        <p class="module-header__number">Módulo 3</p>
+        <h2 class="module-header__title">Evidências da Aplicação e Discussão dos Resultados</h2>
+        <p class="module-header__subtitle">Espaço para inserção futura de dados reais da dissertação</p>
+      </div>
+
+      <div class="hero__warning" style="display: block; margin-bottom: 1.5rem;">
+        ⚠️ Os resultados reais deverão ser inseridos após validação e análise da dissertação.
+      </div>
+
+      <div class="placeholder-block">
+        <span class="placeholder-block__tag">Placeholder — Resultado da Dissertação</span>
+        <p>[resultado da dissertação] — Os resultados apresentam evidências de aplicação e devem ser interpretados dentro dos limites metodológicos da pesquisa.</p>
+      </div>
+
+      <div class="placeholder-block">
+        <span class="placeholder-block__tag">Placeholder — Instrumento de Coleta</span>
+        <p>[instrumento de coleta] — O instrumento utilizado para coleta de dados será descrito após definição metodológica.</p>
+      </div>
+
+      <div class="placeholder-block">
+        <span class="placeholder-block__tag">Placeholder — Limitação Metodológica</span>
+        <p>[limitação metodológica] — Toda pesquisa possui limitações. As limitações específicas deste estudo serão declaradas após a análise dos dados.</p>
+      </div>
+
+      <div class="card" style="border-color: rgba(245, 158, 11, 0.3);">
+        <h3 class="card__title" style="color: var(--color-warning);">⚠️ Nota de Governança</h3>
+        <div class="card__content">
+          <p>Este módulo <strong>não contém resultados reais</strong>. Nenhuma afirmação de que a metodologia "provou", "garantiu" ou "atestou" melhoria universal foi inserida. Os blocos acima são placeholders para substituição futura.</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <button class="btn btn--primary" data-nav="mod-4" id="btn-to-mod4">Avançar para Caixa de Ferramentas →</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- MÓDULO 4 — Caixa de Ferramentas                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-4" class="ebook-section">
+      <div class="module-header">
+        <p class="module-header__number">Módulo 4</p>
+        <h2 class="module-header__title">Caixa de Ferramentas</h2>
+        <p class="module-header__subtitle">Anexos, roteiros e materiais de apoio</p>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">📎 Materiais Disponíveis</h3>
+        <ul style="list-style: none; padding: 0;">
+          <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+            <a href="anexos/roteiro-estudante-estacao-1.md">Roteiro do estudante — Estação 1 (Filtração do Óleo)</a>
+          </li>
+          <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+            <a href="anexos/roteiro-estudante-estacao-2.md">Roteiro do estudante — Estação 2 (Reator IoT vs Manual)</a>
+          </li>
+          <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+            <a href="anexos/roteiro-estudante-estacao-3.md">Roteiro do estudante — Estação 3 (Teste de pH)</a>
+          </li>
+          <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+            <a href="anexos/guia-rapido-professor.md">Guia rápido do professor</a>
+          </li>
+          <li style="padding: 0.5rem 0;">
+            <a href="anexos/instrumento-avaliacao.md">Instrumento de avaliação por estação</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card" style="border-color: rgba(245, 158, 11, 0.3);">
+        <h3 class="card__title" style="color: var(--color-warning);">📌 Alinhamento Curricular</h3>
+        <div class="card__content">
+          <p>[habilidade BNCC/currículo local a validar]</p>
+          <p style="margin-top: 0.5rem;">O alinhamento à BNCC ou currículo local deve ser validado após definição do segmento, série, habilidade e recorte curricular da dissertação.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">🔗 Links de Acesso Rápido (Placeholders)</h3>
+        <div class="card__content">
+          <p>Os links abaixo são placeholders e devem ser substituídos por URLs reais após publicação:</p>
+          <ul style="margin-top: 0.5rem; list-style: disc; padding-left: 1.25rem;">
+            <li>Estação 1: <code>https://exemplo.edu/estacao1</code></li>
+            <li>Estação 2: <code>https://exemplo.edu/estacao2</code></li>
+            <li>Estação 3: <code>https://exemplo.edu/estacao3</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- GOVERNANÇA E QUALIDADE                                             -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-governanca" class="ebook-section">
+      <div class="module-header">
+        <p class="module-header__number">Governança</p>
+        <h2 class="module-header__title">Rubrica de Qualidade (0–10)</h2>
+        <p class="module-header__subtitle">Critérios técnicos para avaliação do produto educacional</p>
+      </div>
+
+      <div class="scale-cards">
+        <div class="scale-card scale-card--red">
+          <div class="scale-card__range">0–3</div>
+          <div class="scale-card__label">Inadequado</div>
+        </div>
+        <div class="scale-card scale-card--orange">
+          <div class="scale-card__range">4–6</div>
+          <div class="scale-card__label">Insuficiente</div>
+        </div>
+        <div class="scale-card scale-card--green">
+          <div class="scale-card__range">7–8</div>
+          <div class="scale-card__label">Adequado</div>
+        </div>
+        <div class="scale-card scale-card--blue">
+          <div class="scale-card__range">9–10</div>
+          <div class="scale-card__label">Excelência</div>
+        </div>
+      </div>
+
+      <table class="rubric-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Dimensão</th>
+            <th>Peso</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Rigor conceitual em Química / Saponificação</td><td>2 pts</td></tr>
+          <tr><td>2</td><td>Reprodutibilidade das estações</td><td>3 pts</td></tr>
+          <tr><td>3</td><td>Transposição didática e linguagem docente</td><td>2 pts</td></tr>
+          <tr><td>4</td><td>Interatividade significativa / e-learning</td><td>1 pt</td></tr>
+          <tr><td>5</td><td>Acessibilidade e usabilidade</td><td>1 pt</td></tr>
+          <tr><td>6</td><td>Rastreabilidade com a dissertação</td><td>1 pt</td></tr>
+        </tbody>
+      </table>
+
+      <div class="card" style="margin-top: 1.5rem;">
+        <div class="card__content">
+          <p>A avaliação de rigor conceitual utiliza a formulação: <em>"ausência de erros conceituais detectáveis após revisão técnica especializada"</em>, e <strong>não</strong> "rigor perfeito", reconhecendo que toda produção editorial está sujeita a revisão contínua.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- DO WEB-BOOK À PLATAFORMA ECOSABON (P1)                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-plataforma" class="ebook-section">
+      <div class="module-header">
+        <p class="module-header__number">Plataforma</p>
+        <h2 class="module-header__title">Do Web-book à Plataforma EcoSabon</h2>
+        <p class="module-header__subtitle">Este web-book é uma demonstração. A Plataforma EcoSabon vai além.</p>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="platform-showcase__disclaimer" id="platform-showcase-disclaimer" role="note">
+        <p><strong>⚠️ Demonstração visual:</strong> Esta seção representa visualmente a Plataforma EcoSabon. Não conecta o web-book a dados reais, não coleta informações e não substitui validação pedagógica futura. Todos os dados exibidos são fictícios e ilustrativos.</p>
+      </div>
+
+      <!-- ARIA Live Region -->
+      <div id="platform-showcase-aria-status" class="sr-only" aria-live="polite"></div>
+
+      <!-- ─── Mapa Visual da Plataforma ───────────────────────────────────── -->
+      <div class="card platform-showcase__map-card">
+        <h3 class="card__title">🗺️ Ecossistema da Plataforma EcoSabon</h3>
+        <p class="card__content" style="margin-bottom: 1.5rem;">Clique ou pressione Enter nos pontos do diagrama para explorar cada camada da plataforma.</p>
+
+        <div class="platform-showcase__map" role="img" aria-label="Diagrama do ecossistema da Plataforma EcoSabon com 5 camadas: Conteúdo, Curso, Backend, Domínio e Governança">
+          <svg class="platform-map-svg" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <title>Diagrama do Ecossistema EcoSabon</title>
+            <desc>Cinco camadas concêntricas representando Conteúdo (web-book), Curso Interativo, Backend/API, Domínio Compartilhado e Governança.</desc>
+
+            <!-- Background layers -->
+            <rect x="10" y="10" width="680" height="300" rx="16" fill="rgba(16, 185, 129, 0.03)" stroke="rgba(16, 185, 129, 0.15)" stroke-width="1"/>
+
+            <!-- Layer boxes -->
+            <rect x="30" y="40" width="120" height="240" rx="10" fill="rgba(16, 185, 129, 0.08)" stroke="var(--color-primary)" stroke-width="1.5" stroke-dasharray="4,4"/>
+            <text x="90" y="70" fill="var(--color-primary)" font-size="11" font-weight="bold" text-anchor="middle" font-family="var(--font-display)">CONTEÚDO</text>
+            <text x="90" y="90" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">Web-book</text>
+            <text x="90" y="105" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">Premium 3D</text>
+            <text x="90" y="120" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">Offline</text>
+
+            <rect x="170" y="40" width="120" height="240" rx="10" fill="rgba(6, 182, 212, 0.08)" stroke="var(--color-accent)" stroke-width="1.5" stroke-dasharray="4,4"/>
+            <text x="230" y="70" fill="var(--color-accent)" font-size="11" font-weight="bold" text-anchor="middle" font-family="var(--font-display)">CURSO</text>
+            <text x="230" y="90" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">Módulos</text>
+            <text x="230" y="105" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">Quizzes</text>
+            <text x="230" y="120" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">Progresso</text>
+
+            <rect x="310" y="40" width="120" height="240" rx="10" fill="rgba(139, 92, 246, 0.08)" stroke="var(--color-info)" stroke-width="1.5" stroke-dasharray="4,4"/>
+            <text x="370" y="70" fill="var(--color-info)" font-size="11" font-weight="bold" text-anchor="middle" font-family="var(--font-display)">BACKEND</text>
+            <text x="370" y="90" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">Express + JWT</text>
+            <text x="370" y="105" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">RBAC (Papéis)</text>
+            <text x="370" y="120" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">Zod Schemas</text>
+
+            <rect x="450" y="40" width="120" height="240" rx="10" fill="rgba(245, 158, 11, 0.08)" stroke="var(--color-warning)" stroke-width="1.5" stroke-dasharray="4,4"/>
+            <text x="510" y="70" fill="var(--color-warning)" font-size="11" font-weight="bold" text-anchor="middle" font-family="var(--font-display)">DOMÍNIO</text>
+            <text x="510" y="90" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">Saponification</text>
+            <text x="510" y="105" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">Engine</text>
+            <text x="510" y="120" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">Compartilhado</text>
+
+            <rect x="590" y="40" width="90" height="240" rx="10" fill="rgba(52, 211, 153, 0.08)" stroke="var(--color-success)" stroke-width="1.5" stroke-dasharray="4,4"/>
+            <text x="635" y="70" fill="var(--color-success)" font-size="11" font-weight="bold" text-anchor="middle" font-family="var(--font-display)">GOV</text>
+            <text x="635" y="90" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">191 testes</text>
+            <text x="635" y="105" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">CI/CD</text>
+            <text x="635" y="120" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">Relatórios</text>
+
+            <!-- Connection arrows -->
+            <line x1="150" y1="160" x2="170" y2="160" stroke="var(--color-text-muted)" stroke-width="1.5" marker-end="url(#platform-arrow)"/>
+            <line x1="290" y1="160" x2="310" y2="160" stroke="var(--color-text-muted)" stroke-width="1.5" marker-end="url(#platform-arrow)"/>
+            <line x1="430" y1="160" x2="450" y2="160" stroke="var(--color-text-muted)" stroke-width="1.5" marker-end="url(#platform-arrow)"/>
+            <line x1="570" y1="160" x2="590" y2="160" stroke="var(--color-text-muted)" stroke-width="1.5" marker-end="url(#platform-arrow)"/>
+
+            <!-- Arrow marker -->
+            <defs>
+              <marker id="platform-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-text-muted)"/>
+              </marker>
+            </defs>
+
+            <!-- Highlight: "Você está aqui" -->
+            <rect x="30" y="220" width="120" height="50" rx="8" fill="rgba(16, 185, 129, 0.15)" stroke="var(--color-primary)" stroke-width="2"/>
+            <text x="90" y="242" fill="var(--color-primary)" font-size="10" font-weight="bold" text-anchor="middle">📍 Você está aqui</text>
+            <text x="90" y="258" fill="var(--color-text-secondary)" font-size="9" text-anchor="middle">Web-book Premium 3D</text>
+          </svg>
+        </div>
+
+        <!-- Platform hotspots -->
+        <div class="platform-showcase__hotspots">
+          <button class="platform-hotspot" data-target="ph-conteudo" aria-controls="panel-ph-conteudo" aria-expanded="false" type="button">
+            📖 Conteúdo
+          </button>
+          <button class="platform-hotspot" data-target="ph-curso" aria-controls="panel-ph-curso" aria-expanded="false" type="button">
+            🎓 Curso
+          </button>
+          <button class="platform-hotspot" data-target="ph-backend" aria-controls="panel-ph-backend" aria-expanded="false" type="button">
+            🔒 Backend
+          </button>
+          <button class="platform-hotspot" data-target="ph-dominio" aria-controls="panel-ph-dominio" aria-expanded="false" type="button">
+            ⚗️ Domínio
+          </button>
+          <button class="platform-hotspot" data-target="ph-governanca" aria-controls="panel-ph-governanca" aria-expanded="false" type="button">
+            ✅ Governança
+          </button>
+        </div>
+
+        <!-- Hotspot panels -->
+        <div id="panel-ph-conteudo" class="platform-hotspot-panel" hidden>
+          <h4>📖 Camada de Conteúdo</h4>
+          <p>O web-book Premium 3D que você está lendo agora. Contém infográfico interativo, hotspots acessíveis, checklist Go/No-Go, visualização molecular 3D e funciona 100% offline.</p>
+        </div>
+        <div id="panel-ph-curso" class="platform-hotspot-panel" hidden>
+          <h4>🎓 Camada de Curso</h4>
+          <p>Módulos estruturados com quizzes, progresso e armazenamento. Cada módulo guia o aluno por uma etapa da aprendizagem de Química Verde e saponificação.</p>
+        </div>
+        <div id="panel-ph-backend" class="platform-hotspot-panel" hidden>
+          <h4>🔒 Camada de Backend</h4>
+          <p>API Express com autenticação JWT, autorização por papel (RBAC), validação de dados com Zod, rate limiting e observabilidade. Endurecida em 4 fases de hardening (H1–H4).</p>
+        </div>
+        <div id="panel-ph-dominio" class="platform-hotspot-panel" hidden>
+          <h4>⚗️ Domínio Compartilhado</h4>
+          <p>O <code>SaponificationEngine</code> centraliza cálculos de estequiometria qualitativa e é compartilhado entre web-book, curso e backend — garantindo consistência científica.</p>
+        </div>
+        <div id="panel-ph-governanca" class="platform-hotspot-panel" hidden>
+          <h4>✅ Governança</h4>
+          <p>191 testes automatizados em CI/CD, 86 relatórios versionados, PRs revisados, releases tagueadas. Governança profissional de ponta a ponta.</p>
+        </div>
+
+        <!-- Text equivalent for print -->
+        <div class="platform-showcase__map-fallback print-only">
+          <h4>Descrição do Ecossistema EcoSabon</h4>
+          <p><strong>Conteúdo:</strong> Web-book Premium 3D (onde você está agora). Infográfico, hotspots, 3D, offline, PDF.</p>
+          <p><strong>Curso:</strong> Módulos, quizzes, progresso, armazenamento.</p>
+          <p><strong>Backend:</strong> Express, JWT, RBAC, Zod, rate limiting (4 fases de hardening).</p>
+          <p><strong>Domínio:</strong> SaponificationEngine compartilhado.</p>
+          <p><strong>Governança:</strong> 191 testes, CI/CD, 86 relatórios, PRs, releases.</p>
+        </div>
+      </div>
+
+      <!-- ─── Papéis da Plataforma (Flip Cards) ──────────────────────────── -->
+      <div class="card">
+        <h3 class="card__title">👥 Papéis na Plataforma EcoSabon</h3>
+        <p class="card__content" style="margin-bottom: 1.5rem;">Clique ou pressione Enter para conhecer cada papel no ecossistema. <em>Papéis demonstrativos — a plataforma ainda não está em uso com usuários reais.</em></p>
+
+        <div class="platform-showcase__roles">
+          <!-- Professor -->
+          <div class="platform-role-card" id="role-card-professor" data-role-name="Professor">
+            <button class="platform-role-card__trigger" type="button" aria-label="Ver detalhes do papel Professor">
+              <div class="platform-role-card__front">
+                <span class="platform-role-card__icon">🧑‍🏫</span>
+                <span class="platform-role-card__name">Professor</span>
+                <span class="platform-role-card__hint">Clique para ver</span>
+              </div>
+              <div class="platform-role-card__back" aria-hidden="true">
+                <span class="platform-role-card__icon">🧑‍🏫</span>
+                <span class="platform-role-card__name">Professor</span>
+                <p class="platform-role-card__desc">Cria turmas, configura missões, acompanha squads, visualiza relatórios pedagógicos e toma decisões baseadas em dados formativos.</p>
+              </div>
+            </button>
+          </div>
+
+          <!-- Squad -->
+          <div class="platform-role-card" id="role-card-squad" data-role-name="Squad">
+            <button class="platform-role-card__trigger" type="button" aria-label="Ver detalhes do papel Squad/Bancada">
+              <div class="platform-role-card__front">
+                <span class="platform-role-card__icon">👥</span>
+                <span class="platform-role-card__name">Squad / Bancada</span>
+                <span class="platform-role-card__hint">Clique para ver</span>
+              </div>
+              <div class="platform-role-card__back" aria-hidden="true">
+                <span class="platform-role-card__icon">👥</span>
+                <span class="platform-role-card__name">Squad / Bancada</span>
+                <p class="platform-role-card__desc">Equipe colaborativa que executa missões, registra evidências, preenche método científico e recebe feedback formativo para construir dossiê acadêmico.</p>
+              </div>
+            </button>
+          </div>
+
+          <!-- Plataforma -->
+          <div class="platform-role-card" id="role-card-plataforma" data-role-name="Plataforma">
+            <button class="platform-role-card__trigger" type="button" aria-label="Ver detalhes do papel Plataforma">
+              <div class="platform-role-card__front">
+                <span class="platform-role-card__icon">🌐</span>
+                <span class="platform-role-card__name">Plataforma</span>
+                <span class="platform-role-card__hint">Clique para ver</span>
+              </div>
+              <div class="platform-role-card__back" aria-hidden="true">
+                <span class="platform-role-card__icon">🌐</span>
+                <span class="platform-role-card__name">Plataforma</span>
+                <p class="platform-role-card__desc">Orquestra conteúdo, curso, autenticação, autorização e governança. Garante segurança, rastreabilidade e consistência científica entre todas as camadas.</p>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Print fallback for roles -->
+        <div class="platform-showcase__roles-fallback print-only">
+          <p><strong>Professor:</strong> Cria turmas, configura missões, acompanha squads, visualiza relatórios pedagógicos.</p>
+          <p><strong>Squad/Bancada:</strong> Equipe que executa missões, registra evidências, recebe feedback formativo.</p>
+          <p><strong>Plataforma:</strong> Orquestra conteúdo, curso, autenticação, autorização e governança.</p>
+        </div>
+      </div>
+
+      <!-- ─── Jornada Demonstrativa ───────────────────────────────────────── -->
+      <div class="card">
+        <h3 class="card__title">🛤️ Jornada de Aprendizagem na Plataforma</h3>
+        <p class="card__content" style="margin-bottom: 1rem;"><em>Demonstração visual — dados fictícios.</em></p>
+
+        <div class="platform-showcase__journey" role="list" aria-label="Etapas da jornada de aprendizagem na Plataforma EcoSabon">
+          <div class="platform-journey-step" role="listitem">
+            <div class="platform-journey-step__marker">1</div>
+            <div class="platform-journey-step__content">
+              <strong>Explorar Conteúdo</strong>
+              <p>O aluno navega pelo web-book, interage com hotspots, visualiza moléculas 3D e estuda conceitos de saponificação.</p>
+            </div>
+          </div>
+          <div class="platform-journey-step" role="listitem">
+            <div class="platform-journey-step__marker">2</div>
+            <div class="platform-journey-step__content">
+              <strong>Receber Missão</strong>
+              <p>O professor configura uma missão: investigar, calcular ou produzir sabão em bancada com método científico.</p>
+            </div>
+          </div>
+          <div class="platform-journey-step" role="listitem">
+            <div class="platform-journey-step__marker">3</div>
+            <div class="platform-journey-step__content">
+              <strong>Trabalhar em Squad</strong>
+              <p>A bancada/squad executa a missão colaborativamente, registrando observações, medidas e conclusões.</p>
+            </div>
+          </div>
+          <div class="platform-journey-step" role="listitem">
+            <div class="platform-journey-step__marker">4</div>
+            <div class="platform-journey-step__content">
+              <strong>Submeter Evidências</strong>
+              <p>O squad submete relatório, fotos, cálculos e método científico via plataforma.</p>
+            </div>
+          </div>
+          <div class="platform-journey-step" role="listitem">
+            <div class="platform-journey-step__marker">5</div>
+            <div class="platform-journey-step__content">
+              <strong>Feedback Formativo</strong>
+              <p>O professor analisa, comenta e fornece feedback formativo para evolução da bancada.</p>
+            </div>
+          </div>
+          <div class="platform-journey-step" role="listitem">
+            <div class="platform-journey-step__marker">6</div>
+            <div class="platform-journey-step__content">
+              <strong>Dossiê Acadêmico</strong>
+              <p>A plataforma consolida evidências, feedbacks e progresso em um dossiê rastreável por squad.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── O que é Real vs Demonstrativo vs Roadmap ────────────────────── -->
+      <div class="card">
+        <h3 class="card__title">🔍 O que você vê neste Web-book</h3>
+
+        <div class="platform-showcase__status-grid">
+          <div class="platform-status-block platform-status-block--real">
+            <h4>✅ Real e Funcional</h4>
+            <ul>
+              <li>Navegação modular por seções</li>
+              <li>Hotspots interativos no infográfico</li>
+              <li>Visualização molecular Premium 3D</li>
+              <li>Funcionamento 100% offline</li>
+              <li>PDF inteligente via print.css</li>
+              <li>191 testes automatizados</li>
+              <li>Acessibilidade por teclado</li>
+            </ul>
+          </div>
+          <div class="platform-status-block platform-status-block--demo">
+            <h4>🎭 Demonstrativo/Ilustrativo</h4>
+            <ul>
+              <li>Papéis (Professor, Squad) nesta seção</li>
+              <li>Jornada de aprendizagem nesta seção</li>
+              <li>Mapa do ecossistema nesta seção</li>
+              <li>Dados fictícios nas estações</li>
+              <li>Fluxo de missão representativo</li>
+            </ul>
+          </div>
+          <div class="platform-status-block platform-status-block--roadmap">
+            <h4>🗓️ Roadmap (Futuro)</h4>
+            <ul>
+              <li>Validação com alunos e docentes</li>
+              <li>Deploy público da plataforma</li>
+              <li>Uso multiusuário real</li>
+              <li>Dashboard pedagógico com dados reais</li>
+              <li>Integração backend ↔ web-book</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Governança e Limites ────────────────────────────────────────── -->
+      <div class="card" style="border-color: rgba(16, 185, 129, 0.2);">
+        <h3 class="card__title" style="color: var(--color-primary);">🛡️ Governança e Limites Honestos</h3>
+        <div class="card__content">
+          <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+            <li>✅ <strong>Sem coleta de dados</strong> — este web-book não envia informações a servidores.</li>
+            <li>✅ <strong>Offline</strong> — funciona sem conexão à internet.</li>
+            <li>✅ <strong>Dados fictícios</strong> — qualquer dado exibido é ilustrativo e declarado como tal.</li>
+            <li>✅ <strong>Acessibilidade</strong> — navegável por teclado, com texto equivalente para diagramas.</li>
+            <li>✅ <strong>Imprimível</strong> — todas as seções aparecem no PDF.</li>
+            <li>⚠️ <strong>Protótipo avançado</strong> — não é produto final em produção.</li>
+            <li>⚠️ <strong>Sem validação</strong> — nenhum docente ou aluno testou o sistema.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ─── CTA ─────────────────────────────────────────────────────────── -->
+      <div class="platform-showcase__cta">
+        <p class="platform-showcase__cta-text">
+          <strong>Este web-book é uma demonstração.</strong> A Plataforma EcoSabon é o ecossistema completo — com backend, autenticação, autorização, squads, missões e dossiê acadêmico.
+        </p>
+        <p class="platform-showcase__cta-subtext">
+          O web-book é a porta de entrada. A plataforma é o edifício.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- VALIDAÇÃO EXTERNA                                                  -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-validacao" class="ebook-section">
+      <div class="module-header">
+        <p class="module-header__number">Validação</p>
+        <h2 class="module-header__title">Formulário de Validação Docente</h2>
+        <p class="module-header__subtitle">Instrumento demonstrativo — escala 1 a 5</p>
+      </div>
+
+      <div class="placeholder-block">
+        <span class="placeholder-block__tag">Instrumento Demonstrativo</span>
+        <p>Este formulário é demonstrativo. Para uso real, deve ser submetido ao Comitê de Ética em Pesquisa (CEP).</p>
+      </div>
+
+      <!-- Item 1 -->
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">1. Clareza da linguagem</label>
+          <p class="card__content">O texto do e-book é compreensível para um professor de Química do Ensino Médio?</p>
+          <div class="likert-scale">
+            <label><input type="radio" name="q1" value="1" />1</label>
+            <label><input type="radio" name="q1" value="2" />2</label>
+            <label><input type="radio" name="q1" value="3" />3</label>
+            <label><input type="radio" name="q1" value="4" />4</label>
+            <label><input type="radio" name="q1" value="5" />5</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">2. Viabilidade do tempo das estações</label>
+          <p class="card__content">Os tempos estimados são realistas para uma aula de 50 minutos?</p>
+          <div class="likert-scale">
+            <label><input type="radio" name="q2" value="1" />1</label>
+            <label><input type="radio" name="q2" value="2" />2</label>
+            <label><input type="radio" name="q2" value="3" />3</label>
+            <label><input type="radio" name="q2" value="4" />4</label>
+            <label><input type="radio" name="q2" value="5" />5</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">3. Completude dos materiais anexos</label>
+          <p class="card__content">Os roteiros e guias são suficientes para aplicar as estações sem material complementar?</p>
+          <div class="likert-scale">
+            <label><input type="radio" name="q3" value="1" />1</label>
+            <label><input type="radio" name="q3" value="2" />2</label>
+            <label><input type="radio" name="q3" value="3" />3</label>
+            <label><input type="radio" name="q3" value="4" />4</label>
+            <label><input type="radio" name="q3" value="5" />5</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">4. Facilidade de navegação</label>
+          <p class="card__content">A interface permite localizar rapidamente módulos, estações e anexos?</p>
+          <div class="likert-scale">
+            <label><input type="radio" name="q4" value="1" />1</label>
+            <label><input type="radio" name="q4" value="2" />2</label>
+            <label><input type="radio" name="q4" value="3" />3</label>
+            <label><input type="radio" name="q4" value="4" />4</label>
+            <label><input type="radio" name="q4" value="5" />5</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 5 -->
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">5. Possibilidade de adaptação à realidade escolar</label>
+          <p class="card__content">O material pode ser adaptado para escolas com poucos recursos?</p>
+          <div class="likert-scale">
+            <label><input type="radio" name="q5" value="1" />1</label>
+            <label><input type="radio" name="q5" value="2" />2</label>
+            <label><input type="radio" name="q5" value="3" />3</label>
+            <label><input type="radio" name="q5" value="4" />4</label>
+            <label><input type="radio" name="q5" value="5" />5</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pergunta Aberta -->
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">Pergunta aberta obrigatória:</label>
+          <p class="card__content" style="font-style: italic;">Qual parte do e-book impediria ou dificultaria sua aplicação real?</p>
+          <textarea id="open-question" placeholder="Escreva sua resposta aqui..." aria-label="Resposta à pergunta aberta"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- CHECKLIST GO/NO-GO                                                 -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="mod-checklist" class="ebook-section">
+      <div class="module-header">
+        <p class="module-header__number">Aceite Final</p>
+        <h2 class="module-header__title">Checklist Go / No-Go</h2>
+        <p class="module-header__subtitle">O produto só será considerado pronto se todas as dimensões forem verificadas</p>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">📋 Qualidade Acadêmica e Pedagógica</h3>
+        <div id="checklist-go">
+          <ul class="checklist">
+            <li class="checklist__item"><input type="checkbox" id="go-1" /> Cada estação possui objetivo pedagógico definido</li>
+            <li class="checklist__item"><input type="checkbox" id="go-2" /> Cada estação possui conteúdo de estequiometria/proporções</li>
+            <li class="checklist__item"><input type="checkbox" id="go-3" /> Cada estação possui lista de materiais necessários</li>
+            <li class="checklist__item"><input type="checkbox" id="go-4" /> Cada estação possui tempo estimado</li>
+            <li class="checklist__item"><input type="checkbox" id="go-5" /> Cada estação possui orientação de mediação docente</li>
+            <li class="checklist__item"><input type="checkbox" id="go-6" /> Cada estação possui instrumento de avaliação</li>
+            <li class="checklist__item"><input type="checkbox" id="go-7" /> Cada estação possui adaptação de baixo recurso</li>
+            <li class="checklist__item"><input type="checkbox" id="go-8" /> Cada estação possui anexo correspondente</li>
+            <li class="checklist__item"><input type="checkbox" id="go-9" /> Rubrica 0-10 com pesos está presente</li>
+            <li class="checklist__item"><input type="checkbox" id="go-10" /> Formulário de validação docente está presente</li>
+            <li class="checklist__item"><input type="checkbox" id="go-11" /> Todo conteúdo fictício está claramente sinalizado</li>
+            <li class="checklist__item"><input type="checkbox" id="go-12" /> Nenhuma afirmação indevida de resultado real foi inserida</li>
+            <li class="checklist__item"><input type="checkbox" id="go-13" /> O design é responsivo (mobile + desktop)</li>
+            <li class="checklist__item"><input type="checkbox" id="go-14" /> A impressão gera material minimamente legível</li>
+          </ul>
+        </div>
+        <div id="checklist-result" class="checklist-result checklist-result--fail">
+          ⏳ 0/14 dimensões verificadas. Complete todas para aprovar.
+        </div>
+      </div>
+
+      <div class="card" style="border-color: rgba(245, 158, 11, 0.3);">
+        <h3 class="card__title" style="color: var(--color-warning);">📌 Regra Final de Aceite</h3>
+        <div class="card__content">
+          <p><strong>O produto só será considerado pronto se cada estação possuir objetivo, conteúdo, materiais, tempo, mediação docente, avaliação, adaptação de baixo recurso e anexo correspondente.</strong></p>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /.container -->
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="btn-top" aria-label="Voltar ao topo" title="Voltar ao topo">↑</button>
+
+  <!-- Script -->
+</body>
+</html>
