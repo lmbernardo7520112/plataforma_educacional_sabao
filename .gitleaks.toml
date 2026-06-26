@@ -1,0 +1,6 @@
+[allowlist]
+paths = [
+    '''tools/kotobeeauthor/''',
+    '''local_evidence/''',
+    '''local_release/'''
+]
