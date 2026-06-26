@@ -35,22 +35,21 @@ A publicação foi efetuada utilizando o método de worktree isolada para evitar
 - **Endereço**: `https://lmbernardo7520112.github.io/plataforma_educacional_sabao/`
 
 ## 9. Status da URL
-- **Pendente (404)**: O repositório atual está na modalidade privada e o plano de conta padrão do usuário não permite a disponibilização pública de GitHub Pages em repositórios privados. 
-- **Recomendação**: Para ativar e tornar a URL disponível, o usuário deve alterar as configurações do repositório no GitHub para **público** (Settings → Danger Zone → Change visibility) ou possuir conta GitHub Pro/Team.
+- **Ativo (200 OK)**: O repositório foi alterado para público e a configuração do GitHub Pages foi habilitada com sucesso. A URL está respondendo normalmente e carregando os recursos do e-book.
 
 ## 10. Validação Local
 - Aprovada. O preview local foi executado na porta 4173 e confirmou o carregamento integral dos estilos e scripts locais estruturados sob a nova base de caminhos de assets.
 
 ## 11. Validação Pública
-- **Pendente**: A validação pública não pôde ser completada devido ao status 404 retornado pelo servidor GitHub Pages.
+- **Aprovada**: Testes efetuados via curl confirmaram a resposta `HTTP/2 200 OK` da URL e integridade dos assets.
 
 ## 12. QR Code
-- **Status**: Não gerado.
-- **Raciocínio**: Conforme os critérios de governança estritos, o QR Code de acesso só deve ser gerado localmente após a validação bem-sucedida e estabilização da URL pública correspondente.
+- **Status**: Não gerado localmente.
+- **Raciocínio**: Embora a URL pública esteja validada e estável, o ambiente local não dispõe das bibliotecas Python (`qrcode`) ou utilitários CLI (`qrencode`) instalados para desenhar e salvar a imagem do código bidimensional. Recomenda-se a geração do QR Code através de um serviço externo ou manualmente pelo usuário a partir da URL.
 - **Rastreamento**: Confirmou-se a inexistência de arquivos QR Code versionados.
 
 ## 13. Testes Pós-Deploy
-- Aprovados. Executados com êxito todos os 219 testes da plataforma na branch local de deploy.
+- Aprovados. Executados com êxito todos os 219 testes da plataforma.
 
 ## 14. Cibersegurança
 - **CSP**: Política de CSP estática ativa na meta tag do HTML limitando conexões a `'self'`.
@@ -63,4 +62,4 @@ A publicação foi efetuada utilizando o método de worktree isolada para evitar
 - A URL pública estável existirá apenas enquanto a branch `gh-pages` e a configuração correspondente forem mantidas no GitHub.
 
 ## 16. Decisão
-`DECISÃO: DPC-DEPLOY PARCIAL. BUILD E PUBLICAÇÃO FORAM EXECUTADOS, MAS A URL PÚBLICA AINDA NÃO FOI VALIDADA. QR CODE NÃO DEVE SER GERADO ATÉ VALIDAÇÃO.`
+`DECISÃO: DPC-DEPLOY CONCLUÍDA. WEB-BOOK ECOSABON PUBLICADO NO GITHUB PAGES COMO VITRINE ESTÁTICA. URL VALIDADA. QR CODE NÃO FOI GERADO LOCALMENTE DEVIDO À INDISPONIBILIDADE DE BIBLIOTECAS LOCAIS (QRCODE/QRENCODE). PLATAFORMA/BACKEND INTOCADOS.`
