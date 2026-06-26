@@ -46,3 +46,9 @@ export {
   initPremium3DStage
 } from './premium-3d-stage.js';
 
+export {
+  togglePlatformHotspotPanel,
+  togglePlatformRoleCard,
+  initPlatformShowcase
+} from './platform-showcase.js';
+

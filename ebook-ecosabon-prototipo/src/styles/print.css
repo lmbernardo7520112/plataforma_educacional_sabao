@@ -245,5 +245,129 @@
     border-left-color: #333 !important;
     color: #222 !important;
   }
+
+  /* ─── Platform Showcase P1 Print Styles ──────────────────────────── */
+  .platform-showcase__disclaimer {
+    background: none !important;
+    border: 1px solid #999 !important;
+    border-left: 4px solid #666 !important;
+    color: #222 !important;
+  }
+
+  .platform-showcase__map {
+    overflow: visible !important;
+  }
+
+  .platform-map-svg {
+    max-width: 100% !important;
+  }
+
+  .platform-showcase__hotspots {
+    display: none !important;
+  }
+
+  .platform-hotspot-panel {
+    display: block !important;
+    background: none !important;
+    border: 1px solid #ccc !important;
+    color: #222 !important;
+    page-break-inside: avoid;
+  }
+
+  .platform-hotspot-panel[hidden] {
+    display: block !important;
+  }
+
+  .platform-hotspot-panel h4 {
+    color: #111 !important;
+  }
+
+  .platform-hotspot-panel p {
+    color: #333 !important;
+  }
+
+  .platform-role-card__trigger {
+    height: auto !important;
+    position: static !important;
+  }
+
+  .platform-role-card__front,
+  .platform-role-card__back {
+    position: static !important;
+    transform: none !important;
+    backface-visibility: visible !important;
+    background: none !important;
+    border: 1px solid #ccc !important;
+    height: auto !important;
+    margin-bottom: 0.5rem;
+    color: #222 !important;
+  }
+
+  .platform-role-card__back {
+    display: block !important;
+  }
+
+  .platform-role-card__back[aria-hidden="true"] {
+    display: block !important;
+  }
+
+  .platform-role-card__hint {
+    display: none !important;
+  }
+
+  .platform-role-card__desc {
+    color: #333 !important;
+  }
+
+  .platform-journey-step__marker {
+    background: none !important;
+    border-color: #333 !important;
+    color: #333 !important;
+  }
+
+  .platform-journey-step__content strong {
+    color: #111 !important;
+  }
+
+  .platform-journey-step__content p {
+    color: #333 !important;
+  }
+
+  .platform-journey-step:not(:last-child)::before {
+    background: #ccc !important;
+  }
+
+  .platform-status-block {
+    background: none !important;
+    border: 1px solid #ccc !important;
+    page-break-inside: avoid;
+  }
+
+  .platform-status-block h4 {
+    color: #111 !important;
+  }
+
+  .platform-status-block li {
+    color: #333 !important;
+  }
+
+  .platform-showcase__cta {
+    background: none !important;
+    border: 1px solid #999 !important;
+    page-break-inside: avoid;
+  }
+
+  .platform-showcase__cta-text {
+    color: #222 !important;
+  }
+
+  .platform-showcase__cta-subtext {
+    color: #111 !important;
+  }
+
+  .platform-showcase__map-fallback,
+  .platform-showcase__roles-fallback {
+    display: block !important;
+  }
 }
 
