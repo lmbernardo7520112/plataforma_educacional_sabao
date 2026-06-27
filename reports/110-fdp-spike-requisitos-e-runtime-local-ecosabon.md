@@ -53,3 +53,5 @@ Para unificar a arquitetura e garantir compatibilidade nativa com o Docker Compo
 2. Iniciar o servidor Node.js no Render apontando para o Atlas e rodar o seed localmente redirecionado.
 3. Criar a interface de redirecionamento na Vercel através do [client/vercel.json](file:///home/leonardomaximinobernardo/My_projects/plataforma_educacional_sabao/client/vercel.json) para que chamadas a `/api/*` vão para o Render.
 4. Efetuar o teste manual de onboarding de alunos e submissão de relatório para testar o fluxo de ponta a ponta.
+
+> ⚠️ **Aviso de URL Candidata**: O arquivo `client/vercel.json` aponta para `https://ecosabon-api.onrender.com/api/*` como destino de rewrite. Este domínio/serviço no Render **ainda não existe e não foi provisionado**. Trata-se de uma URL candidata futura a ser criada e validada exclusivamente durante a próxima fase de deploy real (`FDP-DEPLOY-SPIKE`). Até lá, nenhuma requisição em ambiente público funcionará.
