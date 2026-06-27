@@ -1,4 +1,3 @@
-import { MissionStatus } from '../types/mission.js';
 
 export type ScientificField = 'hypothesis' | 'procedure' | 'observations' | 'conclusion';
 
