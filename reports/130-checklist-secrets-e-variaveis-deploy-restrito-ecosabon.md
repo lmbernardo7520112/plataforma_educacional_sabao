@@ -28,7 +28,7 @@ As variáveis listadas acima devem ser inseridas exclusivamente no painel do Web
 ### 2.2 Painel do MongoDB Atlas (Banco de Dados)
 Não há injeção de variáveis de ambiente no Atlas, mas sim configuração de credenciais e acessos:
 - **Database Access**: Criar usuário exclusivo (ex: `ecosabon_pilot_srv`) com permissões restritas de leitura/escrita no banco `ecosabon_pilot`.
-- **Network Access**: IP Access List deve autorizar a conexão de rede vinda do Render. Provisoriamente para a camada free, usa-se `0.0.0.0/0`, exigindo que a senha do usuário do banco seja complexa (ex: gerada com 32+ caracteres alfa-numéricos).
+- **Network Access**: IP Access List deve autorizar a conexão de rede vinda do Render. Provisoriamente para a camada free, usa-se `0.0.0.0/0`. A configuração `0.0.0.0/0`, se inevitável em camada gratuita por IP dinâmico, deve ser tratada como exceção provisória do spike, nunca como configuração ideal de produção. Deve vir acompanhada de usuário de privilégio mínimo, senha forte (ex: gerada com 32+ caracteres alfa-numéricos), monitoramento e plano de restrição posterior.
 
 ### 2.3 Painel da Vercel (Frontend Client)
 O cliente React consome a API através de rotas relativas (`/api`), cuja resolução é resolvida pelo arquivo `vercel.json` (proxy transparente).

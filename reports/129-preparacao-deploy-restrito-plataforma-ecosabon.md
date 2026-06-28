@@ -47,12 +47,12 @@ Durante a fase futura de deploy, o provisionamento do banco seguirá estes passo
 3. Criar usuário de banco com privilégios restritos de escrita e leitura apenas no banco `ecosabon_pilot` (princípio do privilégio mínimo).
 4. Gerar senha forte e aleatória para o usuário de banco.
 5. Configurar o Network Access (Allowlist de IP):
-   - Adicionar IPs do Render ou, no caso do Render Free que usa IPs dinâmicos, configurar provisoriamente `0.0.0.0/0` (com monitoramento rigoroso e senha de banco forte).
+   - Adicionar IPs do Render ou, no caso do Render Free que usa IPs dinâmicos, configurar provisoriamente `0.0.0.0/0`. A configuração `0.0.0.0/0`, se inevitável em camada gratuita por IP dinâmico, deve ser tratada como exceção provisória do spike, nunca como configuração ideal de produção. Deve vir acompanhada de usuário de privilégio mínimo, senha forte, monitoramento e plano de restrição posterior.
 6. Montar a Connection String segura com placeholder: `mongodb+srv://<USER>:<PASSWORD>@<CLUSTER>/ecosabon_pilot?retryWrites=true&w=majority`.
 
 **Riscos e Mitigações**:
 - *Risco de Exposição da Connection String*: Salva exclusivamente na variável de ambiente `DATABASE_URL` no painel do Render.
-- *Risco de Allowlist Ampla (0.0.0.0/0)*: Mitigado pela complexidade da senha do usuário do banco (mínimo 32 caracteres gerados aleatoriamente).
+- *Risco de Allowlist Ampla (0.0.0.0/0)*: A configuração `0.0.0.0/0`, se inevitável em camada gratuita por IP dinâmico, deve ser tratada como exceção provisória do spike, nunca como configuração ideal de produção. Deve vir acompanhada de usuário de privilégio mínimo, senha forte (mínimo 32 caracteres gerados aleatoriamente), monitoramento e plano de restrição posterior.
 
 ## 7. Plano Render Backend (Sem Criar Serviço)
 Durante a fase futura de deploy, a publicação do servidor seguirá estes passos:
