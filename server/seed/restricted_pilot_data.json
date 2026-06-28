@@ -1,0 +1,48 @@
+{
+  "teachers": [
+    {
+      "name": "Leonardo (Piloto)",
+      "email": "leonardo@example.com"
+    },
+    {
+      "name": "Nadja (Piloto)",
+      "email": "nadja@example.com"
+    }
+  ],
+  "classrooms": [
+    {
+      "id": "classroom-3a",
+      "name": "3ºANO A",
+      "code": "3A-PILOTO"
+    },
+    {
+      "id": "classroom-3b",
+      "name": "3ºANO B",
+      "code": "3B-PILOTO"
+    }
+  ],
+  "squads": [
+    {
+      "name": "Bancada Alfa (3ºA)",
+      "classroomId": "classroom-3a",
+      "students": [
+        "Estudante Alfa 1",
+        "Estudante Alfa 2",
+        "Estudante Alfa 3",
+        "Estudante Alfa 4",
+        "Estudante Alfa 5"
+      ]
+    },
+    {
+      "name": "Bancada Beta (3ºB)",
+      "classroomId": "classroom-3b",
+      "students": [
+        "Estudante Beta 1",
+        "Estudante Beta 2",
+        "Estudante Beta 3",
+        "Estudante Beta 4",
+        "Estudante Beta 5"
+      ]
+    }
+  ]
+}
