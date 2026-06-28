@@ -2,11 +2,12 @@ import { Router } from 'express';
 import { authService } from '../services/authService.ts';
 import { validate } from '../middleware/validate.ts';
 import { teacherRegisterSchema, teacherLoginSchema, squadLoginSchema } from '../schemas/auth.schema.ts';
+import { checkTeacherPilotAccess, checkSquadPilotAccess } from '../middleware/pilotAuth.ts';
 
 const router = Router();
 
 // Endpoint Administrativo - Instalação da Escola
-router.post('/teacher/register', validate(teacherRegisterSchema), async (req, res) => {
+router.post('/teacher/register', validate(teacherRegisterSchema), checkTeacherPilotAccess, async (req, res) => {
   try {
     const { name, email, password } = req.body;
     const data = await authService.createTeacher(name, email, password);
@@ -17,7 +18,7 @@ router.post('/teacher/register', validate(teacherRegisterSchema), async (req, re
 });
 
 // Endpoint Administrativo - Acesso Professor
-router.post('/teacher/login', validate(teacherLoginSchema), async (req, res) => {
+router.post('/teacher/login', validate(teacherLoginSchema), checkTeacherPilotAccess, async (req, res) => {
   try {
     const { email, password } = req.body;
     const data = await authService.authenticateTeacher(email, password);
@@ -28,7 +29,7 @@ router.post('/teacher/login', validate(teacherLoginSchema), async (req, res) => 
 });
 
 // Endpoint Estudantil - Login da Bancada
-router.post('/squad/login', validate(squadLoginSchema), async (req, res) => {
+router.post('/squad/login', validate(squadLoginSchema), checkSquadPilotAccess, async (req, res) => {
   try {
     const { squadId } = req.body;
     

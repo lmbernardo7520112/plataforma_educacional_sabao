@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { isTeacherAllowedInPilot } from '../config/pilot.ts';
 
 // JWT_SECRET is validated at server startup (server.ts).
 // This getter provides a fail-safe in case the middleware is loaded in isolation.
@@ -13,6 +14,7 @@ function getJWTSecret(): string {
 
 export interface DecodedToken {
   id?: string;
+  email?: string;
   squadId?: string;
   classroomId?: string;
   role: 'TEACHER' | 'SQUAD';
@@ -29,6 +31,21 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction) => 
   const token = authHeader.split(' ')[1];
   try {
     const decoded = jwt.verify(token, getJWTSecret()) as DecodedToken;
+    
+    // Enforcement in Pilot Mode
+    if (decoded.role === 'TEACHER' && decoded.email) {
+      if (!isTeacherAllowedInPilot(decoded.email)) {
+        return res.status(403).json({
+          success: false,
+          error: {
+            code: 'FORBIDDEN',
+            message: 'Acesso restrito ao piloto autorizado.',
+            requestId: (req as unknown as { requestId?: string }).requestId,
+          },
+        });
+      }
+    }
+
     (req as unknown as { user: DecodedToken }).user = decoded;
     next();
   } catch (error) {

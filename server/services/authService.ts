@@ -22,7 +22,7 @@ export class AuthService {
     if (!isValid) throw new Error('Assinatura Eletrônica (Senha) Incorreta.');
 
     const token = jwt.sign(
-      { id: teacher._id, role: 'TEACHER' },
+      { id: teacher._id, email: teacher.email, role: 'TEACHER' },
       getJWTSecret(),
       { expiresIn: '8h' }
     );
