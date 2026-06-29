@@ -1,9 +1,1 @@
-{
-  "files": [],
-  "references": [
-    { "path": "./shared" },
-    { "path": "./server" },
-    { "path": "./client" },
-    { "path": "./curso-interativo" }
-  ]
-}
+{"compilerOptions": { "esModuleInterop": true, "allowSyntheticDefaultImports": true },"files": [],"references": [{"path": "./shared"}, {"path": "./server"}, {"path": "./client"}, {"path": "./curso-interativo"}]}
