@@ -45,7 +45,7 @@ export const Onboarding: React.FC = () => {
     const fetchClassrooms = async () => {
       setLoading(true);
       try {
-        const { data } = await api.get('/classrooms');
+        const { data } = await api.get('/onboarding/classrooms');
         setClassrooms(data.data);
       } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
@@ -66,8 +66,8 @@ export const Onboarding: React.FC = () => {
     try {
       // Parallel execution: Gets Classroom details mapping AND Existing Squads Array
       const [classRes, squadsRes] = await Promise.all([
-        api.get(`/classrooms/${id}`),
-        api.get(`/classrooms/${id}/squads`)
+        api.get(`/onboarding/classrooms/${id}`),
+        api.get(`/onboarding/classrooms/${id}/squads`)
       ]);
       
       setSelectedClassroom(classRes.data.data);
@@ -160,7 +160,7 @@ export const Onboarding: React.FC = () => {
         }, { headers: { Authorization: `Bearer ${tempToken}` } });
 
         // Refresh List
-        const squadsRes = await api.get(`/classrooms/${selectedClassroom._id}/squads`);
+        const squadsRes = await api.get(`/onboarding/classrooms/${selectedClassroom._id}/squads`);
         setExistingSquads(squadsRes.data.data);
         cancelEdit();
         setError('✅ Bancada atualizada com sucesso! Selecione-a para entrar no laboratório.');
