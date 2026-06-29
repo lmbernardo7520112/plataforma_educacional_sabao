@@ -15,4 +15,7 @@ O endurecimento das rotas públicas de onboarding foi validado. As requisições
 - **Modo Piloto Restrito**: A plataforma permanece blindada em modo piloto (`PILOT_MODE=true`), impedindo a criação de turmas ou inscrições fora do escopo homologado.
 
 ## 4. Avaliação de Riscos
-O risco de vazamento de dados de estudantes é nulo, pois toda a massa de dados em uso é sintética e o onboarding opera sob DTOs estritos. O ambiente está plenamente apto para a divulgação controlada.
+O risco de vazamento de dados de estudantes é nulo, pois toda a massa de dados em uso é sintética e o onboarding opera sob DTOs estritos. 
+
+WARN: o endpoint público de squads ainda retorna a lista sintética members. Embora não contenha dados reais, a forma mais segura para QR/divulgação restrita é substituir essa lista por memberCount ou studentCount antes de qualquer divulgação mais ampla.
+
