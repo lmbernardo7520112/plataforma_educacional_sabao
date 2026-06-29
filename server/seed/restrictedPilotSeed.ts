@@ -87,12 +87,12 @@ export async function seedRestrictedPilot(): Promise<void> {
     const mongoClassroomId = classroomMap.get(s.classroomId);
     if (!mongoClassroomId) continue;
 
-    const existing = await Squad.findOne({ name: s.name, classroomId: mongoClassroomId });
+    const existing = await Squad.findOne({ nome: s.name, classroomId: mongoClassroomId });
     if (!existing) {
       await Squad.create({
-        name: s.name,
+        nome: s.name,
         classroomId: mongoClassroomId,
-        members: s.students.map(name => ({ name })),
+        members: s.students,
       });
       console.log(`✅ Bancada criada: ${s.name} com ${s.students.length} alunos`);
     } else {
