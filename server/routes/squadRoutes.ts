@@ -14,7 +14,7 @@ const router = Router({ mergeParams: true });
 // and also standalone at /api/squads
 
 // GET /api/classrooms/:classroomId/squads
-router.get('/', validate(classroomIdFromParentSchema), async (req: Request, res: Response) => {
+router.get('/', requireAuth, requireRole(['TEACHER']), validate(classroomIdFromParentSchema), async (req: Request, res: Response) => {
   try {
     const { classroomId } = req.params;
     const list = await squadService.getSquadsByClassroom(classroomId as string);

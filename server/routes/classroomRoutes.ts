@@ -6,9 +6,11 @@ import { requireAuth, requireRole } from '../middleware/auth.ts';
 import { validate } from '../middleware/validate.ts';
 import { classroomIdParamSchema } from '../schemas/common.schema.ts';
 
+import { requireAuth, requireRole } from '../middleware/auth.ts';
+
 const router = Router();
 
-router.get('/', async (_req: Request, res: Response) => {
+router.get('/', requireAuth, requireRole(['TEACHER']), async (_req: Request, res: Response) => {
   try {
     const list = await classroomService.getActiveClassrooms();
     res.json({ success: true, data: list });
@@ -17,7 +19,7 @@ router.get('/', async (_req: Request, res: Response) => {
   }
 });
 
-router.get('/:id', validate(classroomIdParamSchema), async (req: Request, res: Response) => {
+router.get('/:id', requireAuth, requireRole(['TEACHER']), validate(classroomIdParamSchema), async (req: Request, res: Response) => {
   try {
     const details = await classroomService.getClassroomWithStudents(req.params.id as string);
     res.json({ success: true, data: details });

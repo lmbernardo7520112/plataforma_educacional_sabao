@@ -37,8 +37,9 @@ export class ClassroomService {
       const jsonPath = path.resolve(__dirname, '../seed/turmas_alunos.json');
       const fileData = fs.readFileSync(jsonPath, 'utf-8');
       const data = JSON.parse(fileData);
+      const cleanName = (name: string) => name.replace(/\s+/g, '').toUpperCase();
       const turmaData = data.turmas.find(
-        (t: any) => t.nome_turma === classroom.nome
+        (t: any) => cleanName(t.nome_turma) === cleanName(classroom.nome)
       );
       if (turmaData) {
         alunos = turmaData.alunos;

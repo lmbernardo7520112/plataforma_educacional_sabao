@@ -6,6 +6,7 @@ import squadRoutes from './squadRoutes.ts';
 import missionRoutes from './missionRoutes.ts';
 import authRoutes from './authRoutes.ts';
 import reportRoutes from './reportRoutes.ts';
+import onboardingRoutes from './onboardingRoutes.ts';
 
 const router = express.Router();
 
@@ -27,6 +28,8 @@ router.get('/ping', (_req, res) => {
 // ==========================================================
 // 🚀 API routes (will be added in Phase 2+)
 // ==========================================================
+router.use('/api/onboarding', onboardingRoutes); // Roteador de Onboarding Público com Hardening
+
 router.use('/api/classrooms', classroomRoutes);
 router.use('/api/classrooms/:classroomId/squads', squadRoutes); // Nested route for squads inside a classroom
 router.use('/api/squads', squadRoutes); // Standalone GET squad
