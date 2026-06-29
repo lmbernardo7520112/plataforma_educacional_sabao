@@ -6,7 +6,7 @@ DECISÃO: ROTEAMENTO SPA DA PLATAFORMA ECOSABON NA VERCEL CORRIGIDO. ROTAS CLIEN
 
 ## 2. Elementos Consolidados
 
-- **Vercel Fallback**: Inserido `{ "source": "/((?!api/).*)", "destination": "/index.html" }` em `client/vercel.json` para eliminar o erro 404 em recargas.
+- **Vercel Fallback**: Inserido `{ "source": "/((?!api/).*)", "destination": "/index.html" }` em `vercel.json` (raiz) e `client/vercel.json` para eliminar o erro 404 em recargas e redirecionamentos diretos na Vercel.
 - **Navbar do Aluno**: Mantida apontando para `/dashboard` com comportamento de controle herdado pela `ProtectedRoute` client-side de forma ideal.
 - **Rigor de Governança**:
   - Web-book e GitHub Pages inalterados.
