@@ -4,10 +4,10 @@
 Ao tentar acessar rotas client-side gerenciadas pelo React Router (como `/onboarding` ou `/dashboard`) ou ao recarregar a página nestas URLs, a Vercel retornava um erro `404 Not Found`.
 
 ## 2. A Causa
-O arquivo `client/vercel.json` original continha apenas a regra de proxy/rewrite para rotas `/api/*`. Sem uma regra de fallback SPA configurada na Vercel, o servidor tentava resolver as rotas client-side fisicamente no sistema de arquivos, resultando em 404.
+O arquivo `vercel.json` na raiz do monorepo (usado pela Vercel como Root Directory de build) continha apenas a regra de proxy/rewrite para rotas `/api/*`. Sem uma regra de fallback SPA configurada na raiz do projeto na Vercel, o servidor tentava resolver as rotas client-side fisicamente no sistema de arquivos, resultando em 404.
 
-## 3. Alteração no `client/vercel.json`
-Foi adicionado o fallback de roteamento SPA na Vercel, garantindo que qualquer rota que não corresponda à API (`/api/*`) sirva o arquivo `/index.html`:
+## 3. Alteração no `vercel.json` da Raiz e do Client
+Foi adicionado o fallback de roteamento SPA na Vercel em ambos os locais (`vercel.json` da raiz e `client/vercel.json`), garantindo que qualquer rota que não corresponda à API (`/api/*`) sirva o arquivo `/index.html` gerado na pasta de distribuição do client:
 
 ```json
 {
