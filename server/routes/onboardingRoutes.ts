@@ -112,7 +112,7 @@ export const handleGetSquads = async (req: Request, res: Response) => {
       _id: s._id.toString(),
       nome: s.nome,
       classroomId: s.classroomId.toString(),
-      members: s.members || []
+      memberCount: s.members ? s.members.length : 0
     }));
 
     res.json({ success: true, data: publicSquadsDTO });
