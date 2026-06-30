@@ -18,7 +18,8 @@ interface IClassroomDetails extends IClassroom {
 interface ISquad {
   _id: string;
   nome: string;
-  members: string[];
+  memberCount?: number;
+  members?: string[];
 }
 
 export const Onboarding: React.FC = () => {
@@ -84,12 +85,27 @@ export const Onboarding: React.FC = () => {
     }
   };
 
-  const handleEditClick = (e: React.MouseEvent, squad: ISquad) => {
+  const handleEditClick = async (e: React.MouseEvent, squad: ISquad) => {
     e.stopPropagation(); // Evita login acidental
-    setEditingSquad(squad);
-    setSquadName(squad.nome);
-    setSelectedStudents(squad.members);
+    setLoading(true);
     setError(null);
+    try {
+      // SDD Protocolo: Para editar a bancada, faz login temporário para obter os dados autenticados e seguros (inclusive members)
+      const { data } = await api.post('/auth/squad/login', { squadId: squad._id });
+      const fullSquad = data.data.squad;
+      
+      setEditingSquad(squad);
+      setSquadName(fullSquad.nome);
+      setSelectedStudents(fullSquad.members || []);
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.message || 'Falha de propriedade da bancada.');
+      } else {
+        setError('Não foi possível autenticar a bancada para edição.');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const cancelEdit = () => {
@@ -114,7 +130,7 @@ export const Onboarding: React.FC = () => {
         selectedClassroom.nome,
         squad._id,
         squad.nome,
-        squad.members
+        data.data.squad.members || []
       );
       
       navigate('/dashboard');
@@ -287,11 +303,11 @@ export const Onboarding: React.FC = () => {
                            <span className="font-bold text-lg text-white group-hover:text-blue-400 transition-colors">{s.nome}</span>
                            <div className="flex gap-2 items-center">
                              <button onClick={(e) => handleEditClick(e, s)} className="text-gray-400 hover:text-orange-400 text-xs px-2 py-1 bg-black/50 rounded-md transition border border-gray-700 hover:border-orange-500/50">✏️ Editar</button>
-                             <span className="text-xs bg-gray-800 border border-gray-700 px-2 py-1 rounded-md text-gray-300 font-mono">{s.members.length}/5 Vagas</span>
+                             <span className="text-xs bg-gray-800 border border-gray-700 px-2 py-1 rounded-md text-gray-300 font-mono">{(s.memberCount !== undefined ? s.memberCount : (s.members ? s.members.length : 0))}/5 Vagas</span>
                            </div>
                          </div>
                          <div className="text-xs text-gray-400 truncate relative z-10">
-                           {s.members.join(' • ')}
+                           {s.members && s.members.length > 0 ? s.members.join(' • ') : ''}
                          </div>
                       </div>
                     ))

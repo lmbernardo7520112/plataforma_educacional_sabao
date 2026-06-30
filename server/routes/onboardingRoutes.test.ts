@@ -221,10 +221,11 @@ describe('Onboarding Public Hardening Endpoints', () => {
         _id: 'squad-1',
         nome: 'Bancada Alfa',
         classroomId: 'class-1',
-        members: ['Estudante 1', 'Estudante 2']
+        memberCount: 2
       });
 
       // Proibidos de vazar na listagem pública:
+      expect(squadResult).not.toHaveProperty('members');
       expect(squadResult).not.toHaveProperty('journeyState');
       expect(squadResult).not.toHaveProperty('createdAt');
     });
