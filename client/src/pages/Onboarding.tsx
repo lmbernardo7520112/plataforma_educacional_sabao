@@ -38,6 +38,7 @@ export const Onboarding: React.FC = () => {
   const [squadName, setSquadName] = useState('');
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   
+  const [accessCode, setAccessCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -87,19 +88,27 @@ export const Onboarding: React.FC = () => {
 
   const handleEditClick = async (e: React.MouseEvent, squad: ISquad) => {
     e.stopPropagation(); // Evita login acidental
+    const code = window.prompt(`Digite o código de acesso de 8 dígitos para editar a bancada "${squad.nome}":`);
+    if (!code || !code.trim()) return;
+
     setLoading(true);
     setError(null);
     try {
-      // SDD Protocolo: Para editar a bancada, faz login temporário para obter os dados autenticados e seguros (inclusive members)
-      const { data } = await api.post('/auth/squad/login', { squadId: squad._id });
-      const fullSquad = data.data.squad;
+      // Autentica via login-by-code para provar propriedade
+      const { data: authData } = await api.post('/auth/squad/login-by-code', { accessCode: code.trim().toUpperCase() });
+      const fullSquadDetail = await api.get(`/squads/standalone/${squad._id}`, {
+        headers: { Authorization: `Bearer ${authData.data.token}` }
+      });
+      const fullSquad = fullSquadDetail.data.data;
       
       setEditingSquad(squad);
       setSquadName(fullSquad.nome);
       setSelectedStudents(fullSquad.members || []);
+      // Guarda temporariamente o token autenticado de edição
+      (window as any)._tempEditingToken = authData.data.token;
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.message || 'Falha de propriedade da bancada.');
+        setError(err.response?.data?.message || 'Código de acesso incorreto. Edição negada.');
       } else {
         setError('Não foi possível autenticar a bancada para edição.');
       }
@@ -113,37 +122,63 @@ export const Onboarding: React.FC = () => {
     setSquadName('');
     setSelectedStudents([]);
     setError(null);
+    delete (window as any)._tempEditingToken;
   };
 
-  const handleSelectExistingSquad = async (squad: ISquad) => {
-    if (!selectedClassroom) return;
+  const handleSelectExistingSquad = (squad: ISquad) => {
+    setError(null);
+    setError(`Para entrar na bancada "${squad.nome}", insira o código de acesso ao lado.`);
+  };
+
+  const handleLoginByCode = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!accessCode.trim()) return;
     setLoading(true);
+    setError(null);
     try {
-      // Single-Sign On da Bancada requerindo Token RBAC ao nosso servidor
-      const { data } = await api.post('/auth/squad/login', { squadId: squad._id });
+      const code = accessCode.trim().toUpperCase();
+      const { data } = await api.post('/auth/squad/login-by-code', { accessCode: code });
       
       localStorage.setItem('ecosabon_token', data.data.token);
+      
+      // Busca os detalhes completos da bancada autenticada para obter os membros
+      const squadId = data.data.squad._id;
+      const squadDetailRes = await api.get(`/squads/standalone/${squadId}`, {
+        headers: { Authorization: `Bearer ${data.data.token}` }
+      });
+      const fullSquad = squadDetailRes.data.data;
 
-      // Instancia a loja do Zustand
       setSquad(
         selectedClassroom._id,
         selectedClassroom.nome,
-        squad._id,
-        squad.nome,
-        data.data.squad.members || []
+        fullSquad._id,
+        fullSquad.nome,
+        fullSquad.members || []
       );
       
       navigate('/dashboard');
     } catch (err: unknown) {
       console.error(err);
       if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.message || 'Cátedra bloqueada. Token recusado.');
+        setError(err.response?.data?.message || 'Código de acesso inválido ou bancada inativa.');
       } else {
-        setError('Erro crítico ao carregar perfil cibernético da sua bancada anterior.');
+        setError('Falha de rede ao autenticar com o código.');
       }
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleEnterAsVisitor = () => {
+    localStorage.removeItem('ecosabon_token');
+    setSquad(
+      'visitor-classroom',
+      'Turma de Demonstração',
+      'visitor-sandbox',
+      'Visitante Sandbox',
+      ['Visitante']
+    );
+    navigate('/dashboard');
   };
 
   const toggleStudent = (nome: string) => {
@@ -166,9 +201,11 @@ export const Onboarding: React.FC = () => {
     setError(null);
     try {
       if (editingSquad) {
-        // SDD Protocolo: Pede token provisório para provar Ownership e então dispara PUT
-        const { data: authData } = await api.post('/auth/squad/login', { squadId: editingSquad._id });
-        const tempToken = authData.data.token;
+        const tempToken = (window as any)._tempEditingToken;
+        if (!tempToken) {
+          setError('Sessão de edição expirada. Autentique-se novamente.');
+          return;
+        }
         
         await api.put(`/classrooms/${selectedClassroom._id}/squads/${editingSquad._id}`, {
           nome: squadName,
@@ -330,14 +367,61 @@ export const Onboarding: React.FC = () => {
                     </button>
                   </div>
                 ) : (
-                  <div className="animate-fade-in outline-none rounded-2xl bg-gray-900/40 p-10 border border-white/5 text-center flex flex-col justify-center items-center flex-1 my-4">
-                    <span className="text-5xl mb-6 grayscale opacity-50">🔒</span>
-                    <h2 className="text-xl font-bold font-['Outfit'] text-white">Governança B2B Ativa</h2>
-                    <p className="text-gray-400 text-sm max-w-sm mx-auto mt-4 leading-relaxed">
-                      Este Laboratório opera sob contrato institucional SaaS. Alunos não possuem protocolos de Admin para fundar turmas na rede.
-                      <br /><br />
-                      <span className="text-emerald-400 font-bold uppercase tracking-wider text-xs">Solicite ao seu Professor a alocação do seu grupo.</span>
-                    </p>
+                  <div className="bg-gray-900/40 border border-white/5 rounded-3xl p-6 flex flex-col flex-1 my-4 animate-fade-in">
+                    <div className="mb-6">
+                      <h3 className="text-xl font-bold text-emerald-400 flex items-center gap-2">
+                        <span>🔑</span> Acesso à Bancada
+                      </h3>
+                      <p className="text-sm text-gray-400 mt-1">Insira o código de 8 caracteres fornecido pelo seu professor.</p>
+                    </div>
+
+                    <form onSubmit={handleLoginByCode} className="space-y-4">
+                      <div>
+                        <input
+                          type="text"
+                          required
+                          value={accessCode}
+                          onChange={(e) => setAccessCode(e.target.value)}
+                          placeholder="Código de Acesso (Ex: EEE8EF)"
+                          className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-center font-mono font-bold tracking-widest text-lg uppercase focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition shadow-inner"
+                          maxLength={12}
+                        />
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={loading || !accessCode.trim()}
+                        className="w-full text-white font-bold py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 transition shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-lg disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed uppercase tracking-wider text-sm"
+                      >
+                        {loading ? 'Validando código...' : 'Entrar na Bancada 🧪'}
+                      </button>
+                    </form>
+
+                    <div className="relative my-6 flex items-center justify-center">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-white/5"></div>
+                      </div>
+                      <span className="relative bg-[#0a0f1a] px-3 text-xs text-gray-500 uppercase tracking-widest">Ou</span>
+                    </div>
+
+                    <div className="space-y-4">
+                      <button
+                        onClick={handleEnterAsVisitor}
+                        className="w-full text-gray-300 font-bold py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition uppercase tracking-wider text-sm"
+                      >
+                        Acessar como Visitante 👤
+                      </button>
+                      <p className="text-[10px] text-gray-500 text-center leading-relaxed">
+                        Modo Sandbox: Qualquer pessoa pode navegar na plataforma para conhecer as etapas, mas sem salvar dados na nuvem da escola.
+                      </p>
+                    </div>
+
+                    <div className="mt-auto pt-6 border-t border-white/5 flex items-start gap-2.5 opacity-60">
+                      <span className="text-sm">🔒</span>
+                      <p className="text-[10px] text-gray-400 leading-normal">
+                        <strong>Governança Ativa:</strong> Alunos não possuem privilégios administrativos para fundar bancadas diretamente no banco.
+                      </p>
+                    </div>
                   </div>
                 )}
                 

@@ -6,7 +6,7 @@ const Dashboard: React.FC = () => {
   const { missions, currentActiveMissionId, totalXP, waterSavedLiters, classroomName, squadName, squadId, fetchMissions } = useJourneyStore();
 
   React.useEffect(() => {
-    if (squadId) {
+    if (squadId && squadId !== 'visitor-sandbox') {
       fetchMissions();
     }
   }, [squadId, fetchMissions]);
@@ -33,6 +33,12 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       </nav>
+
+      {squadId === 'visitor-sandbox' && (
+        <div className="bg-amber-600/90 text-white font-bold text-center py-2.5 px-4 text-xs sm:text-sm shadow-md animate-pulse sticky top-[73px] z-40">
+          ⚠️ Modo visitante: esta é uma demonstração. Alterações não são salvas no banco da escola.
+        </div>
+      )}
 
       <main className="max-w-7xl mx-auto px-6 py-12">
         {/* Painel Title & Export */}

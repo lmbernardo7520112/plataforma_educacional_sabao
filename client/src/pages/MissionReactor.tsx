@@ -107,13 +107,30 @@ const MissionReactor: React.FC = () => {
   };
 
   const submitToServer = async (requirePhoto = true) => {
-    if (requirePhoto && !evidencePhoto) {
-      setError('Evidência fotográfica atestatória é insubstituível. Tire a foto da equipe.');
-      return;
-    }
     if (!squadId) {
        setError('Grupo não identificado na sessão atual.');
        return;
+    }
+
+    if (squadId === 'visitor-sandbox') {
+      setLoading(true);
+      setError(null);
+      try {
+        const waterSaved = missionId === 3 ? (parseFloat(numericInputs.oilMassGrams) || 0) / 1000 : 0.5;
+        // Simula o complete da missão no Zustand sem enviar dados à API
+        completeMission(missionId, photoPreview || 'demo-evidence-url', 100, waterSaved);
+        navigate('/dashboard');
+      } catch (err: any) {
+        setError(err.message || 'Falha ao simular diário local.');
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    if (requirePhoto && !evidencePhoto) {
+      setError('Evidência fotográfica atestatória é insubstituível. Tire a foto da equipe.');
+      return;
     }
     setLoading(true);
     setError(null);
@@ -293,6 +310,9 @@ const MissionReactor: React.FC = () => {
                     <span className="text-5xl block mb-4 group-hover:scale-110 transition-transform">📸</span>
                     <span className="text-emerald-500 font-bold block">Tocar ou arrastar foto do celular/PC aqui</span>
                     <span className="text-xs text-gray-500 mt-2 block">JPG ou PNG (Até 5MB)</span>
+                    {squadId === 'visitor-sandbox' && (
+                      <span className="text-xs text-amber-500 mt-2 block font-bold">⚠️ Modo Visitante: A foto não será enviada ao servidor.</span>
+                    )}
                   </div>
                 )}
               </div>
@@ -300,7 +320,7 @@ const MissionReactor: React.FC = () => {
               <div className="flex gap-4 mt-8">
                 <button disabled={loading} onClick={() => setStep(2)} className="px-6 py-4 bg-gray-800 rounded-xl text-white disabled:opacity-50">Voltar</button>
                 <button disabled={loading} onClick={() => submitToServer()} className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-black py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] transition disabled:opacity-50 disabled:cursor-not-allowed">
-                  {loading ? 'Sincronizando Blockchain Servidor...' : 'Autenticar Diário 🔒'}
+                  {loading ? 'Sincronizando Blockchain Servidor...' : (squadId === 'visitor-sandbox' ? 'Simular Diário Local 🔒' : 'Autenticar Diário 🔒')}
                 </button>
               </div>
             </div>

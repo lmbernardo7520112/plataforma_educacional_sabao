@@ -4,6 +4,7 @@ import { authService } from '../services/authService.ts';
 import { validate } from '../middleware/validate.ts';
 import { teacherRegisterSchema, teacherLoginSchema, squadLoginSchema } from '../schemas/auth.schema.ts';
 import { checkTeacherPilotAccess, checkSquadPilotAccess } from '../middleware/pilotAuth.ts';
+import { isPilotModeEnabled } from '../config/pilot.ts';
 
 const router = Router();
 
@@ -50,6 +51,14 @@ router.post('/teacher/login', teacherLoginLimiter, validate(teacherLoginSchema),
 
 // Endpoint Estudantil - Login da Bancada (legado por ID)
 router.post('/squad/login', validate(squadLoginSchema), checkSquadPilotAccess, async (req, res) => {
+  if (isPilotModeEnabled()) {
+    return res.status(423).json({
+      success: false,
+      message: 'Este piloto opera em modo controlado. Acesso por ID legado bloqueado. Use o código de acesso fornecido pelo professor.',
+      code: 'SQUAD_ID_LOGIN_BLOCKED',
+    });
+  }
+
   try {
     const { squadId } = req.body;
     
