@@ -43,7 +43,7 @@ router.post('/', requireAuth, requireRole(['TEACHER']), validate(createSquadSche
 });
 
 // PUT /api/classrooms/:classroomId/squads/:squadId
-router.put('/:squadId', requireAuth, requireRole(['TEACHER']), validate(updateSquadSchema), async (req: Request, res: Response) => {
+router.put('/:squadId', requireAuth, requireRole(['TEACHER', 'SQUAD']), requireSquadOwnership, validate(updateSquadSchema), async (req: Request, res: Response) => {
   try {
     const { classroomId, squadId } = req.params;
 
