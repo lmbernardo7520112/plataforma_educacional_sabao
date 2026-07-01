@@ -34,13 +34,17 @@ const Dashboard: React.FC = () => {
         </div>
       </nav>
 
-      {squadId === 'visitor-sandbox' && (
-        <div className="bg-amber-600/90 text-white font-bold text-center py-2.5 px-4 text-xs sm:text-sm shadow-md animate-pulse sticky top-[73px] z-40">
-          ⚠️ Modo visitante: esta é uma demonstração. Alterações não são salvas no banco da escola.
-        </div>
-      )}
-
       <main className="max-w-7xl mx-auto px-6 py-12">
+        {squadId === 'visitor-sandbox' && (
+          <div className="bg-amber-600/20 border border-amber-500/40 text-amber-200 font-medium p-4 rounded-2xl mb-8 flex items-center gap-3 animate-pulse shadow-[0_0_20px_rgba(245,158,11,0.05)] text-sm sm:text-base">
+            <span className="text-2xl">⚠️</span>
+            <div>
+              <strong className="text-white block font-bold mb-0.5">Modo Visitante Ativo</strong>
+              Esta é uma sessão de demonstração local. Suas alterações e diários de bordo não serão salvos no servidor da escola.
+            </div>
+          </div>
+        )}
+
         {/* Painel Title & Export */}
         <header className="mb-10 animate-fade-in flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
           <div>

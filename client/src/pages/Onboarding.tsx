@@ -301,7 +301,7 @@ export const Onboarding: React.FC = () => {
 
         {/* ===================== STEP 2: SQUAD RESUMPTION OR CREATION ===================== */}
         {step === 2 && selectedClassroom && (
-          <div className="bg-gray-900/60 backdrop-blur-xl border border-white/10 p-8 rounded-3xl shadow-2xl animate-fade-in flex flex-col max-h-[85vh]">
+          <div className="bg-gray-900/60 backdrop-blur-xl border border-white/10 p-8 rounded-3xl shadow-2xl animate-fade-in flex flex-col lg:max-h-[85vh] max-h-none overflow-y-auto lg:overflow-y-visible">
             <div className="flex items-center justify-between mb-8 border-b border-white/10 pb-4">
               <h2 className="text-2xl font-bold flex items-center gap-3">
                 <span className="bg-emerald-600/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span> 
@@ -311,7 +311,7 @@ export const Onboarding: React.FC = () => {
             </div>
             
             {/* Split Screen Engine */}
-            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 overflow-hidden flex-1 min-h-0">
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 lg:overflow-hidden overflow-visible flex-1 min-h-0">
               
               {/* LEFT COLUMN: RESUMPTION (RETOMAR BANCADA) */}
               <div className="flex-1 lg:border-r border-white/10 lg:pr-8 flex flex-col min-h-0">
