@@ -343,22 +343,22 @@ export const Onboarding: React.FC = () => {
                 
                 {editingSquad && (
                   <form onSubmit={handleSaveSquad} className="flex flex-col flex-1 pb-4 animate-fade-in">
-                  <div className="mb-5">
-                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Denominação da Equipe</label>
+                  <div className="mb-3.5">
+                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Denominação da Equipe</label>
                     <input 
                       type="text" 
                       required
                       value={squadName}
                       onChange={e => setSquadName(e.target.value)}
                       placeholder="Ex: Fórmula Genial, Cientistas..."
-                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition shadow-inner"
+                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition shadow-inner"
                       maxLength={50}
                       minLength={3}
                     />
                   </div>
 
                   <div className="flex-1 flex flex-col min-h-0">
-                    <div className="flex justify-between items-end mb-3">
+                    <div className="flex justify-between items-end mb-2.5">
                       <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider">Integrantes Autorizados</label>
                       <span className={`text-xs px-2 py-1 rounded bg-black/50 border ${selectedStudents.length === 5 ? 'text-emerald-400 border-emerald-500/50' : 'text-gray-400 border-gray-800'}`}>
                         {selectedStudents.length} / 5
@@ -371,7 +371,7 @@ export const Onboarding: React.FC = () => {
                         O sistema da escola ainda não enviou os alunos desta turma.
                       </div>
                     ) : (
-                      <div className="overflow-y-auto pr-3 space-y-2 custom-scrollbar max-h-[160px] min-h-[100px] flex-1 border border-white/5 bg-black/20 p-2 rounded-2xl">
+                      <div className="overflow-y-auto pr-3 space-y-2 custom-scrollbar max-h-[110px] min-h-[80px] flex-1 border border-white/5 bg-black/20 p-2 rounded-2xl">
                         {selectedClassroom.alunosOriginal.map((aluno) => {
                           const isSelected = selectedStudents.includes(aluno.nome);
                           const isDisabled = !isSelected && selectedStudents.length >= 5;
@@ -401,7 +401,7 @@ export const Onboarding: React.FC = () => {
                   <button 
                     type="submit" 
                     disabled={loading || selectedStudents.length === 0}
-                    className={`w-full mt-4 text-white font-bold py-3.5 rounded-xl transition shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-lg disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed uppercase tracking-wider text-sm
+                    className={`w-full mt-3 text-white font-bold py-2.5 rounded-xl transition shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-lg disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed uppercase tracking-wider text-sm
                       ${editingSquad ? 'bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 shadow-[0_0_20px_rgba(249,115,22,0.2)]' : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500'}
                     `}
                   >
