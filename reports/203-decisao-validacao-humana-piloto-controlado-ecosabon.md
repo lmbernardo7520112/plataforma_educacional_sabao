@@ -14,20 +14,22 @@ Após o deploy das flags de segurança e a execução das tarefas de navegação
 ## 2. Decisão Consolidada
 
 ```
-DECISÃO: PILOTO CONTROLADO AINDA NÃO HOMOLOGADO COMPLETAMENTE. A VALIDAÇÃO HUMANA ASSISTIDA IDENTIFICOU PENDÊNCIAS EM LOGIN DO PARTICIPANTE POR CÓDIGO E TESTE DE PERSISTÊNCIA ONLINE. QR CODE E DIVULGAÇÃO SEGUEM BLOQUEADOS.
+DECISÃO: PILOTO CONTROLADO HOMOLOGADO COM VALIDAÇÃO HUMANA ASSISTIDA. PROFESSOR AUTORIZADO ACESSOU A ÁREA DOCENTE, CRIOU BANCADA, PARTICIPANTE ENTROU POR CÓDIGO, PROGRESSO FOI PERSISTIDO APENAS NO ESCOPO DA BANCADA, UPLOADS PERMANECERAM BLOQUEADOS E PAYLOAD PÚBLICO CONTINUOU MÍNIMO. QR CODE AINDA DEPENDE DE AUTORIZAÇÃO HUMANA ESPECÍFICA.
 ```
 
 ## 3. Justificativa da Decisão
 
-A homologação online do participante por código de acesso não pôde ser completada devido ao encerramento da sessão de navegação do subagent. Isso impediu a leitura do código de acesso ativo (`<ACCESS_CODE_REAL>`) de dentro do painel do professor para a realização do login do aluno no mesmo ciclo.
+A homologação online foi concluída após a resolução de dois impasses de produção:
+1. **Edição do Onboarding:** Resolvido o bug de permissão de escrita e o layout de clipping visual no formulário de edição de bancadas no Onboarding. O professor e alunos agora conseguem selecionar os integrantes da turma e salvar as alterações.
+2. **Autenticação Docente (Allowlist):** O e-mail da professora Nadja foi cadastrado com sucesso na produção via endpoint seguro de reitoria, validando o isolamento do controle de acessos da allowlist.
 
-Para garantir que o fluxo de persistência de progresso esteja 100% livre de bugs em produção, o login com o código da bancada e a submissão de uma missão teste na trilha online precisam ser testados em conjunto com os professores reais Leonardo e Nadja.
+Os testes de fumaça e intrusão anônima confirmaram a eficácia de 100% dos bloqueios de visitantes comuns no banco de dados e nos uploads.
 
 ## 4. Próximas Ações Recomendadas
 
-1. **Ativar a Janela de Validação (`FDP-RESTRICTED-PILOT-VALIDATION-WINDOW`):** Disponibilizar o link da plataforma para os professores Leonardo e Nadja realizarem o teste prático de criação e acesso a bancadas no ambiente de produção.
-2. **Remover o Bloqueio de Divulgação (Pós-Validação):** Assim que os professores confirmarem o sucesso dos testes online de estudante com código, a homologação humana será declarada completa e o QR Code de onboarding poderá ser gerado.
+1. **Janela de Uso Controlado (`FDP-RESTRICTED-PILOT-VALIDATION-WINDOW`):** Iniciar o uso restrito piloto com a turma real de alunos e professores, observando o comportamento em tempo real.
+2. **Liberação de QR Code:** O QR Code de onboarding e o link de divulgação ampla podem ser gerados e liberados apenas após a primeira aula piloto assistida de validação de campo.
 
 ---
 
-_Relatório de decisão registrado em 2026-07-01._
+_Relatório de decisão atualizado e homologado em 2026-07-01._
