@@ -110,6 +110,12 @@ app.use('/api/', apiLimiter);
 app.use(requestLogger);
 
 // ==========================================================
+// PILOT READONLY GUARD (blocks anonymous mutations in pilot mode)
+// ==========================================================
+import { blockAnonymousMutationsInPilot } from './middleware/pilotReadonly.js';
+app.use(blockAnonymousMutationsInPilot);
+
+// ==========================================================
 // ROUTES
 // ==========================================================
 app.use('/', basicRoutes);

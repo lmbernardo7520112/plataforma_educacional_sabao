@@ -1,10 +1,11 @@
-import { Router } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import { MissionService } from '../services/missionService.ts';
 import { upload } from '../middleware/upload.ts';
 import { validate } from '../middleware/validate.ts';
 import { requireAuth, requireSquadOwnership } from '../middleware/auth.ts';
 import { SubmitMissionSchema } from '../schemas/mission.schema.ts';
 import { squadIdParamSchema } from '../schemas/common.schema.ts';
+import { isPilotUploadsAllowed } from '../config/pilot.ts';
 
 const router = Router({ mergeParams: true });
 const missionService = new MissionService();
@@ -19,13 +20,21 @@ router.get('/', requireAuth, requireSquadOwnership, validate(squadIdParamSchema)
   }
 });
 
-router.post('/submit', requireAuth, requireSquadOwnership, upload.single('evidencePhoto'), validate(SubmitMissionSchema), async (req, res) => {
+// Conditional upload: skip multer entirely when uploads are blocked
+const conditionalUpload = (req: Request, res: Response, next: NextFunction) => {
+  if (!isPilotUploadsAllowed()) {
+    return next(); // Skip multer — no file processing
+  }
+  return upload.single('evidencePhoto')(req, res, next);
+};
+
+router.post('/submit', requireAuth, requireSquadOwnership, conditionalUpload, validate(SubmitMissionSchema), async (req, res) => {
   try {
     const { squadId } = req.params;
     const { missionId, scientificMethod, numericInputs } = req.body;
     const file = req.file;
 
-    // Relacionamento persistente no storage Docker /uploads
+    // Evidence photo is optional in pilot mode when uploads are blocked
     const evidenceUrl = file ? `/uploads/${file.filename}` : undefined;
 
     const missionDoc = await missionService.evaluateAndCompleteMission(

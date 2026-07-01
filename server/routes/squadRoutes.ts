@@ -24,26 +24,26 @@ router.get('/', requireAuth, requireRole(['TEACHER']), validate(classroomIdFromP
   }
 });
 
-// POST /api/classrooms/:classroomId/squads
-router.post('/', validate(createSquadSchema), async (req: Request, res: Response) => {
+// POST /api/classrooms/:classroomId/squads — TEACHER ONLY
+router.post('/', requireAuth, requireRole(['TEACHER']), validate(createSquadSchema), async (req: Request, res: Response) => {
   try {
     const { classroomId } = req.params;
     const { nome, members } = req.body;
+    const teacherId = (req as any).user?.id;
     
-    // Create
-    const newSquad = await squadService.createSquad(classroomId as string, nome, members);
+    // Create with teacher traceability + access code
+    const { squad: newSquad, accessCode } = await squadService.createSquad(
+      classroomId as string, nome, members, teacherId
+    );
     
-    // Auto Login (Emite o JWT imediato para quem acabou de criar a tela, evitando atrito)
-    const tokenData = await authService.authenticateSquad(newSquad._id.toString());
-    
-    res.status(201).json({ success: true, data: newSquad, token: tokenData.token });
+    res.status(201).json({ success: true, data: newSquad, accessCode });
   } catch (error: any) {
     res.status(400).json({ success: false, message: error.message });
   }
 });
 
 // PUT /api/classrooms/:classroomId/squads/:squadId
-router.put('/:squadId', requireAuth, requireSquadOwnership, validate(updateSquadSchema), async (req: Request, res: Response) => {
+router.put('/:squadId', requireAuth, requireRole(['TEACHER']), validate(updateSquadSchema), async (req: Request, res: Response) => {
   try {
     const { classroomId, squadId } = req.params;
 

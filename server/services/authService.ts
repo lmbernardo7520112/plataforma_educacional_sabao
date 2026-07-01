@@ -48,12 +48,33 @@ export class AuthService {
     if (!squad) throw new Error('Bancada Extinta, Órfã ou Não Encontrada.');
     
     const token = jwt.sign(
-      { squadId: squad._id, classroomId: squad.classroomId, role: 'SQUAD' },
+      { squadId: squad._id, classroomId: squad.classroomId, role: 'SQUAD', pilot: true },
       getJWTSecret(),
       { expiresIn: '24h' }
     );
 
     return { token, squad };
+  }
+
+  async authenticateSquadByAccessCode(accessCode: string) {
+    const squad = await Squad.findOne({
+      accessCode,
+      ativo: true,
+    }).select('+accessCode');
+
+    if (!squad) throw new Error('Código de acesso inválido ou bancada inativa.');
+
+    const token = jwt.sign(
+      { squadId: squad._id, classroomId: squad.classroomId, role: 'SQUAD', pilot: true },
+      getJWTSecret(),
+      { expiresIn: '24h' }
+    );
+
+    // Return minimal squad info — no accessCode, no members
+    return {
+      token,
+      squad: { _id: squad._id, nome: squad.nome, classroomId: squad.classroomId },
+    };
   }
 }
 

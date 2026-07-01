@@ -4,7 +4,17 @@ import { Squad, ISquad } from '../models/Squad.ts';
 import { Classroom } from '../models/Classroom.ts';
 import { JourneyState } from '../models/JourneyState.ts';
 
+import crypto from 'node:crypto';
+
 export class SquadService {
+  /**
+   * Generates a short, URL-safe, uppercase access code for a squad.
+   */
+  private generateAccessCode(): string {
+    // 6-char uppercase alphanumeric (36^6 ≈ 2.2B combinations)
+    return crypto.randomBytes(4).toString('base64url').slice(0, 6).toUpperCase();
+  }
+
   /**
    * Consulta os grupos formados numa turma
    */
@@ -15,13 +25,14 @@ export class SquadService {
   }
 
   /**
-   * Cria um novo grupo na turma
+   * Cria um novo grupo na turma com código de acesso e rastreabilidade docente
    */
   async createSquad(
     classroomId: string,
     nome: string,
-    members: string[]
-  ): Promise<ISquad> {
+    members: string[],
+    teacherId?: string
+  ): Promise<{ squad: ISquad; accessCode: string }> {
     const isValidId = await Classroom.exists({ _id: classroomId, ativo: true });
     if (!isValidId) {
       throw new Error('Turma informada não existe ou está inativa.');
@@ -35,14 +46,18 @@ export class SquadService {
       throw new Error('Já existe um grupo com este nome nesta turma.');
     }
 
+    const accessCode = this.generateAccessCode();
+
     const newSquad = await Squad.create({
       classroomId,
       nome,
       members,
       ativo: true,
+      accessCode,
+      createdByTeacherId: teacherId || null,
     });
 
-    return newSquad;
+    return { squad: newSquad, accessCode };
   }
 
   /**
