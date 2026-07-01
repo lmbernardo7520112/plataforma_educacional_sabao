@@ -1,10 +1,11 @@
-import { Router } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import { MissionService } from '../services/missionService.ts';
 import { upload } from '../middleware/upload.ts';
 import { validate } from '../middleware/validate.ts';
 import { requireAuth, requireSquadOwnership } from '../middleware/auth.ts';
 import { SubmitMissionSchema } from '../schemas/mission.schema.ts';
 import { squadIdParamSchema } from '../schemas/common.schema.ts';
+import { isPilotUploadsAllowed } from '../config/pilot.ts';
 
 const router = Router({ mergeParams: true });
 const missionService = new MissionService();
@@ -19,13 +20,37 @@ router.get('/', requireAuth, requireSquadOwnership, validate(squadIdParamSchema)
   }
 });
 
-router.post('/submit', requireAuth, requireSquadOwnership, upload.single('evidencePhoto'), validate(SubmitMissionSchema), async (req, res) => {
+// Conditional upload: reject file uploads when blocked, skip multer entirely
+const conditionalUpload = (req: Request, res: Response, next: NextFunction) => {
+  if (!isPilotUploadsAllowed()) {
+    // If client sent a file despite uploads being blocked, reject explicitly
+    const contentType = req.headers['content-type'] || '';
+    if (contentType.includes('multipart/form-data') && contentType.includes('boundary')) {
+      // Still need to parse the multipart to get text fields — but strip any files
+      return upload.none()(req, res, (err) => {
+        if (err) {
+          // multer.none() rejects files with LIMIT_UNEXPECTED_FILE — expected behavior
+          return res.status(423).json({
+            success: false,
+            message: 'Uploads de arquivos estão desabilitados no modo piloto.',
+            code: 'PILOT_UPLOADS_BLOCKED',
+          });
+        }
+        return next();
+      });
+    }
+    return next(); // Non-multipart request — proceed normally
+  }
+  return upload.single('evidencePhoto')(req, res, next);
+};
+
+router.post('/submit', requireAuth, requireSquadOwnership, conditionalUpload, validate(SubmitMissionSchema), async (req, res) => {
   try {
     const { squadId } = req.params;
     const { missionId, scientificMethod, numericInputs } = req.body;
     const file = req.file;
 
-    // Relacionamento persistente no storage Docker /uploads
+    // Evidence photo is optional in pilot mode when uploads are blocked
     const evidenceUrl = file ? `/uploads/${file.filename}` : undefined;
 
     const missionDoc = await missionService.evaluateAndCompleteMission(

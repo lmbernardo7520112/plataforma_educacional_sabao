@@ -59,7 +59,7 @@ const MissionReactor: React.FC = () => {
     setNumericInputs(prev => ({ ...prev, [field]: val }));
   };
 
-  const handleScientificValidation = (e: React.FormEvent) => {
+  const handleScientificValidation = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     try {
@@ -94,14 +94,20 @@ const MissionReactor: React.FC = () => {
         if (!engine.evaluatePHTolerance(ph)) throw new Error(`Bloqueio de Qualidade: O pH final marcou [${ph}], o que significa severo risco corrosivo ou baixa estabilidade e está rejeitado pela Agência Reguladora.`);
       }
 
-      setStep(3); // Avança pra foto
+      // In pilot mode (uploads blocked), submit directly; otherwise go to photo step
+      const isPilotMode = import.meta.env.VITE_PILOT_MODE === 'true' || import.meta.env.VITE_PILOT_UPLOADS_BLOCKED === 'true';
+      if (isPilotMode) {
+        await submitToServer(false);
+      } else {
+        setStep(3); // Avança pra foto
+      }
     } catch (err: unknown) {
       setError((err as Error).message);
     }
   };
 
-  const submitToServer = async () => {
-    if (!evidencePhoto) {
+  const submitToServer = async (requirePhoto = true) => {
+    if (requirePhoto && !evidencePhoto) {
       setError('Evidência fotográfica atestatória é insubstituível. Tire a foto da equipe.');
       return;
     }
@@ -125,7 +131,9 @@ const MissionReactor: React.FC = () => {
         }
       });
       formData.append('numericInputs', JSON.stringify(parsedNumeric));
-      formData.append('evidencePhoto', evidencePhoto);
+      if (evidencePhoto) {
+        formData.append('evidencePhoto', evidencePhoto);
+      }
 
       const { data } = await api.post(`/squads/${squadId}/missions/submit`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
@@ -291,7 +299,7 @@ const MissionReactor: React.FC = () => {
 
               <div className="flex gap-4 mt-8">
                 <button disabled={loading} onClick={() => setStep(2)} className="px-6 py-4 bg-gray-800 rounded-xl text-white disabled:opacity-50">Voltar</button>
-                <button disabled={loading} onClick={submitToServer} className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-black py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] transition disabled:opacity-50 disabled:cursor-not-allowed">
+                <button disabled={loading} onClick={() => submitToServer()} className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-black py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] transition disabled:opacity-50 disabled:cursor-not-allowed">
                   {loading ? 'Sincronizando Blockchain Servidor...' : 'Autenticar Diário 🔒'}
                 </button>
               </div>

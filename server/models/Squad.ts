@@ -8,6 +8,8 @@ export interface ISquad extends Document {
   members: string[];
   ativo: boolean;
   criadoEm: Date;
+  accessCodeHash?: string;
+  createdByTeacherId?: Types.ObjectId;
 }
 
 const SquadSchema = new Schema<ISquad>(
@@ -29,9 +31,9 @@ const SquadSchema = new Schema<ISquad>(
       required: [true, 'Membros são obrigatórios'],
       validate: {
         validator: function (v: string[]) {
-          return v.length >= 1 && v.length <= 5;
+          return v.length >= 0 && v.length <= 5;
         },
-        message: 'O grupo deve ter entre 1 e 5 membros',
+        message: 'O grupo deve ter no máximo 5 membros',
       },
     },
     ativo: {
@@ -43,6 +45,16 @@ const SquadSchema = new Schema<ISquad>(
       type: Date,
       default: Date.now,
       immutable: true,
+    },
+    accessCodeHash: {
+      type: String,
+      select: false, // Never returned in queries by default — security
+      index: true,
+    },
+    createdByTeacherId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Teacher',
+      default: null,
     },
   },
   {

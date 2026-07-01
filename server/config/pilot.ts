@@ -74,3 +74,33 @@ export function assertTeacherAllowedInPilot(email: string): void {
 export function isPublicRegistrationDisabledInPilot(): boolean {
   return isPilotModeEnabled();
 }
+
+/**
+ * Checks if public-facing write operations (POST/PUT/DELETE) from anonymous
+ * visitors should be blocked. Default-safe: enabled when PILOT_MODE is active.
+ * @returns boolean
+ */
+export function isPilotPublicReadonly(): boolean {
+  if (!isPilotModeEnabled()) return false;
+  return process.env.PILOT_PUBLIC_READONLY !== 'false';
+}
+
+/**
+ * Checks if file uploads are allowed in pilot mode.
+ * Default-safe: uploads are blocked unless explicitly enabled.
+ * @returns boolean
+ */
+export function isPilotUploadsAllowed(): boolean {
+  if (!isPilotModeEnabled()) return true;
+  return process.env.PILOT_ALLOW_UPLOADS === 'true';
+}
+
+/**
+ * Checks if squad login (by access code or ID) is allowed in pilot mode.
+ * Default-safe: allowed when PILOT_MODE is active to let participants join.
+ * @returns boolean
+ */
+export function isPilotSquadLoginAllowed(): boolean {
+  if (!isPilotModeEnabled()) return true;
+  return process.env.PILOT_ALLOW_SQUAD_LOGIN !== 'false';
+}
