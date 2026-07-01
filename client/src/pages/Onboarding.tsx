@@ -371,7 +371,7 @@ export const Onboarding: React.FC = () => {
                         O sistema da escola ainda não enviou os alunos desta turma.
                       </div>
                     ) : (
-                      <div className="overflow-y-auto pr-3 space-y-2 custom-scrollbar flex-1 border border-white/5 bg-black/20 p-2 rounded-2xl">
+                      <div className="overflow-y-auto pr-3 space-y-2 custom-scrollbar max-h-[160px] min-h-[100px] flex-1 border border-white/5 bg-black/20 p-2 rounded-2xl">
                         {selectedClassroom.alunosOriginal.map((aluno) => {
                           const isSelected = selectedStudents.includes(aluno.nome);
                           const isDisabled = !isSelected && selectedStudents.length >= 5;
@@ -401,7 +401,7 @@ export const Onboarding: React.FC = () => {
                   <button 
                     type="submit" 
                     disabled={loading || selectedStudents.length === 0}
-                    className={`w-full mt-6 text-white font-bold py-5 rounded-xl transition shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-lg disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed uppercase tracking-wider text-sm
+                    className={`w-full mt-4 text-white font-bold py-3.5 rounded-xl transition shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-lg disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed uppercase tracking-wider text-sm
                       ${editingSquad ? 'bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 shadow-[0_0_20px_rgba(249,115,22,0.2)]' : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500'}
                     `}
                   >
