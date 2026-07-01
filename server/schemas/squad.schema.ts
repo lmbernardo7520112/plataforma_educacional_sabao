@@ -14,7 +14,6 @@ export const createSquadSchema = z.object({
       .array(
         z.string().min(2, 'O nome do membro deve ter no mínimo 2 caracteres.')
       )
-      .min(1, 'Um grupo precisa de pelo menos 1 membro.')
       .max(5, 'Um grupo pode ter no máximo 5 membros.'),
   }),
   params: z.object({
