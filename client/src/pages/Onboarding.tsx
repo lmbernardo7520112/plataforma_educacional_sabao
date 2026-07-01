@@ -274,10 +274,10 @@ export const Onboarding: React.FC = () => {
             </div>
             
             {/* Split Screen Engine */}
-            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 overflow-hidden flex-1">
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 overflow-hidden flex-1 min-h-0">
               
               {/* LEFT COLUMN: RESUMPTION (RETOMAR BANCADA) */}
-              <div className="flex-1 lg:border-r border-white/10 lg:pr-8 flex flex-col">
+              <div className="flex-1 lg:border-r border-white/10 lg:pr-8 flex flex-col min-h-0">
                 <div className="mb-6">
                   <h3 className="text-xl font-bold text-blue-400 flex items-center gap-2">
                     <span>🔄</span> Retomar Diário Existente
@@ -316,7 +316,7 @@ export const Onboarding: React.FC = () => {
               </div>
 
               {/* RIGHT COLUMN: CREATION/EDIT FORM */}
-              <div className="flex-1 flex flex-col">
+              <div className="flex-1 flex flex-col min-h-0">
                 {editingSquad ? (
                   <div className="mb-6 flex justify-between items-end">
                     <div>
