@@ -20,10 +20,26 @@ router.get('/', requireAuth, requireSquadOwnership, validate(squadIdParamSchema)
   }
 });
 
-// Conditional upload: skip multer entirely when uploads are blocked
+// Conditional upload: reject file uploads when blocked, skip multer entirely
 const conditionalUpload = (req: Request, res: Response, next: NextFunction) => {
   if (!isPilotUploadsAllowed()) {
-    return next(); // Skip multer — no file processing
+    // If client sent a file despite uploads being blocked, reject explicitly
+    const contentType = req.headers['content-type'] || '';
+    if (contentType.includes('multipart/form-data') && contentType.includes('boundary')) {
+      // Still need to parse the multipart to get text fields — but strip any files
+      return upload.none()(req, res, (err) => {
+        if (err) {
+          // multer.none() rejects files with LIMIT_UNEXPECTED_FILE — expected behavior
+          return res.status(423).json({
+            success: false,
+            message: 'Uploads de arquivos estão desabilitados no modo piloto.',
+            code: 'PILOT_UPLOADS_BLOCKED',
+          });
+        }
+        return next();
+      });
+    }
+    return next(); // Non-multipart request — proceed normally
   }
   return upload.single('evidencePhoto')(req, res, next);
 };

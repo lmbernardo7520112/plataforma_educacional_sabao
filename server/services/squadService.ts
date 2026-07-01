@@ -9,10 +9,29 @@ import crypto from 'node:crypto';
 export class SquadService {
   /**
    * Generates a short, URL-safe, uppercase access code for a squad.
+   * 8-char alphanumeric (36^8 ≈ 2.8 trillion combinations).
    */
-  private generateAccessCode(): string {
-    // 6-char uppercase alphanumeric (36^6 ≈ 2.2B combinations)
-    return crypto.randomBytes(4).toString('base64url').slice(0, 6).toUpperCase();
+  static generateAccessCode(): string {
+    return crypto.randomBytes(6).toString('base64url').slice(0, 8).toUpperCase();
+  }
+
+  /**
+   * One-way hash of the access code using SHA-256.
+   * No salt needed for short codes — rate limiting compensates.
+   */
+  static hashAccessCode(code: string): string {
+    return crypto.createHash('sha256').update(code.toUpperCase()).digest('hex');
+  }
+
+  /**
+   * Verifies a plaintext access code against a stored hash.
+   */
+  static verifyAccessCode(code: string, hash: string): boolean {
+    const candidateHash = SquadService.hashAccessCode(code);
+    return crypto.timingSafeEqual(
+      Buffer.from(candidateHash, 'hex'),
+      Buffer.from(hash, 'hex'),
+    );
   }
 
   /**
@@ -25,7 +44,8 @@ export class SquadService {
   }
 
   /**
-   * Cria um novo grupo na turma com código de acesso e rastreabilidade docente
+   * Cria um novo grupo na turma com código de acesso (hash) e rastreabilidade docente.
+   * Retorna o código plaintext UMA ÚNICA VEZ na resposta ao professor.
    */
   async createSquad(
     classroomId: string,
@@ -46,17 +66,19 @@ export class SquadService {
       throw new Error('Já existe um grupo com este nome nesta turma.');
     }
 
-    const accessCode = this.generateAccessCode();
+    const accessCode = SquadService.generateAccessCode();
+    const accessCodeHash = SquadService.hashAccessCode(accessCode);
 
     const newSquad = await Squad.create({
       classroomId,
       nome,
       members,
       ativo: true,
-      accessCode,
+      accessCodeHash,
       createdByTeacherId: teacherId || null,
     });
 
+    // Return plaintext code ONCE to teacher — never stored or logged
     return { squad: newSquad, accessCode };
   }
 

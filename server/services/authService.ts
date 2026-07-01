@@ -57,12 +57,21 @@ export class AuthService {
   }
 
   async authenticateSquadByAccessCode(accessCode: string) {
+    const { SquadService } = await import('./squadService.ts');
+    const candidateHash = SquadService.hashAccessCode(accessCode);
+
+    // Query by hash — never by plaintext
     const squad = await Squad.findOne({
-      accessCode,
+      accessCodeHash: candidateHash,
       ativo: true,
-    }).select('+accessCode');
+    }).select('+accessCodeHash');
 
     if (!squad) throw new Error('Código de acesso inválido ou bancada inativa.');
+
+    // Timing-safe verification as defense-in-depth
+    if (!SquadService.verifyAccessCode(accessCode, squad.accessCodeHash!)) {
+      throw new Error('Código de acesso inválido ou bancada inativa.');
+    }
 
     const token = jwt.sign(
       { squadId: squad._id, classroomId: squad.classroomId, role: 'SQUAD', pilot: true },
@@ -70,7 +79,7 @@ export class AuthService {
       { expiresIn: '24h' }
     );
 
-    // Return minimal squad info — no accessCode, no members
+    // Return minimal squad info — no hash, no members
     return {
       token,
       squad: { _id: squad._id, nome: squad.nome, classroomId: squad.classroomId },

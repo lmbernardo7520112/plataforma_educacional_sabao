@@ -8,7 +8,7 @@ export interface ISquad extends Document {
   members: string[];
   ativo: boolean;
   criadoEm: Date;
-  accessCode?: string;
+  accessCodeHash?: string;
   createdByTeacherId?: Types.ObjectId;
 }
 
@@ -46,7 +46,7 @@ const SquadSchema = new Schema<ISquad>(
       default: Date.now,
       immutable: true,
     },
-    accessCode: {
+    accessCodeHash: {
       type: String,
       select: false, // Never returned in queries by default — security
       index: true,
